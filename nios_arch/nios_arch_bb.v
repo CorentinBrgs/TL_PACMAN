@@ -1,28 +1,22 @@
 
 module nios_arch (
-	clk_clk,
-	reset_reset_n,
-	memory_mem_ca,
-	memory_mem_ck,
-	memory_mem_ck_n,
-	memory_mem_cke,
-	memory_mem_cs_n,
-	memory_mem_dm,
-	memory_mem_dq,
-	memory_mem_dqs,
-	memory_mem_dqs_n,
-	oct_rzqin);	
+	terasic_sram_0_conduit_end_DQ,
+	terasic_sram_0_conduit_end_ADDR,
+	terasic_sram_0_conduit_end_UB_n,
+	terasic_sram_0_conduit_end_LB_n,
+	terasic_sram_0_conduit_end_WE_n,
+	terasic_sram_0_conduit_end_CE_n,
+	terasic_sram_0_conduit_end_OE_n,
+	nios2_qsys_0_custom_instruction_master_readra,
+	nios2_qsys_0_d_irq_irq);	
 
-	input		clk_clk;
-	input		reset_reset_n;
-	output	[9:0]	memory_mem_ca;
-	output	[0:0]	memory_mem_ck;
-	output	[0:0]	memory_mem_ck_n;
-	output	[0:0]	memory_mem_cke;
-	output	[0:0]	memory_mem_cs_n;
-	output	[0:0]	memory_mem_dm;
-	inout	[7:0]	memory_mem_dq;
-	inout	[0:0]	memory_mem_dqs;
-	inout	[0:0]	memory_mem_dqs_n;
-	input		oct_rzqin;
+	inout	[15:0]	terasic_sram_0_conduit_end_DQ;
+	output	[19:0]	terasic_sram_0_conduit_end_ADDR;
+	output		terasic_sram_0_conduit_end_UB_n;
+	output		terasic_sram_0_conduit_end_LB_n;
+	output		terasic_sram_0_conduit_end_WE_n;
+	output		terasic_sram_0_conduit_end_CE_n;
+	output		terasic_sram_0_conduit_end_OE_n;
+	output		nios2_qsys_0_custom_instruction_master_readra;
+	input	[31:0]	nios2_qsys_0_d_irq_irq;
 endmodule

@@ -3,12 +3,14 @@
  <debug showDebugMenu="0" />
  <systemtable filter="All Interfaces">
   <columns>
-   <connections preferredWidth="207" />
+   <connections preferredWidth="143" />
    <irq preferredWidth="34" />
    <name preferredWidth="227" />
   </columns>
  </systemtable>
  <library
-   expandedCategories="Library,Library/University Program/Audio &amp; Video/Video,Project,Library/DSP,Library/Memory Interfaces and Controllers,Library/University Program,Library/University Program/Audio &amp; Video,Library/Memory Interfaces and Controllers/Memory Interfaces with UniPHY,Library/DSP/Video and Image Processing" />
- <window width="1680" height="1010" x="0" y="0" />
+   expandedCategories="Project/Terasic Technologies Inc.,Project,Library/Memory Interfaces and Controllers,Library/Memory Interfaces and Controllers/Memory Interfaces with UniPHY,Library/University Program/Memory,Library,Library/University Program,Project/Terasic Technologies Inc./C5G" />
+ <window width="1696" height="1026" x="-8" y="-8" />
+ <hdlexample language="VHDL" />
+ <generation synthesis="VHDL" path="_PROJECT_NAME_" />
 </preferences>

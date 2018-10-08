@@ -1,15 +1,12 @@
 	nios_arch u0 (
-		.clk_clk          (<connected-to-clk_clk>),          //    clk.clk
-		.reset_reset_n    (<connected-to-reset_reset_n>),    //  reset.reset_n
-		.memory_mem_ca    (<connected-to-memory_mem_ca>),    // memory.mem_ca
-		.memory_mem_ck    (<connected-to-memory_mem_ck>),    //       .mem_ck
-		.memory_mem_ck_n  (<connected-to-memory_mem_ck_n>),  //       .mem_ck_n
-		.memory_mem_cke   (<connected-to-memory_mem_cke>),   //       .mem_cke
-		.memory_mem_cs_n  (<connected-to-memory_mem_cs_n>),  //       .mem_cs_n
-		.memory_mem_dm    (<connected-to-memory_mem_dm>),    //       .mem_dm
-		.memory_mem_dq    (<connected-to-memory_mem_dq>),    //       .mem_dq
-		.memory_mem_dqs   (<connected-to-memory_mem_dqs>),   //       .mem_dqs
-		.memory_mem_dqs_n (<connected-to-memory_mem_dqs_n>), //       .mem_dqs_n
-		.oct_rzqin        (<connected-to-oct_rzqin>)         //    oct.rzqin
+		.terasic_sram_0_conduit_end_DQ                 (<connected-to-terasic_sram_0_conduit_end_DQ>),                 //             terasic_sram_0_conduit_end.DQ
+		.terasic_sram_0_conduit_end_ADDR               (<connected-to-terasic_sram_0_conduit_end_ADDR>),               //                                       .ADDR
+		.terasic_sram_0_conduit_end_UB_n               (<connected-to-terasic_sram_0_conduit_end_UB_n>),               //                                       .UB_n
+		.terasic_sram_0_conduit_end_LB_n               (<connected-to-terasic_sram_0_conduit_end_LB_n>),               //                                       .LB_n
+		.terasic_sram_0_conduit_end_WE_n               (<connected-to-terasic_sram_0_conduit_end_WE_n>),               //                                       .WE_n
+		.terasic_sram_0_conduit_end_CE_n               (<connected-to-terasic_sram_0_conduit_end_CE_n>),               //                                       .CE_n
+		.terasic_sram_0_conduit_end_OE_n               (<connected-to-terasic_sram_0_conduit_end_OE_n>),               //                                       .OE_n
+		.nios2_qsys_0_custom_instruction_master_readra (<connected-to-nios2_qsys_0_custom_instruction_master_readra>), // nios2_qsys_0_custom_instruction_master.readra
+		.nios2_qsys_0_d_irq_irq                        (<connected-to-nios2_qsys_0_d_irq_irq>)                         //                     nios2_qsys_0_d_irq.irq
 	);
 

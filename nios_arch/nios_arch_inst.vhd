@@ -1,33 +1,27 @@
 	component nios_arch is
 		port (
-			clk_clk          : in    std_logic                    := 'X';             -- clk
-			reset_reset_n    : in    std_logic                    := 'X';             -- reset_n
-			memory_mem_ca    : out   std_logic_vector(9 downto 0);                    -- mem_ca
-			memory_mem_ck    : out   std_logic_vector(0 downto 0);                    -- mem_ck
-			memory_mem_ck_n  : out   std_logic_vector(0 downto 0);                    -- mem_ck_n
-			memory_mem_cke   : out   std_logic_vector(0 downto 0);                    -- mem_cke
-			memory_mem_cs_n  : out   std_logic_vector(0 downto 0);                    -- mem_cs_n
-			memory_mem_dm    : out   std_logic_vector(0 downto 0);                    -- mem_dm
-			memory_mem_dq    : inout std_logic_vector(7 downto 0) := (others => 'X'); -- mem_dq
-			memory_mem_dqs   : inout std_logic_vector(0 downto 0) := (others => 'X'); -- mem_dqs
-			memory_mem_dqs_n : inout std_logic_vector(0 downto 0) := (others => 'X'); -- mem_dqs_n
-			oct_rzqin        : in    std_logic                    := 'X'              -- rzqin
+			terasic_sram_0_conduit_end_DQ                 : inout std_logic_vector(15 downto 0) := (others => 'X'); -- DQ
+			terasic_sram_0_conduit_end_ADDR               : out   std_logic_vector(19 downto 0);                    -- ADDR
+			terasic_sram_0_conduit_end_UB_n               : out   std_logic;                                        -- UB_n
+			terasic_sram_0_conduit_end_LB_n               : out   std_logic;                                        -- LB_n
+			terasic_sram_0_conduit_end_WE_n               : out   std_logic;                                        -- WE_n
+			terasic_sram_0_conduit_end_CE_n               : out   std_logic;                                        -- CE_n
+			terasic_sram_0_conduit_end_OE_n               : out   std_logic;                                        -- OE_n
+			nios2_qsys_0_custom_instruction_master_readra : out   std_logic;                                        -- readra
+			nios2_qsys_0_d_irq_irq                        : in    std_logic_vector(31 downto 0) := (others => 'X')  -- irq
 		);
 	end component nios_arch;
 
 	u0 : component nios_arch
 		port map (
-			clk_clk          => CONNECTED_TO_clk_clk,          --    clk.clk
-			reset_reset_n    => CONNECTED_TO_reset_reset_n,    --  reset.reset_n
-			memory_mem_ca    => CONNECTED_TO_memory_mem_ca,    -- memory.mem_ca
-			memory_mem_ck    => CONNECTED_TO_memory_mem_ck,    --       .mem_ck
-			memory_mem_ck_n  => CONNECTED_TO_memory_mem_ck_n,  --       .mem_ck_n
-			memory_mem_cke   => CONNECTED_TO_memory_mem_cke,   --       .mem_cke
-			memory_mem_cs_n  => CONNECTED_TO_memory_mem_cs_n,  --       .mem_cs_n
-			memory_mem_dm    => CONNECTED_TO_memory_mem_dm,    --       .mem_dm
-			memory_mem_dq    => CONNECTED_TO_memory_mem_dq,    --       .mem_dq
-			memory_mem_dqs   => CONNECTED_TO_memory_mem_dqs,   --       .mem_dqs
-			memory_mem_dqs_n => CONNECTED_TO_memory_mem_dqs_n, --       .mem_dqs_n
-			oct_rzqin        => CONNECTED_TO_oct_rzqin         --    oct.rzqin
+			terasic_sram_0_conduit_end_DQ                 => CONNECTED_TO_terasic_sram_0_conduit_end_DQ,                 --             terasic_sram_0_conduit_end.DQ
+			terasic_sram_0_conduit_end_ADDR               => CONNECTED_TO_terasic_sram_0_conduit_end_ADDR,               --                                       .ADDR
+			terasic_sram_0_conduit_end_UB_n               => CONNECTED_TO_terasic_sram_0_conduit_end_UB_n,               --                                       .UB_n
+			terasic_sram_0_conduit_end_LB_n               => CONNECTED_TO_terasic_sram_0_conduit_end_LB_n,               --                                       .LB_n
+			terasic_sram_0_conduit_end_WE_n               => CONNECTED_TO_terasic_sram_0_conduit_end_WE_n,               --                                       .WE_n
+			terasic_sram_0_conduit_end_CE_n               => CONNECTED_TO_terasic_sram_0_conduit_end_CE_n,               --                                       .CE_n
+			terasic_sram_0_conduit_end_OE_n               => CONNECTED_TO_terasic_sram_0_conduit_end_OE_n,               --                                       .OE_n
+			nios2_qsys_0_custom_instruction_master_readra => CONNECTED_TO_nios2_qsys_0_custom_instruction_master_readra, -- nios2_qsys_0_custom_instruction_master.readra
+			nios2_qsys_0_d_irq_irq                        => CONNECTED_TO_nios2_qsys_0_d_irq_irq                         --                     nios2_qsys_0_d_irq.irq
 		);
 
