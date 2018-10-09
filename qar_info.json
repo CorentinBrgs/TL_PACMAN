@@ -1,0 +1,7 @@
+{
+	"common_dir" : "F:/QuartusProjects/C5G_v.1.2.2_SystemCD/Demonstrations/C5G_HDMI_VPG/",
+	"acds_version" : "Version 18.1.0",
+	"platform" : "windows",
+	"os" : "Windows 10",
+	"qpf" : "C5G_HDMI_VPG.qpf"
+}
