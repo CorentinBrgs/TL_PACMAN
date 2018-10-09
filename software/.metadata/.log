@@ -1,0 +1,63 @@
+!SESSION 2013-07-17 15:37:45.488 -----------------------------------------------
+eclipse.buildId=M20120208-0800
+java.version=1.6.0_23
+java.vendor=Sun Microsystems Inc.
+BootLoader constants: OS=win32, ARCH=x86, WS=win32, NL=zh_TW
+Framework arguments:  -product org.eclipse.epp.package.cpp.product -perspective com.altera.sbtgui.ui.cPerspective
+Command-line arguments:  -os win32 -ws win32 -arch x86 -product org.eclipse.epp.package.cpp.product -perspective com.altera.sbtgui.ui.cPerspective
+
+!ENTRY org.eclipse.cdt.core 1 0 2013-07-17 15:38:30.804
+!MESSAGE Indexed 'HDMI_DEMO_bsp' (81 sources, 128 headers) in 1.36 sec: 4,407 declarations; 5,588 references; 0 unresolved inclusions; 3 syntax errors; 18 unresolved names (0.18%)
+
+!ENTRY org.eclipse.cdt.core 1 0 2013-07-17 15:38:52.731
+!MESSAGE Indexed 'HDMI_DEMO' (5 sources, 82 headers) in 0.41 sec: 4,315 declarations; 8,726 references; 13 unresolved inclusions; 2 syntax errors; 172 unresolved names (1.30%)
+!SESSION 2013-11-29 10:35:19.310 -----------------------------------------------
+eclipse.buildId=M20120208-0800
+java.version=1.6.0_23
+java.vendor=Sun Microsystems Inc.
+BootLoader constants: OS=win32, ARCH=x86, WS=win32, NL=en_US
+Framework arguments:  -product org.eclipse.epp.package.cpp.product -perspective com.altera.sbtgui.ui.cPerspective
+Command-line arguments:  -os win32 -ws win32 -arch x86 -product org.eclipse.epp.package.cpp.product -perspective com.altera.sbtgui.ui.cPerspective
+
+!ENTRY org.eclipse.ui 4 4 2013-11-29 10:35:41.854
+!MESSAGE Could not create view: 'org.eclipse.ui.internal.introview'.
+
+!ENTRY org.eclipse.ui 4 0 2013-11-29 10:35:58.085
+!MESSAGE Problems occurred restoring workbench.
+!SUBENTRY 1 unknown 0 0 2013-11-29 10:35:58.085
+!MESSAGE OK
+!SUBENTRY 1 unknown 0 0 2013-11-29 10:35:58.085
+!MESSAGE OK
+!SUBENTRY 1 unknown 0 0 2013-11-29 10:35:58.085
+!MESSAGE OK
+!SUBENTRY 1 unknown 0 0 2013-11-29 10:35:58.085
+!MESSAGE OK
+!SUBENTRY 1 org.eclipse.ui 4 0 2013-11-29 10:35:58.085
+!MESSAGE Unable to restore perspective: Workspace - Nios II.
+!SUBENTRY 2 org.eclipse.ui 0 0 2013-11-29 10:35:58.085
+!MESSAGE Problems occurred restoring perspective.
+!SUBENTRY 3 org.eclipse.ui 0 0 2013-11-29 10:35:58.085
+!MESSAGE 
+!SUBENTRY 2 unknown 0 0 2013-11-29 10:35:58.086
+!MESSAGE OK
+!SUBENTRY 2 unknown 0 0 2013-11-29 10:35:58.086
+!MESSAGE OK
+!SUBENTRY 2 unknown 0 0 2013-11-29 10:35:58.086
+!MESSAGE OK
+!SUBENTRY 2 unknown 0 0 2013-11-29 10:35:58.086
+!MESSAGE OK
+!SUBENTRY 2 unknown 0 0 2013-11-29 10:35:58.086
+!MESSAGE OK
+!SUBENTRY 2 unknown 0 0 2013-11-29 10:35:58.086
+!MESSAGE OK
+!SUBENTRY 2 unknown 0 0 2013-11-29 10:35:58.086
+!MESSAGE OK
+!SUBENTRY 2 unknown 0 0 2013-11-29 10:35:58.086
+!MESSAGE OK
+!SUBENTRY 2 org.eclipse.ui 4 0 2013-11-29 10:35:58.086
+!MESSAGE Could not find view: org.eclipse.ui.internal.introview
+!SUBENTRY 1 unknown 0 0 2013-11-29 10:35:58.086
+!MESSAGE OK
+
+!ENTRY org.eclipse.epp.usagedata.recording 1 0 2013-11-29 10:36:19.431
+!MESSAGE Usage data upload to http://udc.eclipse.org/upload.php failed with error code 404.
