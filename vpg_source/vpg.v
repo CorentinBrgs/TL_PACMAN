@@ -156,34 +156,42 @@ begin
 		`VGA_640x480p60: begin  // 640x480@60 25.175 MHZ
 			{h_total, h_sync, h_start, h_end} <= {12'd799, 12'd95, 12'd141, 12'd781}; 
 			{v_total, v_sync, v_start, v_end} <= {12'd524, 12'd1, 12'd34, 12'd514}; 
-      {v_active_14, v_active_24, v_active_34} <= {12'd154, 12'd274, 12'd394};
+			{v_active_14, v_active_24, v_active_34} <= {12'd154, 12'd274, 12'd394};
 		end	
 		`MODE_720x480: begin  // 720x480@60 27MHZ (VIC=3, 480P)
 			{h_total, h_sync, h_start, h_end} <= {12'd857, 12'd61, 12'd119, 12'd839}; 
 			{v_total, v_sync, v_start, v_end} <= {12'd524, 12'd5, 12'd35, 12'd515}; 
-      {v_active_14, v_active_24, v_active_34} <= {12'd155, 12'd275, 12'd395};
+			{v_active_14, v_active_24, v_active_34} <= {12'd155, 12'd275, 12'd395};
 		end
 		`MODE_1024x768: begin  //1024x768@60 65MHZ (XGA)
 			{h_total, h_sync, h_start, h_end} <= {12'd1343, 12'd135, 12'd293, 12'd1317}; 
 			{v_total, v_sync, v_start, v_end} <= {12'd805, 12'd5, 12'd34, 12'd802}; 
-      {v_active_14, v_active_24, v_active_34} <= {12'd226, 12'd418, 12'd610};
+			{v_active_14, v_active_24, v_active_34} <= {12'd226, 12'd418, 12'd610};
 		end
+		
+		//Attempt to make a custom mode for our screen, which is 1440x900@60Hz (see http://tinyvga.com/vga-timing/1440x900@60Hz)
+		`MODE_1440x900: begin //1440x900@60Hz 	 106.47MHZ (VESA)
+			{h_total, h_sync, h_start, h_end} <= {12'd1903, 12'd151, 12'd381, 12'd1821}; 
+			{v_total, v_sync, v_start, v_end} <= {12'd931, 12'd2, 12'd30, 12'd930}; 
+			{v_active_14, v_active_24, v_active_34} <= {12'd255, 12'd480, 12'd705};
+		end
+		
+		
 		`MODE_1280x1024: begin //1280x1024@60   108MHZ (SXGA)
 			{h_total, h_sync, h_start, h_end} <= {12'd1687, 12'd111, 12'd357, 12'd1637}; 
 			{v_total, v_sync, v_start, v_end} <= {12'd1065, 12'd2, 12'd40, 12'd1064}; 
-      {v_active_14, v_active_24, v_active_34} <= {12'd296, 12'd552, 12'd808};
+			{v_active_14, v_active_24, v_active_34} <= {12'd296, 12'd552, 12'd808};
 		end	
 		`FHD_1920x1080p60: begin
 			{h_total, h_sync, h_start, h_end} <= {12'd2199, 12'd43, 12'd189, 12'd2109}; 
 			{v_total, v_sync, v_start, v_end} <= {12'd1124, 12'd4, 12'd40, 12'd1120}; 
-      {v_active_14, v_active_24, v_active_34} <= {12'd310, 12'd580, 12'd850};
+			{v_active_14, v_active_24, v_active_34} <= {12'd310, 12'd580, 12'd850};
 		end		
 		default: begin
 			{h_total, h_sync, h_start, h_end} <= {12'd2159, 12'd191, 12'd493, 12'd2093}; 
 			{v_total, v_sync, v_start, v_end} <= {12'd1249, 12'd2, 12'd48, 12'd1248}; 
-      {v_active_14, v_active_24, v_active_34} <= {12'd348, 12'd648, 12'd948};
+			{v_active_14, v_active_24, v_active_34} <= {12'd348, 12'd648, 12'd948};
 		end
 	endcase
 end
-
 endmodule

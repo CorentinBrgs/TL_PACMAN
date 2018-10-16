@@ -328,8 +328,8 @@ zdbfbclk <> <GND>
 
 
 |C5G_HDMI_VPG|vpg_mode:u_vpg_mode
-reset_n => vpg_mode[0]~reg0.PRESET
-reset_n => vpg_mode[1]~reg0.ACLR
+reset_n => vpg_mode[0]~reg0.ACLR
+reset_n => vpg_mode[1]~reg0.PRESET
 reset_n => vpg_mode[2]~reg0.PRESET
 reset_n => vpg_mode[3]~reg0.ACLR
 reset_n => vpg_mode_change~reg0.ACLR
@@ -4202,14 +4202,12 @@ reset_n => mgmt_writedata[2]~reg0.ENA
 reset_n => mgmt_writedata[1]~reg0.ENA
 reset_n => mgmt_writedata[0]~reg0.ENA
 mode[0] => Decoder0.IN3
-mode[0] => Decoder2.IN2
 mode[1] => Decoder0.IN2
+mode[1] => Decoder1.IN2
 mode[2] => Decoder0.IN1
 mode[2] => Decoder1.IN1
-mode[2] => Decoder2.IN1
 mode[3] => Decoder0.IN0
 mode[3] => Decoder1.IN0
-mode[3] => Decoder2.IN0
 mode_change => mode_change_d[0].DATAIN
 mgmt_readdata[0] => always0.IN1
 mgmt_readdata[1] => ~NO_FANOUT~

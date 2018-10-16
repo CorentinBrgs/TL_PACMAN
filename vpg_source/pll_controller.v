@@ -179,7 +179,7 @@ begin
 			 c_counter <= 18'h0_01_01; //1+1=2
 		end	
 		`MODE_720x480: begin  // 50*54/(5*20)=27 MHZ
-			 m_counter <= 18'h2_1B_1B; //27+27=27
+			 m_counter <= 18'h2_1B_1B; //27+27=54
 			 n_counter <= 18'h2_03_02; //3+2=5
 			 c_counter <= 18'h0_0A_0A; //10+10=20 
 		end
@@ -187,6 +187,13 @@ begin
 			 m_counter <= 18'h2_07_06; //7+6=13
 			 n_counter <= 18'h0_01_01; //1+1=2
 			 c_counter <= 18'h2_03_02; //3+2=5 
+		end
+		
+		//Attempt to make a custom mode for our screen, which is 1440x900@60Hz (see http://tinyvga.com/vga-timing/1440x900@60Hz)
+		`MODE_1440x900: begin //106.50 MHZ pour 106.47MHZ(VESA) 
+			 m_counter <= 18'h2_6A_6B; //107+106=213
+			 n_counter <= 18'h0_05_05; //5+5=10
+			 c_counter <= 18'h2_05_05; //5+5=10
 		end
 		`MODE_1280x1024: begin  // 50*54/(5*5)=108 MHZ
 			 m_counter <= 18'h0_1B_1B; //27+27=54

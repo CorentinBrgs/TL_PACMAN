@@ -46,7 +46,7 @@ module vga_generator(
   input       [11:0] v_active_34, 
   output  reg		     vga_hs,             
   output  reg        vga_vs,           
-  output  reg 	     vga_de,
+  output  reg 	      vga_de,
   output  reg [7:0]  vga_r,
   output  reg [7:0]  vga_g,
   output  reg [7:0]  vga_b                                                 
@@ -55,9 +55,9 @@ module vga_generator(
 //=======================================================
 //  Signal declarations
 //=======================================================
-reg			  [11:0]	h_count;
-reg			   [7:0]	pixel_x;
-reg			  [11:0]	v_count;
+reg		[11:0]	h_count;
+reg		[7:0]		pixel_x;
+reg		[11:0]	v_count;
 reg               h_act; 
 reg               h_act_d;
 reg               v_act; 
@@ -67,7 +67,7 @@ wire              h_max, hs_end, hr_start, hr_end;
 wire              v_max, vs_end, vr_start, vr_end;
 wire              v_act_14, v_act_24, v_act_34;
 reg               boarder;
-reg        [3:0]  color_mode;
+reg      [3:0]  	color_mode;
 
 //=======================================================
 //  Structural coding
