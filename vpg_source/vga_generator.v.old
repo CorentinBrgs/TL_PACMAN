@@ -53,23 +53,20 @@ module vga_generator(
 );
 
 image_generator image_generator_inst0 (
-	.row_x(pixel_x),
-	.line_y(pixel_y),
-	.enable(pre_vga_de),
-	.reset(end_image),
-	.clk(clk),
-	.vga_r(vga_r),
-	.vga_g(vga_g),
-	.vga_b(vga_b)
+  .pixel_x()
+	.line_y()
+	.clk()
+	.vga_b()
+	.vga_g()
+	.vga_r()
 );
 
 //=======================================================
 //  Signal declarations
 //=======================================================
-reg		[11:0]		h_count;
-reg		[11:0]		pixel_x;
-reg		[11:0]		v_count;
-reg 	[11:0]		pixel_y;
+reg		[11:0]	h_count;
+reg		[7:0]		pixel_x;
+reg		[11:0]	v_count;
 reg               h_act; 
 reg               h_act_d;
 reg               v_act; 
@@ -79,7 +76,7 @@ wire              h_max, hs_end, hr_start, hr_end;
 wire              v_max, vs_end, vr_start, vr_end;
 wire              v_act_14, v_act_24, v_act_34;
 reg               boarder;
-reg 							end_image;
+reg      [3:0]  	color_mode;
 
 //=======================================================
 //  Structural coding
@@ -102,17 +99,23 @@ always @ (posedge clk or negedge reset_n)
 	begin
     h_act_d   <=  1'b0;
 		h_count		<=	12'b0;
-		pixel_x   <=  12'b0;
+		pixel_x   <=  8'b0;
 		vga_hs		<=	1'b1;
 		h_act	    <=	1'b0;
 	end
 	else
 	begin
     h_act_d   <=  h_act;
+
     if (h_max)
 		  h_count	<= 12'b0;
 		else
 		  h_count	<= h_count + 12'b1;
+
+    if (h_act_d)
+		  pixel_x	<=	pixel_x + 8'b1;
+		else
+		  pixel_x	<=  8'b0;
 
 		if (hs_end && !h_max)
 		  vga_hs	<=	1'b1;
@@ -123,11 +126,6 @@ always @ (posedge clk or negedge reset_n)
 		  h_act	  <=	1'b1;
 		else if (hr_end)
 		  h_act	  <=	1'b0;
-
-		if (h_act)
-		  	pixel_x <= pixel_x + 1'b1;
-	  else
-	  	pixel_x <= 12'b0;
 	end
 
 //vertical control signals
@@ -138,6 +136,7 @@ always@(posedge clk or negedge reset_n)
 		v_count		<=	12'b0;
 		vga_vs		<=	1'b1;
 		v_act	    <=	1'b0;
+		color_mode<=  4'b0;
 	end
 	else 
 	begin		
@@ -159,6 +158,26 @@ always@(posedge clk or negedge reset_n)
 	  	  v_act <=	1'b1;
 		  else if (vr_end)
 		    v_act <=	1'b0;
+
+  		if (vr_start)
+	  	  color_mode[0] <=	1'b1;
+		  else if (v_act_14)
+		    color_mode[0] <=	1'b0;
+
+  		if (v_act_14)
+	  	  color_mode[1] <=	1'b1;
+		  else if (v_act_24)
+		    color_mode[1] <=	1'b0;
+		    
+  		if (v_act_24)
+	  	  color_mode[2] <=	1'b1;
+		  else if (v_act_34)
+		    color_mode[2] <=	1'b0;
+		    
+  		if (v_act_34)
+	  	  color_mode[3] <=	1'b1;
+		  else if (vr_end)
+		    color_mode[3] <=	1'b0;
 		end
 	end
 
@@ -167,8 +186,6 @@ always @(posedge clk or negedge reset_n)
 begin
 	if (!reset_n)
 	begin
-		pixel_y 	<= 	12'b0;
-		end_image <= 1'b0;
     vga_de <= 1'b0;
     pre_vga_de <= 1'b0;
     boarder <= 1'b0;		
@@ -178,22 +195,21 @@ begin
     vga_de <= pre_vga_de;
     pre_vga_de <= v_act && h_act;
     
-    if ((!h_act_d && h_act) || hr_end || (!v_act_d && v_act) || vr_end)
+    if ((!h_act_d&&h_act) || hr_end || (!v_act_d&&v_act) || vr_end)
       boarder <= 1'b1;
     else
-      boarder <= 1'b0;   
-
-
-    if (v_act)
-    	begin
-    	if (hr_end)
-    		pixel_y <= pixel_y + 1'b1;
-    	end
-    else
-    	pixel_y <= 12'b0;
-
-    if (hr_end && vr_end)
-    	end_image <= 1'b1;
+      boarder <= 1'b0;   		
+		
+		if (boarder)
+			{vga_r, vga_g, vga_b} <= {8'hFF,8'hFF,8'hFF};
+		else
+		  case (color_mode)
+      	4'b0001 : {vga_r, vga_g, vga_b} <= {pixel_x,8'h00,8'h00};
+      	4'b0010 : {vga_r, vga_g, vga_b} <= {8'h00,pixel_x,8'h00};
+      	4'b0100 : {vga_r, vga_g, vga_b} <= {8'h00,8'h00,pixel_x};
+      	4'b1000 : {vga_r, vga_g, vga_b} <= {pixel_x,pixel_x,pixel_x};
+      	default  : {vga_r, vga_g, vga_b} <= {8'h00,8'h00,8'h00};
+      endcase
 	end
 end	
 

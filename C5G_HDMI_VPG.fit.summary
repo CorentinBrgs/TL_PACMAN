@@ -1,12 +1,12 @@
-Fitter Status : Successful - Tue Oct 16 17:18:27 2018
+Fitter Status : Successful - Wed Oct 17 16:27:35 2018
 Quartus Prime Version : 18.0.0 Build 614 04/24/2018 SJ Standard Edition
 Revision Name : C5G_HDMI_VPG
 Top-level Entity Name : C5G_HDMI_VPG
 Family : Cyclone V
 Device : 5CGXFC5C6F27C7
 Timing Models : Final
-Logic utilization (in ALMs) : 2,387 / 29,080 ( 8 % )
-Total registers : 2970
+Logic utilization (in ALMs) : 2,382 / 29,080 ( 8 % )
+Total registers : 2976
 Total pins : 141 / 364 ( 39 % )
 Total virtual pins : 0
 Total block memory bits : 2,544,128 / 4,567,040 ( 56 % )

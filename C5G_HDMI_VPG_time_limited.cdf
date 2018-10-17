@@ -4,7 +4,7 @@ JedecChain;
 	DefaultMfr(6E);
 
 	P ActionCode(Cfg)
-		Device PartName(5CGXFC5C6F27) Path("D:/TL_PACMAN/") File("C5G_HDMI_VPG_time_limited.sof") MfrSpec(OpMask(1));
+		Device PartName(5CGXFC5C6F27) Path("D:/TL_MOREIRA_BERGES/TL_PACMAN/") File("C5G_HDMI_VPG_time_limited.sof") MfrSpec(OpMask(1));
 
 ChainEnd;
 
