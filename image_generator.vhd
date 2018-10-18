@@ -42,10 +42,14 @@ ARCHITECTURE bdf_type OF image_generator IS
 	SIGNAL s_data : STD_LOGIC_VECTOR(2 DOWNTO 0) := (OTHERS => '0');
 	SIGNAL s_rdaddress : STD_LOGIC_VECTOR(8 DOWNTO 0) := (OTHERS => '0');
 	SIGNAL s_wraddress : STD_LOGIC_VECTOR(8 DOWNTO 0) := (OTHERS => '0');
-	SIGNAL s_q : STD_LOGIC_VECTOR(2 DOWNTO 0) := (OTHERS => '0');
+	SIGNAL memory_out : STD_LOGIC_VECTOR(2 DOWNTO 0) := (OTHERS => '0');
 
 	SIGNAL bloc_x : STD_LOGIC_VECTOR(4 DOWNTO 0) := (OTHERS => '0'); --24 blocs dans la direction horizontale
 	SIGNAL bloc_y : STD_LOGIC_VECTOR(3 DOWNTO 0) := (OTHERS => '0'); --15 blocs dans la direction verticale
+
+	--control signals
+	SIGNAL ctrl_read_address : STD_LOGIC := '0';
+	SIGNAL ctrl_wait_memory : STD_LOGIC := '0';
 
 	COMPONENT background_memory
 		PORT(wren : IN STD_LOGIC;
@@ -66,42 +70,116 @@ BEGIN
 		data => s_data,
 		rdaddress => s_rdaddress,
 		wraddress => s_wraddress,
-		q => s_q
+		q => memory_out
 	);
 
-	READMEMORY : PROCESS(clk)
+--	MIRE : PROCESS(clk) --this process is used to see if the display is centered, with one red square 10*10px in each corner of the screen
+--	BEGIN
+--		s_wren <= '0';
+--		IF (clk'EVENT AND clk='1') THEN
+--			IF(enable='1') THEN
+--				vga_r <= (OTHERS => '1');
+--				vga_g <= (OTHERS => '1');
+--				vga_b <= (OTHERS => '1');
+--				IF (
+--						(
+--						to_integer(unsigned(row_x)) <= 11 
+--						OR 
+--						to_integer(unsigned(row_x)) > 1430 
+--						)
+--					AND (
+--						to_integer(unsigned(line_y)) <= 11 
+--						OR 
+--						to_integer(unsigned(line_y)) > 890 
+--						)
+--					) THEN
+--					vga_g <= (OTHERS => '0');
+--					vga_b <= (OTHERS => '0');
+--				END IF; 
+--			ELSE
+--				vga_r <= (OTHERS => '0');
+--				vga_g <= (OTHERS => '1');
+--				vga_b <= (OTHERS => '1');
+--			END IF ;
+--
+--			IF(reset='1') THEN
+--
+--			END IF;
+--		END IF;
+--	END PROCESS ;
+
+	--MIRE2 : PROCESS(clk) --this process is used to see if the row_x and line_y signals are ok.
+	--BEGIN
+	--	s_wren <= '0';
+	--	IF (clk'EVENT AND clk='1') THEN
+	--		IF(enable='1') THEN
+	--			vga_r <= std_logic_vector (to_unsigned (to_integer(unsigned(row_x)) mod 256, 8));
+	--			vga_g <= std_logic_vector (to_unsigned (to_integer(unsigned(line_y)) mod 256, 8));
+	--			vga_b <= (OTHERS => '0');
+	--		ELSE
+	--			vga_r <= (OTHERS => '0');
+	--			vga_g <= (OTHERS => '0');
+	--			vga_b <= (OTHERS => '1');
+	--		END IF ;
+
+	--		IF(reset='1') THEN
+
+	--		END IF;
+	--	END IF;
+	--END PROCESS ;
+
+	WRITE_READADDRESS: PROCESS(clk)
+		VARIABLE read_address : STD_LOGIC_VECTOR(8 DOWNTO 0) := (OTHERS => '0');
 	BEGIN
 		s_wren <= '0';
+
 		IF (clk'EVENT AND clk='1') THEN
 			IF(enable='1') THEN
-				vga_r <= (OTHERS => '1');
-				vga_g <= (OTHERS => '1');
-				vga_b <= (OTHERS => '1');
-				IF (
-						(
-						to_integer(unsigned(row_x)) <= 11 
-						OR 
-						to_integer(unsigned(row_x)) > 1430 
-						)
-					AND (
-						to_integer(unsigned(line_y)) <= 11 
-						OR 
-						to_integer(unsigned(line_y)) > 890 
-						)
-					) THEN
-					vga_g <= (OTHERS => '0');
-					vga_b <= (OTHERS => '0');
-				END IF; 
+				read_address := STD_LOGIC_VECTOR(to_unsigned( 
+									359 - ((to_integer(unsigned(row_x)) / 60) + (to_integer(unsigned(line_y)) / 60)*24), 9
+								));
+				s_rdaddress <= read_address;
+				ctrl_read_address <= '1';
+			ELSE 
+				ctrl_read_address <= '0';
+			END IF;
+		END IF;
+
+	END PROCESS ;
+
+	WAIT_MEMORY_PROCEED: PROCESS(clk)
+	BEGIN
+		IF (clk'EVENT AND clk='1') THEN
+			IF (ctrl_read_address='1') THEN
+				ctrl_wait_memory <= '1';
 			ELSE
-				vga_r <= (OTHERS => '0');
-				vga_g <= (OTHERS => '1');
-				vga_b <= (OTHERS => '1');
-			END IF ;
+				ctrl_wait_memory <= '0';
+			END IF;
+		END IF;
+	END PROCESS;
 
-			IF(reset='1') THEN
-
+	SEND_BACKGROUND: PROCESS(clk)
+		--VARIABLE bloc_rgb : STD_LOGIC_VECTOR(2 DOWNTO 0) := (OTHERS => '0');
+	BEGIN
+		s_wren <= '0';
+		IF (clk'EVENT AND clk='1' AND ctrl_wait_memory='1') THEN
+			vga_r <= (OTHERS => '0');
+			vga_g <= (OTHERS => '0');
+			vga_b <= (OTHERS => '0');
+				IF(enable='1') THEN
+					IF(memory_out(2) = '1') THEN
+						vga_r <= (OTHERS => '1'); 
+					END IF;
+					IF(memory_out(1) = '1') THEN
+						vga_g <= (OTHERS => '1'); 
+					END IF;
+					IF(memory_out(0) = '1') THEN
+						vga_b <= (OTHERS => '1'); 
+				END IF;
 			END IF;
 		END IF;
 	END PROCESS ;
+
+
 
 END bdf_type;

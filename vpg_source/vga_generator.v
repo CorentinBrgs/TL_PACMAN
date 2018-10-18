@@ -63,23 +63,38 @@ image_generator image_generator_inst0 (
 	.vga_b(vga_b)
 );
 
+sync_signals_buffer sync_signals_buffer_inst0(
+	.clk(clk),
+	.e1(vga_hs_in),
+	.e2(vga_vs_in),
+	.e3(vga_de_in),
+	.s1(vga_hs),
+	.s2(vga_vs),
+	.s3(vga_de)
+);
+
+
+
 //=======================================================
 //  Signal declarations
 //=======================================================
 reg		[11:0]		h_count;
 reg		[11:0]		pixel_x;
 reg		[11:0]		v_count;
-reg 	[11:0]		pixel_y;
-reg               h_act; 
-reg               h_act_d;
-reg               v_act; 
-reg               v_act_d; 
-reg               pre_vga_de;
-wire              h_max, hs_end, hr_start, hr_end;
-wire              v_max, vs_end, vr_start, vr_end;
-wire              v_act_14, v_act_24, v_act_34;
-reg               boarder;
-reg 							end_image;
+reg 		[11:0]		pixel_y;
+reg      	         h_act; 
+reg         	      h_act_d;
+reg            	   v_act; 
+reg               	v_act_d; 
+reg      	         pre_vga_de;
+wire        	      h_max, hs_end, hr_start, hr_end;
+wire           	   v_max, vs_end, vr_start, vr_end;
+wire              	v_act_14, v_act_24, v_act_34;
+reg               	boarder;
+reg 						end_image;
+reg		     vga_hs_in;             
+reg        vga_vs_in;        
+reg 	     vga_de_in;
 
 //=======================================================
 //  Structural coding
@@ -103,7 +118,7 @@ always @ (posedge clk or negedge reset_n)
     h_act_d   <=  1'b0;
 		h_count		<=	12'b0;
 		pixel_x   <=  12'b0;
-		vga_hs		<=	1'b1;
+		vga_hs_in		<=	1'b1;
 		h_act	    <=	1'b0;
 	end
 	else
@@ -115,9 +130,9 @@ always @ (posedge clk or negedge reset_n)
 		  h_count	<= h_count + 12'b1;
 
 		if (hs_end && !h_max)
-		  vga_hs	<=	1'b1;
+		  vga_hs_in	<=	1'b1;
 		else
-		  vga_hs	<= 1'b0;
+		  vga_hs_in	<= 1'b0;
 
 		if (hr_start)
 		  h_act	  <=	1'b1;
@@ -136,7 +151,7 @@ always@(posedge clk or negedge reset_n)
 	begin
 		v_act_d	  <=	1'b0;
 		v_count		<=	12'b0;
-		vga_vs		<=	1'b1;
+		vga_vs_in		<=	1'b1;
 		v_act	    <=	1'b0;
 	end
 	else 
@@ -151,9 +166,9 @@ always@(posedge clk or negedge reset_n)
 		    v_count	<=	v_count + 12'b1;
 
 		  if (vs_end && !v_max)
-		    vga_vs	<=	1'b1;
+		    vga_vs_in	<=	1'b1;
 		  else
-		    vga_vs	<=	1'b0;
+		    vga_vs_in	<=	1'b0;
 
   		if (vr_start)
 	  	  v_act <=	1'b1;
@@ -169,13 +184,13 @@ begin
 	begin
 		pixel_y 	<= 	12'b0;
 		end_image <= 1'b0;
-    vga_de <= 1'b0;
+    vga_de_in <= 1'b0;
     pre_vga_de <= 1'b0;
     boarder <= 1'b0;		
   end
 	else
 	begin
-    vga_de <= pre_vga_de;
+    vga_de_in <= pre_vga_de;
     pre_vga_de <= v_act && h_act;
     
     if ((!h_act_d && h_act) || hr_end || (!v_act_d && v_act) || vr_end)

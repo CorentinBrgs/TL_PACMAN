@@ -79,23 +79,23 @@ BEGIN
 				vga_b <= (OTHERS => '1');
 				IF (
 						(
-						to_integer(unsigned(row_x))<10 
+						to_integer(unsigned(row_x)) <= 11 
 						OR 
-						to_integer(unsigned(row_x))>1430 
+						to_integer(unsigned(row_x)) > 1430 
 						)
 					AND (
-						to_integer(unsigned(line_y))<10 
+						to_integer(unsigned(line_y)) <= 11 
 						OR 
-						to_integer(unsigned(line_y))>890 
+						to_integer(unsigned(line_y)) > 890 
 						)
 					) THEN
 					vga_g <= (OTHERS => '0');
 					vga_b <= (OTHERS => '0');
 				END IF; 
-			ELSE 
+			ELSE
 				vga_r <= (OTHERS => '0');
 				vga_g <= (OTHERS => '1');
-				vga_b <= (OTHERS => '0');
+				vga_b <= (OTHERS => '1');
 			END IF ;
 
 			IF(reset='1') THEN

@@ -66,7 +66,7 @@ BEGIN
 		clock_enable_input_a => "BYPASS",
 		clock_enable_input_b => "BYPASS",
 		clock_enable_output_b => "BYPASS",
-		init_file => "../TL_PACMAN_UTILS/bmp2mif/image.colour.mif",
+		init_file => "image.colour.mif",
 		intended_device_family => "Cyclone V",
 		lpm_type => "altsyncram",
 		numwords_a => 512,

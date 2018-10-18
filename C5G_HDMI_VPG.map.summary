@@ -1,13 +1,13 @@
-Analysis & Synthesis Status : Successful - Thu Oct 18 11:02:33 2018
+Analysis & Synthesis Status : Successful - Thu Oct 18 16:53:45 2018
 Quartus Prime Version : 18.0.0 Build 614 04/24/2018 SJ Standard Edition
 Revision Name : C5G_HDMI_VPG
 Top-level Entity Name : C5G_HDMI_VPG
 Family : Cyclone V
 Logic utilization (in ALMs) : N/A
-Total registers : 2844
+Total registers : 2861
 Total pins : 140
 Total virtual pins : 0
-Total block memory bits : 2,544,128
+Total block memory bits : 2,545,664
 Total DSP Blocks : 3
 Total HSSI RX PCSs : 0
 Total HSSI PMA RX Deserializers : 0
