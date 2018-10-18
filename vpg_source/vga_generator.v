@@ -183,15 +183,14 @@ begin
     else
       boarder <= 1'b0;   
 
-
     if (v_act)
     	begin
-    	if (hr_end)
+    	if (hr_start)
     		pixel_y <= pixel_y + 1'b1;
     	end
     else
     	pixel_y <= 12'b0;
-
+    
     if (hr_end && vr_end)
     	end_image <= 1'b1;
 	end
