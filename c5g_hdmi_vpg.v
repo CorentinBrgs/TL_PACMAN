@@ -189,6 +189,7 @@ wire [3:0]	vpg_disp_mode;
 wire        vpg_pclk;
 wire        vpg_de, vpg_hs, vpg_vs;
 wire [23:0]	vpg_data;
+wire [31:0] position_table_data;
 
 //=======================================================
 //  Sub-module
@@ -222,7 +223,13 @@ vpg	u_vpg (
 	.vpg_vs(vpg_vs),
 	.vpg_r(vpg_data[23:16]),
 	.vpg_g(vpg_data[15:8]),
-	.vpg_b(vpg_data[7:0]) );
+	.vpg_b(vpg_data[7:0]), 
+
+	.nios_clk(nios_clk),
+	.nios_char_data_pos(nios_char_data_pos),
+	.nios_char_wraddress_pos(nios_char_wraddress_pos),
+	.nios_char_wren_pos(nios_char_wren_pos)
+);
 	
 	
 	
@@ -271,7 +278,8 @@ end
         .led_external_connection_export     (LEDG),     //     led_external_connection.export
         .i2c_sda_external_connection_export (I2C_SDA), // i2c_sda_external_connection.export
         .i2c_scl_external_connection_export (I2C_SCL),  // i2c_scl_external_connection.export
-        .hdmi_tx_int_n_external_connection_export  (~HDMI_TX_INT)   // hdmi_tx_int_n_external_connection.export
+        .hdmi_tx_int_n_external_connection_export  (~HDMI_TX_INT),   // hdmi_tx_int_n_external_connection.export
+        .position_table_export(position_table_data)
     );
 
 

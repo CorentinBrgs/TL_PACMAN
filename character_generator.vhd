@@ -22,112 +22,107 @@ USE ieee.numeric_std.all;
 
 LIBRARY work;
 
-ENTITY image_generator IS 
+ENTITY character_generator IS 
 	PORT
 	(
 		row_x :  IN  STD_LOGIC_VECTOR(11 DOWNTO 0);
 		line_y :  IN  STD_LOGIC_VECTOR(11 DOWNTO 0);
+		position_x : IN STD_LOGIC_VECTOR(11 DOWNTO 0);
+		position_y : IN STD_LOGIC_VECTOR(11 DOWNTO 0);
+		nios_clk : IN STD_LOGIC;
+		nios_char_data_pos : IN STD_LOGIC_VECTOR (11 DOWNTO 0);
+		nios_char_wraddress_pos : IN STD_LOGIC_VECTOR(1 DOWNTO 0);
+		nios_char_wren_pos : IN STD_LOGIC;
+		--nios_char_data_char : IN STD_LOGIC_VECTOR (0 DOWNTO 0);
+		--nios_char_wradress_char : IN STD_LOGIC_VECTOR(9 DOWNTO 0);
+		--nios_char_wren_char : IN STD_LOGIC;
 		enable : IN STD_LOGIC;
 		reset : IN STD_LOGIC;
 		clk :  IN  STD_LOGIC;
 		vga_r :  OUT  STD_LOGIC_VECTOR(7 DOWNTO 0);
 		vga_g :  OUT  STD_LOGIC_VECTOR(7 DOWNTO 0);
-		vga_b :  OUT  STD_LOGIC_VECTOR(7 DOWNTO 0)
+		vga_b :  OUT  STD_LOGIC_VECTOR(7 DOWNTO 0);
+
+		refresh_image : IN STD_LOGIC
 	);
-END image_generator;
+END character_generator;
 
-ARCHITECTURE bdf_type OF image_generator IS 
+
+------------------------------------------------------------------------
+--	ARCHITECTURE
+------------------------------------------------------------------------
+
+ARCHITECTURE bdf_type OF character_generator IS 
 	
-	SIGNAL s_wren : STD_LOGIC := '0';
-	SIGNAL s_data : STD_LOGIC_VECTOR(2 DOWNTO 0) := (OTHERS => '0');
-	SIGNAL s_rdaddress : STD_LOGIC_VECTOR(8 DOWNTO 0) := (OTHERS => '0');
-	SIGNAL s_wraddress : STD_LOGIC_VECTOR(8 DOWNTO 0) := (OTHERS => '0');
-	SIGNAL memory_out : STD_LOGIC_VECTOR(2 DOWNTO 0) := (OTHERS => '0');
+	SIGNAL s_rdaddress_pos : STD_LOGIC_VECTOR (1 DOWNTO 0) := (OTHERS => '0');
+	SIGNAL s_memory_out_pos : STD_LOGIC_VECTOR (11 DOWNTO 0) := (OTHERS => '0');
+	SIGNAL s_rdaddress_char : STD_LOGIC_VECTOR (9 DOWNTO 0) := (OTHERS => '0');
+	SIGNAL s_memory_out_char : STD_LOGIC_VECTOR (0 DOWNTO 0) := (OTHERS => '0');
 
-	SIGNAL bloc_x : STD_LOGIC_VECTOR(4 DOWNTO 0) := (OTHERS => '0'); --24 blocs dans la direction horizontale
-	SIGNAL bloc_y : STD_LOGIC_VECTOR(3 DOWNTO 0) := (OTHERS => '0'); --15 blocs dans la direction verticale
-
+	SIGNAL nios_char_data_char : STD_LOGIC_VECTOR (0 DOWNTO 0) := (OTHERS => '0');
+	SIGNAL nios_char_wradress_char : STD_LOGIC_VECTOR (9 DOWNTO 0) := (OTHERS => '0');
+	SIGNAL nios_char_wren_char : STD_LOGIC := (OTHERS => '0');
+	
 	--control signals
 	SIGNAL ctrl_read_address : STD_LOGIC := '0';
 	SIGNAL ctrl_wait_memory : STD_LOGIC := '0';
 
-	COMPONENT background_memory
-		PORT(wren : IN STD_LOGIC;
-			 clock : IN STD_LOGIC;
-			 data : IN STD_LOGIC_VECTOR(2 DOWNTO 0);
-			 rdaddress : IN STD_LOGIC_VECTOR(8 DOWNTO 0);
-			 wraddress : IN STD_LOGIC_VECTOR(8 DOWNTO 0);
-			 q : OUT STD_LOGIC_VECTOR(2 DOWNTO 0)
+	--Components
+
+	COMPONENT position_memory
+		PORT
+		(
+			data		: IN STD_LOGIC_VECTOR (11 DOWNTO 0);
+			rdaddress	: IN STD_LOGIC_VECTOR (1 DOWNTO 0);
+			rdclock		: IN STD_LOGIC ;
+			wraddress	: IN STD_LOGIC_VECTOR (1 DOWNTO 0);
+			wrclock		: IN STD_LOGIC ;
+			wren		: IN STD_LOGIC ;
+			q			: OUT STD_LOGIC_VECTOR (11 DOWNTO 0)
+		);
+	END COMPONENT;
+
+	COMPONENT character_memory
+	PORT
+		(
+			data		: IN STD_LOGIC_VECTOR (0 DOWNTO 0);
+			rdaddress	: IN STD_LOGIC_VECTOR (9 DOWNTO 0);
+			rdclock		: IN STD_LOGIC ;
+			wraddress	: IN STD_LOGIC_VECTOR (9 DOWNTO 0);
+			wrclock		: IN STD_LOGIC ;
+			wren		: IN STD_LOGIC ;
+			q			: OUT STD_LOGIC_VECTOR (0 DOWNTO 0)
 		);
 	END COMPONENT;
 
 BEGIN 
-
-	b2v_inst : background_memory
-	PORT MAP(
-		clock => clk,
-		wren => s_wren,
-		data => s_data,
-		rdaddress => s_rdaddress,
-		wraddress => s_wraddress,
-		q => memory_out
+	--Components instantiation
+	position_memory_inst : position_memory 
+	PORT MAP (
+		data	 	=> nios_char_data_pos,
+		rdaddress	=> s_rdaddress_pos,
+		rdclock	 	=> clk,
+		wraddress	=> nios_char_wraddress_pos,
+		wrclock	 	=> nios_clk,
+		wren	 	=> nios_char_wren_pos,
+		q	 		=> s_memory_out_pos
 	);
 
---	MIRE : PROCESS(clk) --this process is used to see if the display is centered, with one red square 10*10px in each corner of the screen
---	BEGIN
---		s_wren <= '0';
---		IF (clk'EVENT AND clk='1') THEN
---			IF(enable='1') THEN
---				vga_r <= (OTHERS => '1');
---				vga_g <= (OTHERS => '1');
---				vga_b <= (OTHERS => '1');
---				IF (
---						(
---						to_integer(unsigned(row_x)) <= 11 
---						OR 
---						to_integer(unsigned(row_x)) > 1430 
---						)
---					AND (
---						to_integer(unsigned(line_y)) <= 11 
---						OR 
---						to_integer(unsigned(line_y)) > 890 
---						)
---					) THEN
---					vga_g <= (OTHERS => '0');
---					vga_b <= (OTHERS => '0');
---				END IF; 
---			ELSE
---				vga_r <= (OTHERS => '0');
---				vga_g <= (OTHERS => '1');
---				vga_b <= (OTHERS => '1');
---			END IF ;
---
---			IF(reset='1') THEN
---
---			END IF;
---		END IF;
---	END PROCESS ;
+	character_memory_inst : character_memory 
+	PORT MAP (
+		data	 	=> nios_char_data_char,
+		rdaddress	=> s_rdaddress_char,
+		rdclock	 	=> clk,
+		wraddress	=> nios_char_wradress_char,
+		wrclock	 	=> nios_clk,
+		wren	 	=> nios_char_wren_char,
+		q	 		=> s_memory_out_char
+	);
 
-	--MIRE2 : PROCESS(clk) --this process is used to see if the row_x and line_y signals are ok.
-	--BEGIN
-	--	s_wren <= '0';
-	--	IF (clk'EVENT AND clk='1') THEN
-	--		IF(enable='1') THEN
-	--			vga_r <= std_logic_vector (to_unsigned (to_integer(unsigned(row_x)) mod 256, 8));
-	--			vga_g <= std_logic_vector (to_unsigned (to_integer(unsigned(line_y)) mod 256, 8));
-	--			vga_b <= (OTHERS => '0');
-	--		ELSE
-	--			vga_r <= (OTHERS => '0');
-	--			vga_g <= (OTHERS => '0');
-	--			vga_b <= (OTHERS => '1');
-	--		END IF ;
 
-	--		IF(reset='1') THEN
-
-	--		END IF;
-	--	END IF;
-	--END PROCESS ;
-
+------------------------------------------------------------------------
+--	PROCESSES
+------------------------------------------------------------------------
 	WRITE_READADDRESS: PROCESS(clk)
 		VARIABLE read_address : STD_LOGIC_VECTOR(8 DOWNTO 0) := (OTHERS => '0');
 	BEGIN

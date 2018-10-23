@@ -53,6 +53,12 @@ input	  		    reset_n;
 input	  [3:0]	  mode;
 input	  		    mode_change;
 input	  [1:0]	  disp_color; 
+
+input		  	 	 	nios_clk;
+input		[11:0]		nios_char_data_pos;
+input		[1:0]		nios_char_wraddress_pos;
+input			 		nios_char_wren_pos;
+
 output			    vpg_pclk;
 output			    vpg_de;
 output			    vpg_hs;
@@ -132,7 +138,12 @@ vga_generator u_vga_generator (
   .vga_de(vpg_de),
   .vga_r(vpg_r),
   .vga_g(vpg_g),
-  .vga_b(vpg_b) );
+  .vga_b(vpg_b),
+  .nios_clk(nios_clk),
+  .nios_char_data_pos(nios_char_data_pos),
+  .nios_char_wraddress_pos(nios_char_wraddress_pos),
+  .nios_char_wren_pos(nios_char_wren_pos)
+);
 
 
 //=======================================================

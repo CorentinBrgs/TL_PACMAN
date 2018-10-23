@@ -31,28 +31,37 @@
 // --------------------------------------------------------------------
 
 module vga_generator(                                    
-  input              clk,                
-  input              reset_n,                                                
-  input       [11:0] h_total,           
-  input       [11:0] h_sync,           
-  input       [11:0] h_start,             
-  input       [11:0] h_end,                                                    
-  input       [11:0] v_total,           
-  input       [11:0] v_sync,            
-  input       [11:0] v_start,           
-  input       [11:0] v_end, 
-  input       [11:0] v_active_14, 
-  input       [11:0] v_active_24, 
-  input       [11:0] v_active_34, 
-  output  reg		     vga_hs,             
-  output  reg        vga_vs,           
-  output  reg 	     vga_de,
-  output  reg [7:0]  vga_r,
-  output  reg [7:0]  vga_g,
-  output  reg [7:0]  vga_b                                                 
+  input              	clk,                
+  input              	reset_n,                                                
+  input       [11:0] 	h_total,           
+  input       [11:0] 	h_sync,           
+  input       [11:0] 	h_start,             
+  input       [11:0] 	h_end,                                                    
+  input       [11:0] 	v_total,           
+  input       [11:0] 	v_sync,            
+  input       [11:0] 	v_start,           
+  input       [11:0] 	v_end, 
+  input       [11:0] 	v_active_14, 
+  input       [11:0] 	v_active_24, 
+  input       [11:0] 	v_active_34, 
+
+  input		  	 	 	nios_clk,
+  input		  [11:0]	nios_char_data_pos,
+  input		  [1:0]		nios_char_wraddress_pos,
+  input		  	 		nios_char_wren_pos,
+  input		  [0:0]		nios_char_data_char,
+  input		  [9:0]		nios_char_wradress_char,
+  input		  	 		nios_char_wren_char,
+
+  output  reg		    vga_hs,             
+  output  reg        	vga_vs,           
+  output  reg 	     	vga_de,
+  output  reg [7:0]  	vga_r,
+  output  reg [7:0]  	vga_g,
+  output  reg [7:0]  	vga_b                                                 
 );
 
-image_generator image_generator_inst0 (
+background_generator background_generator_inst0 (
 	.row_x(pixel_x),
 	.line_y(pixel_y),
 	.enable(pre_vga_de),
@@ -62,6 +71,26 @@ image_generator image_generator_inst0 (
 	.vga_g(vga_g),
 	.vga_b(vga_b)
 );
+
+character_generator pacman_generator(
+	.row_x(pixel_x),
+	.line_y(pixel_y),
+	.position_x(position_x),
+	.position_y(position_y),
+	.nios_clk(nios_clk),
+	.nios_char_data_pos(nios_char_data_pos),
+	.nios_char_wraddress_pos(nios_char_wraddress_pos),
+	.nios_char_wren_pos(nios_char_wren_pos),
+	.enable(pre_vga_de),
+	.reset(end_image),
+	.clk(clk),
+	.vga_r(vga_r),
+	.vga_g(vga_g),
+	.vga_b(vga_b),
+	.refresh_image(new_image)
+);
+
+
 
 sync_signals_buffer sync_signals_buffer_inst0(
 	.clk(clk),
@@ -81,20 +110,21 @@ sync_signals_buffer sync_signals_buffer_inst0(
 reg		[11:0]		h_count;
 reg		[11:0]		pixel_x;
 reg		[11:0]		v_count;
-reg 		[11:0]		pixel_y;
-reg      	         h_act; 
-reg         	      h_act_d;
-reg            	   v_act; 
-reg               	v_act_d; 
-reg      	         pre_vga_de;
-wire        	      h_max, hs_end, hr_start, hr_end;
-wire           	   v_max, vs_end, vr_start, vr_end;
-wire              	v_act_14, v_act_24, v_act_34;
-reg               	boarder;
-reg 						end_image;
-reg		     vga_hs_in;             
-reg        vga_vs_in;        
-reg 	     vga_de_in;
+reg 	[11:0]		pixel_y;
+reg 				h_act; 
+reg 				h_act_d;
+reg 				v_act; 
+reg 				v_act_d; 
+reg 				pre_vga_de;
+wire				h_max, hs_end, hr_start, hr_end;
+wire				v_max, vs_end, vr_start, vr_end;
+wire				v_act_14, v_act_24, v_act_34;
+wire				new_image;
+reg 				boarder;
+reg 				end_image;
+reg					vga_hs_in;             
+reg 				vga_vs_in;        
+reg 				vga_de_in;
 
 //=======================================================
 //  Structural coding
@@ -110,6 +140,7 @@ assign vr_end = v_count == v_end;
 assign v_act_14 = v_count == v_active_14;
 assign v_act_24 = v_count == v_active_24;
 assign v_act_34 = v_count == v_active_34;
+assign new_image = v_count == 12'b0;
 
 //horizontal control signals
 always @ (posedge clk or negedge reset_n)

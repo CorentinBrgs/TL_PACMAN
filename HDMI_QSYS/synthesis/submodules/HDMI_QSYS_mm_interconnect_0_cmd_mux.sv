@@ -24,9 +24,9 @@
 // agreement for further details.
 
 
-// $Id: //acds/rel/18.1std/ip/merlin/altera_merlin_multiplexer/altera_merlin_multiplexer.sv.terp#1 $
+// $Id: //acds/rel/18.0std/ip/merlin/altera_merlin_multiplexer/altera_merlin_multiplexer.sv.terp#1 $
 // $Revision: #1 $
-// $Date: 2018/07/18 $
+// $Date: 2018/01/31 $
 // $Author: psgswbuild $
 
 // ------------------------------------------
@@ -45,7 +45,7 @@
 //   PIPELINE_ARB:        1
 //   PKT_TRANS_LOCK:      61 (arbitration locking enabled)
 //   ST_DATA_W:           99
-//   ST_CHANNEL_W:        9
+//   ST_CHANNEL_W:        10
 // ------------------------------------------
 
 module HDMI_QSYS_mm_interconnect_0_cmd_mux
@@ -55,7 +55,7 @@ module HDMI_QSYS_mm_interconnect_0_cmd_mux
     // ----------------------
     input                       sink0_valid,
     input [99-1   : 0]  sink0_data,
-    input [9-1: 0]  sink0_channel,
+    input [10-1: 0]  sink0_channel,
     input                       sink0_startofpacket,
     input                       sink0_endofpacket,
     output                      sink0_ready,
@@ -66,7 +66,7 @@ module HDMI_QSYS_mm_interconnect_0_cmd_mux
     // ----------------------
     output                      src_valid,
     output [99-1    : 0] src_data,
-    output [9-1 : 0] src_channel,
+    output [10-1 : 0] src_channel,
     output                      src_startofpacket,
     output                      src_endofpacket,
     input                       src_ready,
@@ -77,12 +77,12 @@ module HDMI_QSYS_mm_interconnect_0_cmd_mux
     input clk,
     input reset
 );
-    localparam PAYLOAD_W        = 99 + 9 + 2;
+    localparam PAYLOAD_W        = 99 + 10 + 2;
     localparam NUM_INPUTS       = 1;
     localparam SHARE_COUNTER_W  = 1;
     localparam PIPELINE_ARB     = 1;
     localparam ST_DATA_W        = 99;
-    localparam ST_CHANNEL_W     = 9;
+    localparam ST_CHANNEL_W     = 10;
     localparam PKT_TRANS_LOCK   = 61;
 
     assign	src_valid			=  sink0_valid;
