@@ -45,15 +45,15 @@ module vga_generator(
   input       [11:0] 	v_active_24, 
   input       [11:0] 	v_active_34, 
 
-  input		  	 	 	nios_clk,
-  input		  [11:0]	nios_char_data_pos,
-  input		  [1:0]		nios_char_wraddress_pos,
-  input		  	 		nios_char_wren_pos,
-  input		  [0:0]		nios_char_data_char,
-  input		  [9:0]		nios_char_wradress_char,
-  input		  	 		nios_char_wren_char,
+  input		  	 	 	    nios_clk,
+  input		  [11:0]	  nios_char_data_pos,
+  input		  [1:0]		  nios_char_wraddress_pos,
+  input		  	 		    nios_char_wren_pos,
+  input		  [0:0]		  nios_char_data_char,
+  input		  [9:0]		  nios_char_wradress_char,
+  input		  	 		    nios_char_wren_char,
 
-  output  reg		    vga_hs,             
+  output  reg		      vga_hs,             
   output  reg        	vga_vs,           
   output  reg 	     	vga_de,
   output  reg [7:0]  	vga_r,
@@ -67,30 +67,29 @@ background_generator background_generator_inst0 (
 	.enable(pre_vga_de),
 	.reset(end_image),
 	.clk(clk),
-	.vga_r(vga_r),
-	.vga_g(vga_g),
-	.vga_b(vga_b)
+	.vga_r(s_vga_r_2),
+	.vga_g(s_vga_g_2),
+	.vga_b(s_vga_b_2)
 );
 
 character_generator pacman_generator(
 	.row_x(pixel_x),
 	.line_y(pixel_y),
+	.enable(pre_vga_de),
+	.reset(end_image),
+	.clk(clk),
+	.vga_r(s_vga_r_1),
+	.vga_g(s_vga_g_1),
+	.vga_b(s_vga_b_1),
+
+  .refresh_image(new_image),
 	.position_x(position_x),
 	.position_y(position_y),
 	.nios_clk(nios_clk),
 	.nios_char_data_pos(nios_char_data_pos),
 	.nios_char_wraddress_pos(nios_char_wraddress_pos),
-	.nios_char_wren_pos(nios_char_wren_pos),
-	.enable(pre_vga_de),
-	.reset(end_image),
-	.clk(clk),
-	.vga_r(vga_r),
-	.vga_g(vga_g),
-	.vga_b(vga_b),
-	.refresh_image(new_image)
+	.nios_char_wren_pos(nios_char_wren_pos)
 );
-
-
 
 sync_signals_buffer sync_signals_buffer_inst0(
 	.clk(clk),
@@ -102,6 +101,29 @@ sync_signals_buffer sync_signals_buffer_inst0(
 	.s3(vga_de)
 );
 
+vga_or vga_or_inst0(
+	.vga_r_1(s_vga_r_1),
+	.vga_r_2(s_vga_r_2),
+	.vga_r_3(s_vga_r_3),
+	.vga_r_4(s_vga_r_4),
+	.vga_r_5(s_vga_r_5),
+	.vga_r_6(s_vga_r_6),
+	.vga_g_1(s_vga_g_1),
+	.vga_g_2(s_vga_g_2),
+	.vga_g_3(s_vga_g_3),
+	.vga_g_4(s_vga_g_4),
+	.vga_g_5(s_vga_g_5),
+	.vga_g_6(s_vga_g_6),
+	.vga_b_1(s_vga_b_1),
+	.vga_b_2(s_vga_b_2),
+	.vga_b_3(s_vga_b_3),
+	.vga_b_4(s_vga_b_4),
+	.vga_b_5(s_vga_b_5),
+	.vga_b_6(s_vga_b_6),
+	.vga_r_out(vga_r),
+	.vga_g_out(vga_g),
+	.vga_b_out(vga_b)
+);
 
 
 //=======================================================
@@ -126,6 +148,27 @@ reg					vga_hs_in;
 reg 				vga_vs_in;        
 reg 				vga_de_in;
 
+
+//VGA intern signals
+reg [7:0] 	s_vga_r_1;
+reg [7:0] 	s_vga_g_1;
+reg [7:0] 	s_vga_b_1;
+reg [7:0] 	s_vga_r_2;
+reg [7:0] 	s_vga_g_2;
+reg [7:0] 	s_vga_b_2;
+reg [7:0] 	s_vga_g_3 = 0;
+reg [7:0] 	s_vga_r_3 = 0;
+reg [7:0] 	s_vga_b_3 = 0;
+reg [7:0] 	s_vga_b_4 = 0;
+reg [7:0] 	s_vga_r_4 = 0;
+reg [7:0] 	s_vga_g_4 = 0;
+reg [7:0] 	s_vga_r_5 = 0;
+reg [7:0] 	s_vga_g_5 = 0;
+reg [7:0] 	s_vga_b_5 = 0;
+reg [7:0] 	s_vga_r_6 = 0;
+reg [7:0] 	s_vga_g_6 = 0;
+reg [7:0] 	s_vga_b_6 = 0;
+
 //=======================================================
 //  Structural coding
 //=======================================================
@@ -143,14 +186,29 @@ assign v_act_34 = v_count == v_active_34;
 assign new_image = v_count == 12'b0;
 
 //horizontal control signals
+
+//s_vga_g_3 <= 8'b0;
+//s_vga_r_3 <= 8'b0;
+//s_vga_b_3 <= 8'b0;
+//s_vga_b_4 <= 8'b0;
+//s_vga_r_4 <= 8'b0;
+//s_vga_g_4 <= 8'b0;
+//s_vga_r_5 <= 8'b0;
+//s_vga_g_5 <= 8'b0;
+//s_vga_b_5 <= 8'b0;
+//s_vga_r_6 <= 8'b0;
+//s_vga_g_6 <= 8'b0;
+//s_vga_b_6 <= 8'b0;
+
+
 always @ (posedge clk or negedge reset_n)
 	if (!reset_n)
 	begin
-    h_act_d   <=  1'b0;
+		h_act_d		<=  1'b0;
 		h_count		<=	12'b0;
-		pixel_x   <=  12'b0;
-		vga_hs_in		<=	1'b1;
-		h_act	    <=	1'b0;
+		pixel_x		<=  12'b0;
+		vga_hs_in	<=	1'b1;
+		h_act 		<=	1'b0;
 	end
 	else
 	begin

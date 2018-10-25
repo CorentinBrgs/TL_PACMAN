@@ -38,6 +38,10 @@ module vpg(
 	mode,
 	mode_change,
 	disp_color,
+	nios_clk,
+	nios_char_data_pos,
+	nios_char_wraddress_pos,
+	nios_char_wren_pos,
 	vpg_pclk,
 	vpg_de,
 	vpg_hs,
@@ -186,7 +190,6 @@ begin
 			{v_total, v_sync, v_start, v_end} <= {12'd931, 12'd2, 12'd30, 12'd930}; 
 			{v_active_14, v_active_24, v_active_34} <= {12'd255, 12'd480, 12'd705};
 		end
-		
 		
 		`MODE_1280x1024: begin //1280x1024@60   108MHZ (SXGA)
 			{h_total, h_sync, h_start, h_end} <= {12'd1687, 12'd111, 12'd357, 12'd1637}; 

@@ -61,7 +61,7 @@ ARCHITECTURE bdf_type OF character_generator IS
 
 	SIGNAL nios_char_data_char : STD_LOGIC_VECTOR (0 DOWNTO 0) := (OTHERS => '0');
 	SIGNAL nios_char_wradress_char : STD_LOGIC_VECTOR (9 DOWNTO 0) := (OTHERS => '0');
-	SIGNAL nios_char_wren_char : STD_LOGIC := '0';
+	SIGNAL nios_char_wren_char : STD_LOGIC := (OTHERS => '0');
 	
 	--control signals
 	SIGNAL ctrl_read_address : STD_LOGIC := '0';
@@ -120,18 +120,61 @@ BEGIN
 	);
 
 
-
-	vga_r <= "00000000";
-	vga_g <= "00000000";
-	vga_b <= "00000000";
 ------------------------------------------------------------------------
 --	PROCESSES
 ------------------------------------------------------------------------
-	--PROCESS(clk)
-	--BEGIN
-	--	IF (clk'EVENT AND clk='1') THEN	
-	--	END IF;
-	--END PROCESS ;
+	WRITE_READADDRESS: PROCESS(clk)
+		VARIABLE read_address : STD_LOGIC_VECTOR(8 DOWNTO 0) := (OTHERS => '0');
+	BEGIN
+		s_wren <= '0';
+
+		IF (clk'EVENT AND clk='1') THEN
+			IF(enable='1') THEN
+				read_address := STD_LOGIC_VECTOR(to_unsigned( 
+									359 - ((to_integer(unsigned(row_x)) / 60) + (to_integer(unsigned(line_y)) / 60)*24), 9
+								));
+				s_rdaddress <= read_address;
+				ctrl_read_address <= '1';
+			ELSE 
+				ctrl_read_address <= '0';
+			END IF;
+		END IF;
+
+	END PROCESS ;
+
+	WAIT_MEMORY_PROCEED: PROCESS(clk)
+	BEGIN
+		IF (clk'EVENT AND clk='1') THEN
+			IF (ctrl_read_address='1') THEN
+				ctrl_wait_memory <= '1';
+			ELSE
+				ctrl_wait_memory <= '0';
+			END IF;
+		END IF;
+	END PROCESS;
+
+	SEND_BACKGROUND: PROCESS(clk)
+		--VARIABLE bloc_rgb : STD_LOGIC_VECTOR(2 DOWNTO 0) := (OTHERS => '0');
+	BEGIN
+		s_wren <= '0';
+		IF (clk'EVENT AND clk='1' AND ctrl_wait_memory='1') THEN
+			vga_r <= (OTHERS => '0');
+			vga_g <= (OTHERS => '0');
+			vga_b <= (OTHERS => '0');
+				IF(enable='1') THEN
+					IF(memory_out(2) = '1') THEN
+						vga_r <= (OTHERS => '1'); 
+					END IF;
+					IF(memory_out(1) = '1') THEN
+						vga_g <= (OTHERS => '1'); 
+					END IF;
+					IF(memory_out(0) = '1') THEN
+						vga_b <= (OTHERS => '1'); 
+				END IF;
+			END IF;
+		END IF;
+	END PROCESS ;
+
 
 
 END bdf_type;

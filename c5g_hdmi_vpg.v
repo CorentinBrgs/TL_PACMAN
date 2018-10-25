@@ -191,6 +191,12 @@ wire        vpg_de, vpg_hs, vpg_vs;
 wire [23:0]	vpg_data;
 wire [31:0] position_table_data;
 
+
+//parallelizer outputs signals
+wire [11:0] paral_data_pos;
+wire [1:0] 	paral_wraddress_pos;
+wire 		paral_wren_pos;
+
 //=======================================================
 //  Sub-module
 //=======================================================
@@ -225,13 +231,19 @@ vpg	u_vpg (
 	.vpg_g(vpg_data[15:8]),
 	.vpg_b(vpg_data[7:0]), 
 
-	.nios_clk(nios_clk),
-	.nios_char_data_pos(nios_char_data_pos),
-	.nios_char_wraddress_pos(nios_char_wraddress_pos),
-	.nios_char_wren_pos(nios_char_wren_pos)
+	.nios_clk(CLOCK_50_B7A),
+	.nios_char_data_pos(paral_data_pos),
+	.nios_char_wraddress_pos(paral_wraddress_pos),
+	.nios_char_wren_pos(paral_wren_pos)
 );
-	
-	
+
+position_parallelizer u_position_parallelizer(
+	.clk(CLOCK_50_B7A),
+	.input_vector(position_table_data),
+	.data_pos(paral_data_pos),
+	.wraddress_pos(paral_wraddress_pos),
+	.wren_pos(paral_wren_pos)
+);
 	
 assign HDMI_TX_CLK = vpg_pclk;
 assign HDMI_TX_D   = vpg_data;
@@ -239,19 +251,12 @@ assign HDMI_TX_DE  = vpg_de;
 assign HDMI_TX_HS  = vpg_hs;
 assign HDMI_TX_VS  = vpg_vs;
 
-
-
-
-
 //=======================================================
 //  Structural coding
 //=======================================================
 
 //LED indication
 assign LEDR = ~vpg_mode; // leds are turn on for loopback mode		
-
-
-
 
 always@(posedge pll_1200k or negedge reset_n)
 begin
