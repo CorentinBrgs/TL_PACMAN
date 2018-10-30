@@ -42,6 +42,7 @@ module vpg(
 	nios_char_data_pos,
 	nios_char_wraddress_pos,
 	nios_char_wren_pos,
+	position_memory_updated,
 	vpg_pclk,
 	vpg_de,
 	vpg_hs,
@@ -62,6 +63,7 @@ input		  	 	 	nios_clk;
 input		[11:0]		nios_char_data_pos;
 input		[1:0]		nios_char_wraddress_pos;
 input			 		nios_char_wren_pos;
+input			position_memory_updated;
 
 output			    vpg_pclk;
 output			    vpg_de;
@@ -146,7 +148,8 @@ vga_generator u_vga_generator (
   .nios_clk(nios_clk),
   .nios_char_data_pos(nios_char_data_pos),
   .nios_char_wraddress_pos(nios_char_wraddress_pos),
-  .nios_char_wren_pos(nios_char_wren_pos)
+  .nios_char_wren_pos(nios_char_wren_pos),
+  .position_memory_updated(position_memory_updated)
 );
 
 

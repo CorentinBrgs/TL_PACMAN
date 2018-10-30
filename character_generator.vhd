@@ -25,25 +25,25 @@ LIBRARY work;
 ENTITY character_generator IS 
 	PORT
 	(
+		clk :  IN  STD_LOGIC;
+		nios_clk : IN STD_LOGIC;
 		row_x :  IN  STD_LOGIC_VECTOR(11 DOWNTO 0);
 		line_y :  IN  STD_LOGIC_VECTOR(11 DOWNTO 0);
 		position_x : IN STD_LOGIC_VECTOR(11 DOWNTO 0);
 		position_y : IN STD_LOGIC_VECTOR(11 DOWNTO 0);
-		nios_clk : IN STD_LOGIC;
-		nios_char_data_pos : IN STD_LOGIC_VECTOR (11 DOWNTO 0);
-		nios_char_wraddress_pos : IN STD_LOGIC_VECTOR(1 DOWNTO 0);
-		nios_char_wren_pos : IN STD_LOGIC;
+		orientation : IN STD_LOGIC_VECTOR(1 DOWNTO 0);
+		position_ready : IN STD_LOGIC;
+		enable : IN STD_LOGIC;
+		reset : IN STD_LOGIC;
+		refresh_image : IN STD_LOGIC;
+
 		--nios_char_data_char : IN STD_LOGIC_VECTOR (0 DOWNTO 0);
 		--nios_char_wradress_char : IN STD_LOGIC_VECTOR(9 DOWNTO 0);
 		--nios_char_wren_char : IN STD_LOGIC;
-		enable : IN STD_LOGIC;
-		reset : IN STD_LOGIC;
-		clk :  IN  STD_LOGIC;
+
 		vga_r :  OUT  STD_LOGIC_VECTOR(7 DOWNTO 0);
 		vga_g :  OUT  STD_LOGIC_VECTOR(7 DOWNTO 0);
-		vga_b :  OUT  STD_LOGIC_VECTOR(7 DOWNTO 0);
-
-		refresh_image : IN STD_LOGIC
+		vga_b :  OUT  STD_LOGIC_VECTOR(7 DOWNTO 0)
 	);
 END character_generator;
 
@@ -54,8 +54,6 @@ END character_generator;
 
 ARCHITECTURE bdf_type OF character_generator IS 
 	
-	SIGNAL s_rdaddress_pos : STD_LOGIC_VECTOR (1 DOWNTO 0) := (OTHERS => '0');
-	SIGNAL s_memory_out_pos : STD_LOGIC_VECTOR (11 DOWNTO 0) := (OTHERS => '0');
 	SIGNAL s_rdaddress_char : STD_LOGIC_VECTOR (9 DOWNTO 0) := (OTHERS => '0');
 	SIGNAL s_memory_out_char : STD_LOGIC_VECTOR (0 DOWNTO 0) := (OTHERS => '0');
 
@@ -63,25 +61,7 @@ ARCHITECTURE bdf_type OF character_generator IS
 	SIGNAL nios_char_wradress_char : STD_LOGIC_VECTOR (9 DOWNTO 0) := (OTHERS => '0');
 	SIGNAL nios_char_wren_char : STD_LOGIC := '0';
 	
-	--control signals
-	SIGNAL ctrl_read_address : STD_LOGIC := '0';
-	SIGNAL ctrl_wait_memory : STD_LOGIC := '0';
-
 	--Components
-
-	COMPONENT position_memory
-		PORT
-		(
-			data		: IN STD_LOGIC_VECTOR (11 DOWNTO 0);
-			rdaddress	: IN STD_LOGIC_VECTOR (1 DOWNTO 0);
-			rdclock		: IN STD_LOGIC ;
-			wraddress	: IN STD_LOGIC_VECTOR (1 DOWNTO 0);
-			wrclock		: IN STD_LOGIC ;
-			wren		: IN STD_LOGIC ;
-			q			: OUT STD_LOGIC_VECTOR (11 DOWNTO 0)
-		);
-	END COMPONENT;
-
 	COMPONENT character_memory
 	PORT
 		(
@@ -95,19 +75,13 @@ ARCHITECTURE bdf_type OF character_generator IS
 		);
 	END COMPONENT;
 
-BEGIN 
-	--Components instantiation
-	position_memory_inst : position_memory 
-	PORT MAP (
-		data	 	=> nios_char_data_pos,
-		rdaddress	=> s_rdaddress_pos,
-		rdclock	 	=> clk,
-		wraddress	=> nios_char_wraddress_pos,
-		wrclock	 	=> nios_clk,
-		wren	 	=> nios_char_wren_pos,
-		q	 		=> s_memory_out_pos
-	);
+	SIGNAL state : INTEGER RANGE 0 TO 4 := 0;	--0 : waiting for new position data
+												--1 : send position_x
+												--2 : send position_y
+												--3 : send orientation
+												--4 : end
 
+BEGIN 
 	character_memory_inst : character_memory 
 	PORT MAP (
 		data	 	=> nios_char_data_char,
@@ -120,18 +94,53 @@ BEGIN
 	);
 
 
-
-	vga_r <= "00000000";
-	vga_g <= "00000000";
-	vga_b <= "00000000";
 ------------------------------------------------------------------------
 --	PROCESSES
 ------------------------------------------------------------------------
-	--PROCESS(clk)
-	--BEGIN
-	--	IF (clk'EVENT AND clk='1') THEN	
-	--	END IF;
-	--END PROCESS ;
+	
+	PROCESS(clk)
+		VARIABLE read_address : INTEGER RANGE 0 TO 575 := 0;
+		VARIABLE i_row_x : INTEGER RANGE 0 TO 1339 := 0;
+		VARIABLE i_line_y : INTEGER RANGE 0 TO 899 := 0;
+		VARIABLE i_position_x : INTEGER RANGE 0 TO 1339 := 0;
+		VARIABLE i_position_y : INTEGER RANGE 0 TO 899 := 0;
+		VARIABLE display_character : BOOLEAN := FALSE;
+
+	BEGIN
+		i_row_x := to_integer(unsigned(row_x));
+		i_line_y := to_integer(unsigned(line_y));
+		i_position_x := to_integer(unsigned(position_x));
+		i_position_y := to_integer(unsigned(position_y));
+
+		display_character := 	(i_row_x - i_position_x >= 6) AND (i_row_x - i_position_x < 54)
+		 						AND 
+		 						(i_line_y - i_position_y >= 6) AND (i_line_y - i_position_y < 54);
+
+		IF (clk'EVENT AND clk='1') THEN
+			IF(display_character) THEN
+				read_address := (i_row_x - i_position_x - 6) /2 + ((i_line_y - i_position_y - 6) /2) * 12;
+				s_rdaddress_char <= STD_LOGIC_VECTOR(to_unsigned(575 - read_address, 10));
+			
+
+
+			ELSE 
+			CASE state IS 
+				WHEN 0 =>
+
+
+		IF (clk'EVENT AND clk='1') THEN
+			vga_r <= (OTHERS => '0');
+			vga_g <= (OTHERS => '0');
+			vga_b <= (OTHERS => '0');
+			IF(enable='1') THEN
+				IF(s_memory_out_char = "1") THEN
+					vga_r <= (OTHERS => '1');
+					vga_g <= (OTHERS => '1');
+					vga_b <= (OTHERS => '0');
+				END IF;
+			END IF;
+		END IF;
+	END PROCESS ;
 
 
 END bdf_type;

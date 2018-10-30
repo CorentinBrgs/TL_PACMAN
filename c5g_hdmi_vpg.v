@@ -196,6 +196,7 @@ wire [31:0] position_table_data;
 wire [11:0] paral_data_pos;
 wire [1:0] 	paral_wraddress_pos;
 wire 		paral_wren_pos;
+wire position_memory_updated;
 
 //=======================================================
 //  Sub-module
@@ -234,7 +235,8 @@ vpg	u_vpg (
 	.nios_clk(CLOCK_50_B7A),
 	.nios_char_data_pos(paral_data_pos),
 	.nios_char_wraddress_pos(paral_wraddress_pos),
-	.nios_char_wren_pos(paral_wren_pos)
+	.nios_char_wren_pos(paral_wren_pos),
+  .position_memory_updated(position_memory_updated)
 );
 
 position_parallelizer u_position_parallelizer(
@@ -242,7 +244,8 @@ position_parallelizer u_position_parallelizer(
 	.input_vector(position_table_data),
 	.data_pos(paral_data_pos),
 	.wraddress_pos(paral_wraddress_pos),
-	.wren_pos(paral_wren_pos)
+	.wren_pos(paral_wren_pos),
+  .position_memory_updated(position_memory_updated)
 );
 	
 assign HDMI_TX_CLK = vpg_pclk;

@@ -29,7 +29,8 @@ ENTITY position_parallelizer IS
 		input_vector : IN STD_LOGIC_VECTOR(31 DOWNTO 0);
 		data_pos : OUT STD_LOGIC_VECTOR(11 DOWNTO 0);
 		wraddress_pos : OUT STD_LOGIC_VECTOR(1 DOWNTO 0);
-		wren_pos : OUT STD_LOGIC
+		wren_pos : OUT STD_LOGIC;
+		position_memory_updated : OUT STD_LOGIC
 	);
 END position_parallelizer;
 
@@ -59,11 +60,10 @@ ARCHITECTURE arch0 OF position_parallelizer IS
 ------------------------------------------------------------------------
 	PROCESS(clk)
 	BEGIN
-		r_input_vector <= input_vector;
-
 		IF(clk'EVENT AND clk='1') THEN 
-
-			IF ((r_input_vector /= input_vector) AND (input_vector /= "000000000000")) THEN
+    	r_input_vector <= input_vector;
+    	position_memory_updated <= '0';
+			IF ((r_input_vector /= input_vector) AND (input_vector /= "000000000000") AND (state=0) ) THEN
 				data_x <= input_vector(31 DOWNTO 18);
 				data_y <= input_vector(17 DOWNTO 4);
 				data_orientation <= input_vector(3 DOWNTO 0);
@@ -92,6 +92,7 @@ ARCHITECTURE arch0 OF position_parallelizer IS
 						wraddress_pos <= (OTHERS => '0') ;
 						wren_pos <= '0';
 						state <= 0;
+						position_memory_updated <= '1';
 				END CASE;
 			END IF;
 		END IF;
