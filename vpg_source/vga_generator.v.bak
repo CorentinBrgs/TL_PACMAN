@@ -268,15 +268,11 @@ always@(posedge clk or negedge reset_n)
   		v_act_d	  <=	v_act;
 		  
 		  if (v_max)
-		  begin
 		    v_count	<=	12'b0;
 		    new_image <= 1'b1;
-		  end
 		  else
-		  begin
 		    v_count	<=	v_count + 12'b1;
 		    new_image <= 1'b0;
-		  end
 		  if (vs_end && !v_max)
 		    vga_vs_in	<=	1'b1;
 		  else

@@ -63,7 +63,7 @@ ARCHITECTURE bdf_type OF character_generator IS
 	
 	SIGNAL s_position_x : STD_LOGIC_VECTOR(11 DOWNTO 0) := "000000111100";
 	SIGNAL s_position_y : STD_LOGIC_VECTOR(11 DOWNTO 0) := "000001111000";
-	SIGNAL s_orientation : STD_LOGIC_VECTOR(1 DOWNTO 0) := "10";
+	SIGNAL s_orientation : STD_LOGIC_VECTOR(1 DOWNTO 0) := "01";
 	SIGNAL s_position_ready : STD_LOGIC := '1';
 
 	--Components
@@ -109,15 +109,16 @@ ARCHITECTURE bdf_type OF character_generator IS
 		CASE orientation IS 
 			WHEN "00" =>
 				read_address := (i_row_x - i_position_x - 6) /2 + ((i_line_y - i_position_y - 6) /2) * 24;
-			WHEN "01" =>
-				read_address := ((i_row_x - i_position_x - 6) /2)*24 + ((i_line_y - i_position_y - 6) /2);
-			WHEN "10" =>
-				read_address := (23 - (i_row_x - i_position_x - 6)/2) + ((i_line_y - i_position_y - 6) /2) * 24;
-			WHEN "11" =>
-				read_address := ((i_row_x - i_position_x - 6) /2)*24 + (23 - (i_line_y - i_position_y - 6)/2);
+			WHEN OTHERS =>
+				read_address := 575 - ((i_row_x - i_position_x - 6) /2 + ((i_line_y - i_position_y - 6) /2) * 24);
 		END CASE;
 		RETURN std_logic_vector(to_unsigned(read_address, 10));
 	END;
+
+
+
+	
+	
 
 BEGIN 
 	character_memory_inst : character_memory 
@@ -160,8 +161,9 @@ BEGIN
 			CASE state IS 
 				WHEN 0 => --sending address to memory
 					IF(display_character) THEN
-						s_rdaddress_char <= compute_char_address(row_x, line_y, s_position_x, s_position_y, s_orientation);
-						state <= 1;
+						read_address := (i_row_x - i_position_x - 6) /2 + ((i_line_y - i_position_y - 6) /2) * 24;
+						s_rdaddress_char <= STD_LOGIC_VECTOR(to_unsigned(read_address, 10));
+						state <= 2;
 					ELSE 
 						vga_r <= (OTHERS => '0');
 						vga_g <= (OTHERS => '0');
@@ -169,14 +171,16 @@ BEGIN
 					END IF;
 				WHEN 1 => --wait memory proceed
 					IF(display_character) THEN
-						s_rdaddress_char <= compute_char_address(row_x, line_y, position_x, position_y, s_orientation);
+						read_address := (i_row_x - i_position_x - 6) /2 + ((i_line_y - i_position_y - 6) /2) * 24;
+						s_rdaddress_char <= STD_LOGIC_VECTOR(to_unsigned(read_address, 10));
 						state <= 2;
 					ELSE 
 						state <= 0;
 					END IF;
-				WHEN 2 => --state 2 : normal procedure
+				WHEN OTHERS => --state 2 : normal procedure
 					IF(display_character) THEN
-						s_rdaddress_char <= compute_char_address(row_x, line_y, position_x, position_y, s_orientation);
+						read_address := (i_row_x - i_position_x - 6) /2 + ((i_line_y - i_position_y - 6) /2) * 24;
+						s_rdaddress_char <= STD_LOGIC_VECTOR(to_unsigned(read_address, 10));
 						IF(s_memory_out_char = "1") THEN
 							vga_r <= (OTHERS => '1');
 							vga_g <= (OTHERS => '1');
@@ -187,50 +191,16 @@ BEGIN
 							vga_b <= (OTHERS => '0');
 						END IF;
 					ELSE 
+						state <= 0;
 						IF(s_memory_out_char = "1") THEN
 							vga_r <= (OTHERS => '1');
 							vga_g <= (OTHERS => '1');
 							vga_b <= (OTHERS => '0');
 						END IF;
-						state <= 3;
 					END IF;
-				WHEN OTHERS => --state 3 : finish display
-					IF (s_memory_out_char = "1") THEN
-						vga_r <= (OTHERS => '1');
-						vga_g <= (OTHERS => '1');
-						vga_b <= (OTHERS => '0');
-					ELSE 
-						vga_r <= (OTHERS => '0');
-						vga_g <= (OTHERS => '0');
-						vga_b <= (OTHERS => '0');
-					END IF;
-					state <= 0;
 			END CASE;
 		END IF;
 	END PROCESS ;
 
-
-
-	PROCESS(refresh_image)
-		VARIABLE counter : INTEGER RANGE 0 TO 61 := 0;
-	BEGIN
-		IF(refresh_image'EVENT AND refresh_image = '1') THEN
-			IF (counter > 60) THEN 
-				CASE s_orientation IS 
-					WHEN "00" =>
-						s_orientation <= "01";
-					WHEN "01" =>
-						s_orientation <= "10";
-					WHEN "10" =>
-						s_orientation <= "11";
-					WHEN "11" =>
-						s_orientation <= "00";
-				END CASE;
-				counter := 0;
-			ELSE 
-				counter := counter +1;
-			END IF;
-		END IF;
-	END PROCESS;
 
 END bdf_type;

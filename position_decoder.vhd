@@ -48,17 +48,13 @@ ARCHITECTURE bdf_type OF position_decoder IS
 	
 	SIGNAL s_rdaddress_pos : STD_LOGIC_VECTOR (1 DOWNTO 0) := (OTHERS => '0');
 	SIGNAL s_memory_out_pos : STD_LOGIC_VECTOR (11 DOWNTO 0) := (OTHERS => '0');
-	
-	--control signals
-	SIGNAL ctrl_read_address : STD_LOGIC := '0';
-	SIGNAL ctrl_wait_memory : STD_LOGIC := '0';
-  
+
+	--control signal  
 	SIGNAL state : INTEGER RANGE 0 TO 4 := 0;	--0 : waiting for new position data
 												--1 : send position_x
 												--2 : send position_y
 												--3 : send orientation
 												--4 : end
-
 	--Components
 	COMPONENT position_memory
 		PORT

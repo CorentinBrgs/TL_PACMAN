@@ -73,6 +73,61 @@ BEGIN
 		q => memory_out
 	);
 
+--	MIRE : PROCESS(clk) --this process is used to see if the display is centered, with one red square 10*10px in each corner of the screen
+--	BEGIN
+--		s_wren <= '0';
+--		IF (clk'EVENT AND clk='1') THEN
+--			IF(enable='1') THEN
+--				vga_r <= (OTHERS => '1');
+--				vga_g <= (OTHERS => '1');
+--				vga_b <= (OTHERS => '1');
+--				IF (
+--						(
+--						to_integer(unsigned(row_x)) <= 11 
+--						OR 
+--						to_integer(unsigned(row_x)) > 1430 
+--						)
+--					AND (
+--						to_integer(unsigned(line_y)) <= 11 
+--						OR 
+--						to_integer(unsigned(line_y)) > 890 
+--						)
+--					) THEN
+--					vga_g <= (OTHERS => '0');
+--					vga_b <= (OTHERS => '0');
+--				END IF; 
+--			ELSE
+--				vga_r <= (OTHERS => '0');
+--				vga_g <= (OTHERS => '1');
+--				vga_b <= (OTHERS => '1');
+--			END IF ;
+--
+--			IF(reset='1') THEN
+--
+--			END IF;
+--		END IF;
+--	END PROCESS ;
+
+	--MIRE2 : PROCESS(clk) --this process is used to see if the row_x and line_y signals are ok.
+	--BEGIN
+	--	s_wren <= '0';
+	--	IF (clk'EVENT AND clk='1') THEN
+	--		IF(enable='1') THEN
+	--			vga_r <= std_logic_vector (to_unsigned (to_integer(unsigned(row_x)) mod 256, 8));
+	--			vga_g <= std_logic_vector (to_unsigned (to_integer(unsigned(line_y)) mod 256, 8));
+	--			vga_b <= (OTHERS => '0');
+	--		ELSE
+	--			vga_r <= (OTHERS => '0');
+	--			vga_g <= (OTHERS => '0');
+	--			vga_b <= (OTHERS => '1');
+	--		END IF ;
+
+	--		IF(reset='1') THEN
+
+	--		END IF;
+	--	END IF;
+	--END PROCESS ;
+
 	WRITE_READADDRESS: PROCESS(clk)
 		VARIABLE read_address : STD_LOGIC_VECTOR(8 DOWNTO 0) := (OTHERS => '0');
 	BEGIN
@@ -81,7 +136,7 @@ BEGIN
 		IF (clk'EVENT AND clk='1') THEN
 			IF(enable='1') THEN
 				read_address := STD_LOGIC_VECTOR(to_unsigned( 
-									((to_integer(unsigned(row_x)) / 60) + (to_integer(unsigned(line_y)) / 60)*24), 9
+									359 - ((to_integer(unsigned(row_x)) / 60) + (to_integer(unsigned(line_y)) / 60)*24), 9
 								));
 				s_rdaddress <= read_address;
 				ctrl_read_address <= '1';
@@ -124,5 +179,7 @@ BEGIN
 			END IF;
 		END IF;
 	END PROCESS ;
+
+
 
 END bdf_type;
