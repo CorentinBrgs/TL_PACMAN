@@ -85,6 +85,8 @@ BEGIN
 -- to be deleted when going to the final ! :D
 position_x <= STD_LOGIC_VECTOR(TO_UNSIGNED(60,12));
 position_y <= STD_LOGIC_VECTOR(TO_UNSIGNED(60,12));
+orientation <= "00" ;
+position_ready <= '1';
 
 ------------------------------------------------------------------------
 --	PROCESSES

@@ -25,17 +25,17 @@ LIBRARY work;
 ENTITY character_generator IS 
 	PORT
 	(
-		clk :  IN  STD_LOGIC;
-		nios_clk : IN STD_LOGIC;
-		row_x :  IN  STD_LOGIC_VECTOR(11 DOWNTO 0);
-		line_y :  IN  STD_LOGIC_VECTOR(11 DOWNTO 0);
-		position_x : IN STD_LOGIC_VECTOR(11 DOWNTO 0);
-		position_y : IN STD_LOGIC_VECTOR(11 DOWNTO 0);
-		orientation : IN STD_LOGIC_VECTOR(1 DOWNTO 0);
-		position_ready : IN STD_LOGIC;
-		enable : IN STD_LOGIC;
-		reset : IN STD_LOGIC;
-		refresh_image : IN STD_LOGIC;
+		clk 			: IN  STD_LOGIC;
+		nios_clk 		: IN STD_LOGIC;
+		row_x 			: IN  STD_LOGIC_VECTOR(11 DOWNTO 0);
+		line_y 			: IN  STD_LOGIC_VECTOR(11 DOWNTO 0);
+		position_x 		: IN STD_LOGIC_VECTOR(11 DOWNTO 0);
+		position_y 		: IN STD_LOGIC_VECTOR(11 DOWNTO 0);
+		orientation 	: IN STD_LOGIC_VECTOR(1 DOWNTO 0);
+		position_ready 	: IN STD_LOGIC;
+		enable 			: IN STD_LOGIC;
+		reset 			: IN STD_LOGIC;
+		refresh_image 	: IN STD_LOGIC;
 
 		--nios_char_data_char : IN STD_LOGIC_VECTOR (0 DOWNTO 0);
 		--nios_char_wradress_char : IN STD_LOGIC_VECTOR(9 DOWNTO 0);
@@ -61,10 +61,10 @@ ARCHITECTURE bdf_type OF character_generator IS
 	SIGNAL nios_char_wradress_char : STD_LOGIC_VECTOR (9 DOWNTO 0) := (OTHERS => '0');
 	SIGNAL nios_char_wren_char : STD_LOGIC := '0';
 	
-	SIGNAL s_position_x : STD_LOGIC_VECTOR(11 DOWNTO 0) := "000000111100";
-	SIGNAL s_position_y : STD_LOGIC_VECTOR(11 DOWNTO 0) := "000001111000";
+	--SIGNAL s_position_x : STD_LOGIC_VECTOR(11 DOWNTO 0) := "000000111100";
+	--SIGNAL s_position_y : STD_LOGIC_VECTOR(11 DOWNTO 0) := "000001111000";
 	SIGNAL s_orientation : STD_LOGIC_VECTOR(1 DOWNTO 0) := "10";
-	SIGNAL s_position_ready : STD_LOGIC := '1';
+	--SIGNAL s_position_ready : STD_LOGIC := '1';
 
 	--Components
 	COMPONENT character_memory
@@ -87,19 +87,19 @@ ARCHITECTURE bdf_type OF character_generator IS
 												--4 : end
 
 	FUNCTION compute_char_address (
-		row_x :  IN  STD_LOGIC_VECTOR(11 DOWNTO 0);
-		line_y :  IN  STD_LOGIC_VECTOR(11 DOWNTO 0);
-		position_x : IN STD_LOGIC_VECTOR(11 DOWNTO 0);
-		position_y : IN STD_LOGIC_VECTOR(11 DOWNTO 0);
+		row_x 		: IN STD_LOGIC_VECTOR(11 DOWNTO 0);
+		line_y 		: IN STD_LOGIC_VECTOR(11 DOWNTO 0);
+		position_x 	: IN STD_LOGIC_VECTOR(11 DOWNTO 0);
+		position_y 	: IN STD_LOGIC_VECTOR(11 DOWNTO 0);
 		orientation : IN STD_LOGIC_VECTOR(1 DOWNTO 0)
 	)
 		RETURN STD_LOGIC_VECTOR IS 
 
-		VARIABLE read_address : INTEGER RANGE 0 TO 575 := 0;
-		VARIABLE i_row_x : INTEGER RANGE 0 TO 1339 := 0;
-		VARIABLE i_line_y : INTEGER RANGE 0 TO 899 := 0;
-		VARIABLE i_position_x : INTEGER RANGE 0 TO 1339 := 0;
-		VARIABLE i_position_y : INTEGER RANGE 0 TO 899 := 0;
+		VARIABLE read_address  	: INTEGER RANGE 0 TO 575 := 0;
+		VARIABLE i_row_x  		: INTEGER RANGE 0 TO 1339 := 0;
+		VARIABLE i_line_y  		: INTEGER RANGE 0 TO 899 := 0;
+		VARIABLE i_position_x  	: INTEGER RANGE 0 TO 1339 := 0;
+		VARIABLE i_position_y  	: INTEGER RANGE 0 TO 899 := 0;
 
 		BEGIN
 			i_row_x := to_integer(unsigned(row_x));
@@ -154,13 +154,13 @@ BEGIN
 		 						AND 
 		 						(i_line_y - i_position_y >= 6) AND (i_line_y - i_position_y < 54)
 		 						AND 
-		 						(s_position_ready = '1');
+		 						(position_ready = '1');
 
 		IF (clk'EVENT AND clk='1') THEN
 			CASE state IS 
 				WHEN 0 => --sending address to memory
 					IF(display_character) THEN
-						s_rdaddress_char <= compute_char_address(row_x, line_y, s_position_x, s_position_y, s_orientation);
+						s_rdaddress_char <= compute_char_address(row_x, line_y, position_x, position_y, s_orientation);
 						state <= 1;
 					ELSE 
 						vga_r <= (OTHERS => '0');
@@ -168,12 +168,8 @@ BEGIN
 						vga_b <= (OTHERS => '0');
 					END IF;
 				WHEN 1 => --wait memory proceed
-					IF(display_character) THEN
 						s_rdaddress_char <= compute_char_address(row_x, line_y, position_x, position_y, s_orientation);
 						state <= 2;
-					ELSE 
-						state <= 0;
-					END IF;
 				WHEN 2 => --state 2 : normal procedure
 					IF(display_character) THEN
 						s_rdaddress_char <= compute_char_address(row_x, line_y, position_x, position_y, s_orientation);
@@ -190,6 +186,10 @@ BEGIN
 						IF(s_memory_out_char = "1") THEN
 							vga_r <= (OTHERS => '1');
 							vga_g <= (OTHERS => '1');
+							vga_b <= (OTHERS => '0');
+						ELSE 
+							vga_r <= (OTHERS => '0');
+							vga_g <= (OTHERS => '0');
 							vga_b <= (OTHERS => '0');
 						END IF;
 						state <= 3;
