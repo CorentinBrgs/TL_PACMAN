@@ -81,56 +81,44 @@ BEGIN
 		wren	 	=> nios_char_wren_pos,
 		q	 		=> s_memory_out_pos
 	);
-	
+
+
+
 -- to be deleted when going to the final ! :D
-position_x <= STD_LOGIC_VECTOR(TO_UNSIGNED(60,12));
-position_y <= STD_LOGIC_VECTOR(TO_UNSIGNED(60,12));
-orientation <= "00" ;
-position_ready <= '1';
+	--position_x <= STD_LOGIC_VECTOR(TO_UNSIGNED(60,12));
+	--position_y <= STD_LOGIC_VECTOR(TO_UNSIGNED(60,12));
+	--orientation <= "00" ;
+	--position_ready <= '1';
 
 ------------------------------------------------------------------------
 --	PROCESSES
 ------------------------------------------------------------------------
-	--PROCESS(clk)
-	--BEGIN
-	--	r_input_vector <= input_vector;
-
-	--	IF(clk'EVENT AND clk='1') THEN 
-
-	--		IF ((r_input_vector /= input_vector) AND (input_vector /= "000000000000")) THEN
-	--			data_x <= input_vector(31 DOWNTO 18);
-	--			data_y <= input_vector(17 DOWNTO 4);
-	--			data_orientation <= input_vector(3 DOWNTO 0);
-	--			state <= 1;
-	--		END IF;
-
-	--		IF (state > 0) THEN
-	--			data_pos <= (OTHERS => '0');
-	--			CASE state is
-	--	    		WHEN 1 => --send position_x
-	--					data_pos <= data_x (11 DOWNTO 0);
-	--					wraddress_pos <= data_x (13 DOWNTO 12);
-	--					wren_pos <= '1';
-	--					state <= state + 1;
-	--				WHEN 2 => --send position_y
-	--					data_pos <= data_y (11 DOWNTO 0);
-	--					wraddress_pos <= data_y (13 DOWNTO 12);
-	--					wren_pos <= '1';
-	--					state <= state + 1; 
-	--				WHEN 3 => --send orientation
-	--					data_pos(1 DOWNTO 0) <= data_orientation (1 DOWNTO 0) ;
-	--					wraddress_pos <= data_orientation (3 DOWNTO 2);
-	--					wren_pos <= '1';
-	--					state <= state + 1;
-	--				WHEN OTHERS =>
-	--					wraddress_pos <= (OTHERS => '0') ;
-	--					wren_pos <= '0';
-	--					state <= 0;
-	--			END CASE;
-	--		END IF;
-	--	END IF;
-	--END PROCESS;
-
-
-
+	
+	PROCESS(clk)
+	BEGIN
+		IF (clk'EVENT AND clk='1') THEN
+			CASE state IS 
+				WHEN 0 => --sending address to memory
+					--IF(position_memory_updated = '1') THEN
+						s_rdaddress_pos <= "00";
+						state <= 1;
+						--position_ready <= '0'; 
+					--END IF;
+				WHEN 1 => 
+					s_rdaddress_pos <= "01";
+					state <= 2;
+				WHEN 2 => 
+					s_rdaddress_pos <= "10";
+					position_x <= s_memory_out_pos;
+					state <= 3;
+				WHEN 3 => 
+					position_y <= s_memory_out_pos;
+					state <= 4;
+				WHEN OTHERS =>
+					orientation <= s_memory_out_pos(1 DOWNTO 0);
+					position_ready <= '1';
+					state <= 0;
+			END CASE;
+		END IF;
+	END PROCESS;
 END bdf_type;
