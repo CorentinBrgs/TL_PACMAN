@@ -49,7 +49,7 @@ module HDMI_QSYS_sysid_qsys (
 
   wire    [ 31: 0] readdata;
   //control_slave, which is an e_avalon_slave
-  assign readdata = address ? 1540469412 : 0;
+  assign readdata = address ? 1541682873 : 0;
 
 endmodule
 

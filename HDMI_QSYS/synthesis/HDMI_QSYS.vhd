@@ -14,6 +14,7 @@ entity HDMI_QSYS is
 		i2c_sda_external_connection_export       : inout std_logic                     := '0'; --       i2c_sda_external_connection.export
 		led_external_connection_export           : out   std_logic_vector(7 downto 0);         --           led_external_connection.export
 		position_table_export                    : out   std_logic_vector(31 downto 0);        --                    position_table.export
+		refresh_image_export                     : in    std_logic                     := '0'; --                     refresh_image.export
 		reset_reset_n                            : in    std_logic                     := '0'  --                             reset.reset_n
 	);
 end entity HDMI_QSYS;
@@ -158,6 +159,16 @@ architecture rtl of HDMI_QSYS is
 		);
 	end component HDMI_QSYS_position;
 
+	component HDMI_QSYS_refresh is
+		port (
+			clk      : in  std_logic                     := 'X';             -- clk
+			reset_n  : in  std_logic                     := 'X';             -- reset_n
+			address  : in  std_logic_vector(1 downto 0)  := (others => 'X'); -- address
+			readdata : out std_logic_vector(31 downto 0);                    -- readdata
+			in_port  : in  std_logic                     := 'X'              -- export
+		);
+	end component HDMI_QSYS_refresh;
+
 	component HDMI_QSYS_sysid_qsys is
 		port (
 			clock    : in  std_logic                     := 'X'; -- clk
@@ -247,6 +258,8 @@ architecture rtl of HDMI_QSYS is
 			position_s1_readdata                         : in  std_logic_vector(31 downto 0) := (others => 'X'); -- readdata
 			position_s1_writedata                        : out std_logic_vector(31 downto 0);                    -- writedata
 			position_s1_chipselect                       : out std_logic;                                        -- chipselect
+			refresh_s1_address                           : out std_logic_vector(1 downto 0);                     -- address
+			refresh_s1_readdata                          : in  std_logic_vector(31 downto 0) := (others => 'X'); -- readdata
 			sysid_qsys_control_slave_address             : out std_logic_vector(0 downto 0);                     -- address
 			sysid_qsys_control_slave_readdata            : in  std_logic_vector(31 downto 0) := (others => 'X'); -- readdata
 			timer_s1_address                             : out std_logic_vector(2 downto 0);                     -- address
@@ -469,6 +482,8 @@ architecture rtl of HDMI_QSYS is
 	signal mm_interconnect_0_position_s1_address                         : std_logic_vector(1 downto 0);  -- mm_interconnect_0:position_s1_address -> position:address
 	signal mm_interconnect_0_position_s1_write                           : std_logic;                     -- mm_interconnect_0:position_s1_write -> mm_interconnect_0_position_s1_write:in
 	signal mm_interconnect_0_position_s1_writedata                       : std_logic_vector(31 downto 0); -- mm_interconnect_0:position_s1_writedata -> position:writedata
+	signal mm_interconnect_0_refresh_s1_readdata                         : std_logic_vector(31 downto 0); -- refresh:readdata -> mm_interconnect_0:refresh_s1_readdata
+	signal mm_interconnect_0_refresh_s1_address                          : std_logic_vector(1 downto 0);  -- mm_interconnect_0:refresh_s1_address -> refresh:address
 	signal irq_mapper_receiver0_irq                                      : std_logic;                     -- timer:irq -> irq_mapper:receiver0_irq
 	signal irq_mapper_receiver1_irq                                      : std_logic;                     -- jtag_uart:av_irq -> irq_mapper:receiver1_irq
 	signal irq_mapper_receiver2_irq                                      : std_logic;                     -- hdmi_tx_int_n:irq -> irq_mapper:receiver2_irq
@@ -486,7 +501,7 @@ architecture rtl of HDMI_QSYS is
 	signal mm_interconnect_0_hdmi_tx_int_n_s1_write_ports_inv            : std_logic;                     -- mm_interconnect_0_hdmi_tx_int_n_s1_write:inv -> hdmi_tx_int_n:write_n
 	signal mm_interconnect_0_position_s1_write_ports_inv                 : std_logic;                     -- mm_interconnect_0_position_s1_write:inv -> position:write_n
 	signal rst_controller_reset_out_reset_ports_inv                      : std_logic;                     -- rst_controller_reset_out_reset:inv -> [hdmi_tx_int_n:reset_n, i2c_scl:reset_n, i2c_sda:reset_n, jtag_uart:rst_n, led:reset_n, nios2_qsys:reset_n, sysid_qsys:reset_n, timer:reset_n]
-	signal rst_controller_001_reset_out_reset_ports_inv                  : std_logic;                     -- rst_controller_001_reset_out_reset:inv -> position:reset_n
+	signal rst_controller_001_reset_out_reset_ports_inv                  : std_logic;                     -- rst_controller_001_reset_out_reset:inv -> [position:reset_n, refresh:reset_n]
 
 begin
 
@@ -620,6 +635,15 @@ begin
 			out_port   => position_table_export                          -- external_connection.export
 		);
 
+	refresh : component HDMI_QSYS_refresh
+		port map (
+			clk      => clk_clk,                                      --                 clk.clk
+			reset_n  => rst_controller_001_reset_out_reset_ports_inv, --               reset.reset_n
+			address  => mm_interconnect_0_refresh_s1_address,         --                  s1.address
+			readdata => mm_interconnect_0_refresh_s1_readdata,        --                    .readdata
+			in_port  => refresh_image_export                          -- external_connection.export
+		);
+
 	sysid_qsys : component HDMI_QSYS_sysid_qsys
 		port map (
 			clock    => pll_sys_outclk0_clk,                                   --           clk.clk
@@ -707,6 +731,8 @@ begin
 			position_s1_readdata                         => mm_interconnect_0_position_s1_readdata,                    --                                       .readdata
 			position_s1_writedata                        => mm_interconnect_0_position_s1_writedata,                   --                                       .writedata
 			position_s1_chipselect                       => mm_interconnect_0_position_s1_chipselect,                  --                                       .chipselect
+			refresh_s1_address                           => mm_interconnect_0_refresh_s1_address,                      --                             refresh_s1.address
+			refresh_s1_readdata                          => mm_interconnect_0_refresh_s1_readdata,                     --                                       .readdata
 			sysid_qsys_control_slave_address             => mm_interconnect_0_sysid_qsys_control_slave_address,        --               sysid_qsys_control_slave.address
 			sysid_qsys_control_slave_readdata            => mm_interconnect_0_sysid_qsys_control_slave_readdata,       --                                       .readdata
 			timer_s1_address                             => mm_interconnect_0_timer_s1_address,                        --                               timer_s1.address

@@ -6,6 +6,7 @@
 			i2c_sda_external_connection_export       : inout std_logic                     := 'X'; -- export
 			led_external_connection_export           : out   std_logic_vector(7 downto 0);         -- export
 			position_table_export                    : out   std_logic_vector(31 downto 0);        -- export
+			refresh_image_export                     : in    std_logic                     := 'X'; -- export
 			reset_reset_n                            : in    std_logic                     := 'X'  -- reset_n
 		);
 	end component HDMI_QSYS;

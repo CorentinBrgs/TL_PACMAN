@@ -189,21 +189,23 @@ wire [3:0]	vpg_disp_mode;
 wire        vpg_pclk;
 wire        vpg_de, vpg_hs, vpg_vs;
 wire [23:0]	vpg_data;
+
 wire [31:0] position_table_data;
+wire        refresh_image;
 
 
 //parallelizer outputs signals
 wire [11:0] paral_data_pos;
 wire [1:0] 	paral_wraddress_pos;
 wire 		paral_wren_pos;
-wire position_memory_updated;
+wire        position_memory_updated;
 
 //=======================================================
 //  Sub-module
 //=======================================================
 //system clock
 sys_pll u_sys_pll (
-  .refclk(CLOCK_50_B7A),
+	.refclk(CLOCK_50_B7A),
 	.rst(!KEY[2]),
 	.outclk_0(pll_1200k), // 1200K
 	.locked(reset_n) );
@@ -231,21 +233,8 @@ vpg	u_vpg (
 	.vpg_r(vpg_data[23:16]),
 	.vpg_g(vpg_data[15:8]),
 	.vpg_b(vpg_data[7:0]), 
-
-	.nios_clk(CLOCK_50_B7A),
-	.nios_char_data_pos(paral_data_pos),
-	.nios_char_wraddress_pos(paral_wraddress_pos),
-	.nios_char_wren_pos(paral_wren_pos),
-  .position_memory_updated(position_memory_updated)
-);
-
-position_parallelizer u_position_parallelizer(
-	.clk(CLOCK_50_B7A),
-	.input_vector(position_table_data),
-	.data_pos(paral_data_pos),
-	.wraddress_pos(paral_wraddress_pos),
-	.wren_pos(paral_wren_pos),
-  .position_memory_updated(position_memory_updated)
+	.position_data(position_table_data),
+	.refresh_image(refresh_image)
 );
 	
 assign HDMI_TX_CLK = vpg_pclk;
@@ -287,7 +276,8 @@ end
         .i2c_sda_external_connection_export (I2C_SDA), // i2c_sda_external_connection.export
         .i2c_scl_external_connection_export (I2C_SCL),  // i2c_scl_external_connection.export
         .hdmi_tx_int_n_external_connection_export  (~HDMI_TX_INT),   // hdmi_tx_int_n_external_connection.export
-        .position_table_export(position_table_data)
+        .position_table_export(position_table_data),
+        .refresh_image_export(refresh_image)
     );
 
 

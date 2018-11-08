@@ -38,11 +38,8 @@ module vpg(
 	mode,
 	mode_change,
 	disp_color,
-	nios_clk,
-	nios_char_data_pos,
-	nios_char_wraddress_pos,
-	nios_char_wren_pos,
-	position_memory_updated,
+	position_data,
+	refresh_image,
 	vpg_pclk,
 	vpg_de,
 	vpg_hs,
@@ -53,25 +50,22 @@ module vpg(
 );
 
 
-input	  		    clk_50;
-input	  		    reset_n;
-input	  [3:0]	  mode;
-input	  		    mode_change;
-input	  [1:0]	  disp_color; 
+input	  		clk_50;
+input	  		reset_n;
+input	[3:0]	mode;
+input			mode_change;
+input	[1:0]	disp_color; 
 
-input		  	 	 	nios_clk;
-input		[11:0]		nios_char_data_pos;
-input		[1:0]		nios_char_wraddress_pos;
-input			 		nios_char_wren_pos;
-input			position_memory_updated;
+input	[31:0]	position_data;
 
-output			    vpg_pclk;
-output			    vpg_de;
-output			    vpg_hs;
-output			    vpg_vs;
+output			vpg_pclk;
+output			vpg_de;
+output			vpg_hs;
+output			vpg_vs;
 output	[7:0] 	vpg_r;
 output	[7:0] 	vpg_g;
 output	[7:0] 	vpg_b;
+output			refresh_image;
 
 
 //=======================================================
@@ -145,11 +139,8 @@ vga_generator u_vga_generator (
   .vga_r(vpg_r),
   .vga_g(vpg_g),
   .vga_b(vpg_b),
-  .nios_clk(nios_clk),
-  .nios_char_data_pos(nios_char_data_pos),
-  .nios_char_wraddress_pos(nios_char_wraddress_pos),
-  .nios_char_wren_pos(nios_char_wren_pos),
-  .position_memory_updated(position_memory_updated)
+  .position_data(position_data),
+  .refresh_image(refresh_image)
 );
 
 

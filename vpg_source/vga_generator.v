@@ -45,21 +45,15 @@ module vga_generator(
   input       [11:0] 	v_active_24, 
   input       [11:0] 	v_active_34, 
 
-  input		  	 	 	    nios_clk,
-  input		  [11:0]	  	nios_char_data_pos,
-  input		  [1:0]		  	nios_char_wraddress_pos,
-  input		  	 		    nios_char_wren_pos,
-  input		  [0:0]		  	nios_char_data_char,
-  input		  [9:0]		  	nios_char_wradress_char,
-  input		  	 		    nios_char_wren_char,
-  input						position_memory_updated,
-
   output  reg		    vga_hs,             
   output  reg        	vga_vs,           
   output  reg 	     	vga_de,
   output  reg [7:0]  	vga_r,
   output  reg [7:0]  	vga_g,
-  output  reg [7:0]  	vga_b                                                 
+  output  reg [7:0]  	vga_b,
+
+  input       [31:0]	position_data,
+  output  reg			refresh_image                                               
 );
 
 background_generator background_generator_inst0 (
@@ -73,29 +67,11 @@ background_generator background_generator_inst0 (
 	.vga_b(s_vga_b_2)
 );
 
-position_decoder position_decoder_inst0(
-	.clk(clk),
-	.nios_clk(nios_clk),
-	.nios_char_data_pos(nios_char_data_pos),
-	.nios_char_wraddress_pos(nios_char_wraddress_pos),
-	.nios_char_wren_pos(nios_char_wren_pos),
-	.position_memory_updated(position_memory_updated),
-	.position_x(s_position_x),
-	.position_y(s_position_y),
-	.orientation(s_orientation),
-	.position_ready(s_position_ready)
-
-);
-
 character_generator pacman_generator(
 	.clk(clk),
-	.nios_clk(nios_clk),
 	.row_x(pixel_x),
 	.line_y(pixel_y),
-	.position_x(s_position_x),
-	.position_y(s_position_y),
-	.orientation(s_orientation),
-	.position_ready(s_position_ready),
+	.position_data(position_data),
 	.enable(pre_vga_de),
 	.reset(end_image),
 	.refresh_image(new_image),
@@ -160,13 +136,6 @@ reg 				end_image;
 reg					vga_hs_in;             
 reg 				vga_vs_in;        
 reg 				vga_de_in;
-
-
-//position signals
-reg [11:0]		s_position_x;
-reg [11:0]		s_position_y;
-reg [1:0]		s_orientation;
-reg 			s_position_ready;
 
 //VGA intern signals
 reg [7:0] 	s_vga_r_1;
@@ -271,11 +240,13 @@ always@(posedge clk or negedge reset_n)
 		  begin
 		    v_count	<=	12'b0;
 		    new_image <= 1'b1;
+		    refresh_image <= 1'b1;
 		  end
 		  else
 		  begin
 		    v_count	<=	v_count + 12'b1;
 		    new_image <= 1'b0;
+		    refresh_image <= 1'b0;
 		  end
 		  if (vs_end && !v_max)
 		    vga_vs_in	<=	1'b1;

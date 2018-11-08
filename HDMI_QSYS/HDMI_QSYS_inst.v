@@ -5,6 +5,7 @@
 		.i2c_sda_external_connection_export       (<connected-to-i2c_sda_external_connection_export>),       //       i2c_sda_external_connection.export
 		.led_external_connection_export           (<connected-to-led_external_connection_export>),           //           led_external_connection.export
 		.position_table_export                    (<connected-to-position_table_export>),                    //                    position_table.export
-		.reset_reset_n                            (<connected-to-reset_reset_n>)                             //                             reset.reset_n
+		.reset_reset_n                            (<connected-to-reset_reset_n>),                            //                             reset.reset_n
+		.refresh_image_export                     (<connected-to-refresh_image_export>)                      //                     refresh_image.export
 	);
 
