@@ -161,11 +161,15 @@ architecture rtl of HDMI_QSYS is
 
 	component HDMI_QSYS_refresh is
 		port (
-			clk      : in  std_logic                     := 'X';             -- clk
-			reset_n  : in  std_logic                     := 'X';             -- reset_n
-			address  : in  std_logic_vector(1 downto 0)  := (others => 'X'); -- address
-			readdata : out std_logic_vector(31 downto 0);                    -- readdata
-			in_port  : in  std_logic                     := 'X'              -- export
+			clk        : in  std_logic                     := 'X';             -- clk
+			reset_n    : in  std_logic                     := 'X';             -- reset_n
+			address    : in  std_logic_vector(1 downto 0)  := (others => 'X'); -- address
+			write_n    : in  std_logic                     := 'X';             -- write_n
+			writedata  : in  std_logic_vector(31 downto 0) := (others => 'X'); -- writedata
+			chipselect : in  std_logic                     := 'X';             -- chipselect
+			readdata   : out std_logic_vector(31 downto 0);                    -- readdata
+			in_port    : in  std_logic                     := 'X';             -- export
+			irq        : out std_logic                                         -- irq
 		);
 	end component HDMI_QSYS_refresh;
 
@@ -259,7 +263,10 @@ architecture rtl of HDMI_QSYS is
 			position_s1_writedata                        : out std_logic_vector(31 downto 0);                    -- writedata
 			position_s1_chipselect                       : out std_logic;                                        -- chipselect
 			refresh_s1_address                           : out std_logic_vector(1 downto 0);                     -- address
+			refresh_s1_write                             : out std_logic;                                        -- write
 			refresh_s1_readdata                          : in  std_logic_vector(31 downto 0) := (others => 'X'); -- readdata
+			refresh_s1_writedata                         : out std_logic_vector(31 downto 0);                    -- writedata
+			refresh_s1_chipselect                        : out std_logic;                                        -- chipselect
 			sysid_qsys_control_slave_address             : out std_logic_vector(0 downto 0);                     -- address
 			sysid_qsys_control_slave_readdata            : in  std_logic_vector(31 downto 0) := (others => 'X'); -- readdata
 			timer_s1_address                             : out std_logic_vector(2 downto 0);                     -- address
@@ -277,9 +284,24 @@ architecture rtl of HDMI_QSYS is
 			receiver0_irq : in  std_logic                     := 'X'; -- irq
 			receiver1_irq : in  std_logic                     := 'X'; -- irq
 			receiver2_irq : in  std_logic                     := 'X'; -- irq
+			receiver3_irq : in  std_logic                     := 'X'; -- irq
 			sender_irq    : out std_logic_vector(31 downto 0)         -- irq
 		);
 	end component HDMI_QSYS_irq_mapper;
+
+	component altera_irq_clock_crosser is
+		generic (
+			IRQ_WIDTH : integer := 1
+		);
+		port (
+			receiver_clk   : in  std_logic                    := 'X';             -- clk
+			sender_clk     : in  std_logic                    := 'X';             -- clk
+			receiver_reset : in  std_logic                    := 'X';             -- reset
+			sender_reset   : in  std_logic                    := 'X';             -- reset
+			receiver_irq   : in  std_logic_vector(0 downto 0) := (others => 'X'); -- irq
+			sender_irq     : out std_logic_vector(0 downto 0)                     -- irq
+		);
+	end component altera_irq_clock_crosser;
 
 	component hdmi_qsys_rst_controller is
 		generic (
@@ -413,7 +435,7 @@ architecture rtl of HDMI_QSYS is
 		);
 	end component hdmi_qsys_rst_controller_001;
 
-	signal pll_sys_outclk0_clk                                           : std_logic;                     -- pll_sys:outclk_0 -> [hdmi_tx_int_n:clk, i2c_scl:clk, i2c_sda:clk, irq_mapper:clk, jtag_uart:clk, led:clk, mm_interconnect_0:pll_sys_outclk0_clk, nios2_qsys:clk, onchip_memory2:clk, rst_controller:clk, sysid_qsys:clock, timer:clk]
+	signal pll_sys_outclk0_clk                                           : std_logic;                     -- pll_sys:outclk_0 -> [hdmi_tx_int_n:clk, i2c_scl:clk, i2c_sda:clk, irq_mapper:clk, irq_synchronizer:sender_clk, jtag_uart:clk, led:clk, mm_interconnect_0:pll_sys_outclk0_clk, nios2_qsys:clk, onchip_memory2:clk, rst_controller:clk, sysid_qsys:clock, timer:clk]
 	signal nios2_qsys_data_master_readdata                               : std_logic_vector(31 downto 0); -- mm_interconnect_0:nios2_qsys_data_master_readdata -> nios2_qsys:d_readdata
 	signal nios2_qsys_data_master_waitrequest                            : std_logic;                     -- mm_interconnect_0:nios2_qsys_data_master_waitrequest -> nios2_qsys:d_waitrequest
 	signal nios2_qsys_data_master_debugaccess                            : std_logic;                     -- nios2_qsys:debug_mem_slave_debugaccess_to_roms -> mm_interconnect_0:nios2_qsys_data_master_debugaccess
@@ -482,15 +504,20 @@ architecture rtl of HDMI_QSYS is
 	signal mm_interconnect_0_position_s1_address                         : std_logic_vector(1 downto 0);  -- mm_interconnect_0:position_s1_address -> position:address
 	signal mm_interconnect_0_position_s1_write                           : std_logic;                     -- mm_interconnect_0:position_s1_write -> mm_interconnect_0_position_s1_write:in
 	signal mm_interconnect_0_position_s1_writedata                       : std_logic_vector(31 downto 0); -- mm_interconnect_0:position_s1_writedata -> position:writedata
+	signal mm_interconnect_0_refresh_s1_chipselect                       : std_logic;                     -- mm_interconnect_0:refresh_s1_chipselect -> refresh:chipselect
 	signal mm_interconnect_0_refresh_s1_readdata                         : std_logic_vector(31 downto 0); -- refresh:readdata -> mm_interconnect_0:refresh_s1_readdata
 	signal mm_interconnect_0_refresh_s1_address                          : std_logic_vector(1 downto 0);  -- mm_interconnect_0:refresh_s1_address -> refresh:address
+	signal mm_interconnect_0_refresh_s1_write                            : std_logic;                     -- mm_interconnect_0:refresh_s1_write -> mm_interconnect_0_refresh_s1_write:in
+	signal mm_interconnect_0_refresh_s1_writedata                        : std_logic_vector(31 downto 0); -- mm_interconnect_0:refresh_s1_writedata -> refresh:writedata
 	signal irq_mapper_receiver0_irq                                      : std_logic;                     -- timer:irq -> irq_mapper:receiver0_irq
 	signal irq_mapper_receiver1_irq                                      : std_logic;                     -- jtag_uart:av_irq -> irq_mapper:receiver1_irq
 	signal irq_mapper_receiver2_irq                                      : std_logic;                     -- hdmi_tx_int_n:irq -> irq_mapper:receiver2_irq
 	signal nios2_qsys_irq_irq                                            : std_logic_vector(31 downto 0); -- irq_mapper:sender_irq -> nios2_qsys:irq
-	signal rst_controller_reset_out_reset                                : std_logic;                     -- rst_controller:reset_out -> [irq_mapper:reset, mm_interconnect_0:nios2_qsys_reset_reset_bridge_in_reset_reset, onchip_memory2:reset, rst_controller_reset_out_reset:in, rst_translator:in_reset]
+	signal irq_mapper_receiver3_irq                                      : std_logic;                     -- irq_synchronizer:sender_irq -> irq_mapper:receiver3_irq
+	signal irq_synchronizer_receiver_irq                                 : std_logic_vector(0 downto 0);  -- refresh:irq -> irq_synchronizer:receiver_irq
+	signal rst_controller_reset_out_reset                                : std_logic;                     -- rst_controller:reset_out -> [irq_mapper:reset, irq_synchronizer:sender_reset, mm_interconnect_0:nios2_qsys_reset_reset_bridge_in_reset_reset, onchip_memory2:reset, rst_controller_reset_out_reset:in, rst_translator:in_reset]
 	signal rst_controller_reset_out_reset_req                            : std_logic;                     -- rst_controller:reset_req -> [nios2_qsys:reset_req, onchip_memory2:reset_req, rst_translator:reset_req_in]
-	signal rst_controller_001_reset_out_reset                            : std_logic;                     -- rst_controller_001:reset_out -> [mm_interconnect_0:position_reset_reset_bridge_in_reset_reset, rst_controller_001_reset_out_reset:in]
+	signal rst_controller_001_reset_out_reset                            : std_logic;                     -- rst_controller_001:reset_out -> [irq_synchronizer:receiver_reset, mm_interconnect_0:position_reset_reset_bridge_in_reset_reset, rst_controller_001_reset_out_reset:in]
 	signal reset_reset_n_ports_inv                                       : std_logic;                     -- reset_reset_n:inv -> [pll_sys:rst, rst_controller:reset_in0, rst_controller_001:reset_in0]
 	signal mm_interconnect_0_jtag_uart_avalon_jtag_slave_read_ports_inv  : std_logic;                     -- mm_interconnect_0_jtag_uart_avalon_jtag_slave_read:inv -> jtag_uart:av_read_n
 	signal mm_interconnect_0_jtag_uart_avalon_jtag_slave_write_ports_inv : std_logic;                     -- mm_interconnect_0_jtag_uart_avalon_jtag_slave_write:inv -> jtag_uart:av_write_n
@@ -500,6 +527,7 @@ architecture rtl of HDMI_QSYS is
 	signal mm_interconnect_0_led_s1_write_ports_inv                      : std_logic;                     -- mm_interconnect_0_led_s1_write:inv -> led:write_n
 	signal mm_interconnect_0_hdmi_tx_int_n_s1_write_ports_inv            : std_logic;                     -- mm_interconnect_0_hdmi_tx_int_n_s1_write:inv -> hdmi_tx_int_n:write_n
 	signal mm_interconnect_0_position_s1_write_ports_inv                 : std_logic;                     -- mm_interconnect_0_position_s1_write:inv -> position:write_n
+	signal mm_interconnect_0_refresh_s1_write_ports_inv                  : std_logic;                     -- mm_interconnect_0_refresh_s1_write:inv -> refresh:write_n
 	signal rst_controller_reset_out_reset_ports_inv                      : std_logic;                     -- rst_controller_reset_out_reset:inv -> [hdmi_tx_int_n:reset_n, i2c_scl:reset_n, i2c_sda:reset_n, jtag_uart:rst_n, led:reset_n, nios2_qsys:reset_n, sysid_qsys:reset_n, timer:reset_n]
 	signal rst_controller_001_reset_out_reset_ports_inv                  : std_logic;                     -- rst_controller_001_reset_out_reset:inv -> [position:reset_n, refresh:reset_n]
 
@@ -637,11 +665,15 @@ begin
 
 	refresh : component HDMI_QSYS_refresh
 		port map (
-			clk      => clk_clk,                                      --                 clk.clk
-			reset_n  => rst_controller_001_reset_out_reset_ports_inv, --               reset.reset_n
-			address  => mm_interconnect_0_refresh_s1_address,         --                  s1.address
-			readdata => mm_interconnect_0_refresh_s1_readdata,        --                    .readdata
-			in_port  => refresh_image_export                          -- external_connection.export
+			clk        => clk_clk,                                      --                 clk.clk
+			reset_n    => rst_controller_001_reset_out_reset_ports_inv, --               reset.reset_n
+			address    => mm_interconnect_0_refresh_s1_address,         --                  s1.address
+			write_n    => mm_interconnect_0_refresh_s1_write_ports_inv, --                    .write_n
+			writedata  => mm_interconnect_0_refresh_s1_writedata,       --                    .writedata
+			chipselect => mm_interconnect_0_refresh_s1_chipselect,      --                    .chipselect
+			readdata   => mm_interconnect_0_refresh_s1_readdata,        --                    .readdata
+			in_port    => refresh_image_export,                         -- external_connection.export
+			irq        => irq_synchronizer_receiver_irq(0)              --                 irq.irq
 		);
 
 	sysid_qsys : component HDMI_QSYS_sysid_qsys
@@ -732,7 +764,10 @@ begin
 			position_s1_writedata                        => mm_interconnect_0_position_s1_writedata,                   --                                       .writedata
 			position_s1_chipselect                       => mm_interconnect_0_position_s1_chipselect,                  --                                       .chipselect
 			refresh_s1_address                           => mm_interconnect_0_refresh_s1_address,                      --                             refresh_s1.address
+			refresh_s1_write                             => mm_interconnect_0_refresh_s1_write,                        --                                       .write
 			refresh_s1_readdata                          => mm_interconnect_0_refresh_s1_readdata,                     --                                       .readdata
+			refresh_s1_writedata                         => mm_interconnect_0_refresh_s1_writedata,                    --                                       .writedata
+			refresh_s1_chipselect                        => mm_interconnect_0_refresh_s1_chipselect,                   --                                       .chipselect
 			sysid_qsys_control_slave_address             => mm_interconnect_0_sysid_qsys_control_slave_address,        --               sysid_qsys_control_slave.address
 			sysid_qsys_control_slave_readdata            => mm_interconnect_0_sysid_qsys_control_slave_readdata,       --                                       .readdata
 			timer_s1_address                             => mm_interconnect_0_timer_s1_address,                        --                               timer_s1.address
@@ -749,7 +784,21 @@ begin
 			receiver0_irq => irq_mapper_receiver0_irq,       -- receiver0.irq
 			receiver1_irq => irq_mapper_receiver1_irq,       -- receiver1.irq
 			receiver2_irq => irq_mapper_receiver2_irq,       -- receiver2.irq
+			receiver3_irq => irq_mapper_receiver3_irq,       -- receiver3.irq
 			sender_irq    => nios2_qsys_irq_irq              --    sender.irq
+		);
+
+	irq_synchronizer : component altera_irq_clock_crosser
+		generic map (
+			IRQ_WIDTH => 1
+		)
+		port map (
+			receiver_clk   => clk_clk,                            --       receiver_clk.clk
+			sender_clk     => pll_sys_outclk0_clk,                --         sender_clk.clk
+			receiver_reset => rst_controller_001_reset_out_reset, -- receiver_clk_reset.reset
+			sender_reset   => rst_controller_reset_out_reset,     --   sender_clk_reset.reset
+			receiver_irq   => irq_synchronizer_receiver_irq,      --           receiver.irq
+			sender_irq(0)  => irq_mapper_receiver3_irq            --             sender.irq
 		);
 
 	rst_controller : component hdmi_qsys_rst_controller
@@ -899,6 +948,8 @@ begin
 	mm_interconnect_0_hdmi_tx_int_n_s1_write_ports_inv <= not mm_interconnect_0_hdmi_tx_int_n_s1_write;
 
 	mm_interconnect_0_position_s1_write_ports_inv <= not mm_interconnect_0_position_s1_write;
+
+	mm_interconnect_0_refresh_s1_write_ports_inv <= not mm_interconnect_0_refresh_s1_write;
 
 	rst_controller_reset_out_reset_ports_inv <= not rst_controller_reset_out_reset;
 

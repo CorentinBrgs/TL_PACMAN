@@ -1,0 +1,36 @@
+12:46:06 **** Incremental Build of configuration Nios II for project pacman_soft_0 ****
+make all 
+Info: Building ../pacman_soft_0_bsp/
+C:/intelFPGA/18.0/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../pacman_soft_0_bsp/
+[BSP build complete]
+Info: Compiling main.c to obj/default/main.o
+nios2-elf-gcc -xc -MP -MMD -c -I../pacman_soft_0_bsp//HAL/inc -I../pacman_soft_0_bsp/ -I../pacman_soft_0_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mno-hw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/main.o main.c
+Assembler messages:
+Fatal error: can't create obj/default/main.o: Permission denied
+main.c: In function 'refresh_position':
+main.c:46:10: warning: unused variable 'bytePacket' [-Wunused-variable]
+  alt_u32 bytePacket = charPosition->bytePacket;
+          ^
+main.c:44:9: warning: unused variable 'state' [-Wunused-variable]
+  alt_u8 state = charPosition->state;
+         ^
+main.c:41:9: warning: unused variable 'charId' [-Wunused-variable]
+  alt_u8 charId = charPosition->charId;
+         ^
+main.c: In function 'main':
+main.c:78:54: warning: passing argument 3 of 'alt_irq_register' from incompatible pointer type [-Wincompatible-pointer-types]
+  alt_irq_register(REFRESH_IRQ,(void*)&pacmanPosition,refresh_position);
+                                                      ^
+In file included from main.c:7:0:
+..\pacman_soft_0_bsp\HAL\inc\priv\alt_legacy_irq.h:61:12: note: expected 'alt_isr_func {aka void (*)(void *)}' but argument is of type 'void (*)(position *) {aka void (*)(struct <anonymous> *)}'
+ extern int alt_irq_register (alt_u32 id, 
+            ^
+main.c: At top level:
+main.c:83:1: fatal error: error writing to -: Invalid argument
+ }
+ ^
+compilation terminated.
+make: *** [obj/default/main.o] Error 1
+
+12:46:07 Build Finished (took 753ms)
+

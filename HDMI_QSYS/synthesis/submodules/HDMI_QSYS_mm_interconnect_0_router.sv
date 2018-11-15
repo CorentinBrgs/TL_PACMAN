@@ -222,7 +222,7 @@ module HDMI_QSYS_mm_interconnect_0_router
     end
 
     // ( 0x101020 .. 0x101030 )
-    if ( {address[RG:PAD3],{PAD3{1'b0}}} == 21'h101020  && read_transaction  ) begin
+    if ( {address[RG:PAD3],{PAD3{1'b0}}} == 21'h101020   ) begin
             src_channel = 11'b10000000000;
             src_data[PKT_DEST_ID_H:PKT_DEST_ID_L] = 8;
     end

@@ -73,7 +73,10 @@ module HDMI_QSYS_mm_interconnect_0 (
 		output wire [31:0] position_s1_writedata,                        //                                       .writedata
 		output wire        position_s1_chipselect,                       //                                       .chipselect
 		output wire [1:0]  refresh_s1_address,                           //                             refresh_s1.address
+		output wire        refresh_s1_write,                             //                                       .write
 		input  wire [31:0] refresh_s1_readdata,                          //                                       .readdata
+		output wire [31:0] refresh_s1_writedata,                         //                                       .writedata
+		output wire        refresh_s1_chipselect,                        //                                       .chipselect
 		output wire [0:0]  sysid_qsys_control_slave_address,             //               sysid_qsys_control_slave.address
 		input  wire [31:0] sysid_qsys_control_slave_readdata,            //                                       .readdata
 		output wire [2:0]  timer_s1_address,                             //                               timer_s1.address
@@ -1646,10 +1649,11 @@ module HDMI_QSYS_mm_interconnect_0 (
 		.uav_lock               (refresh_s1_agent_m0_lock),                   //                         .lock
 		.uav_debugaccess        (refresh_s1_agent_m0_debugaccess),            //                         .debugaccess
 		.av_address             (refresh_s1_address),                         //      avalon_anti_slave_0.address
+		.av_write               (refresh_s1_write),                           //                         .write
 		.av_readdata            (refresh_s1_readdata),                        //                         .readdata
-		.av_write               (),                                           //              (terminated)
+		.av_writedata           (refresh_s1_writedata),                       //                         .writedata
+		.av_chipselect          (refresh_s1_chipselect),                      //                         .chipselect
 		.av_read                (),                                           //              (terminated)
-		.av_writedata           (),                                           //              (terminated)
 		.av_begintransfer       (),                                           //              (terminated)
 		.av_beginbursttransfer  (),                                           //              (terminated)
 		.av_burstcount          (),                                           //              (terminated)
@@ -1658,7 +1662,6 @@ module HDMI_QSYS_mm_interconnect_0 (
 		.av_waitrequest         (1'b0),                                       //              (terminated)
 		.av_writebyteenable     (),                                           //              (terminated)
 		.av_lock                (),                                           //              (terminated)
-		.av_chipselect          (),                                           //              (terminated)
 		.av_clken               (),                                           //              (terminated)
 		.uav_clken              (1'b0),                                       //              (terminated)
 		.av_debugaccess         (),                                           //              (terminated)

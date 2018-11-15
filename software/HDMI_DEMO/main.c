@@ -9,6 +9,8 @@
 #include "i2c.h"
 #include "system.h"
 
+#include "alt_types.h"
+
 #include "encoder.h"
 #include "adv7513.h"
 #include "edid.h"

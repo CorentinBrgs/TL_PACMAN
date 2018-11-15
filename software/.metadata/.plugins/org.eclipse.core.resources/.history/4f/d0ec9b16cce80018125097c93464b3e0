@@ -1,0 +1,104 @@
+#include <stdio.h>
+
+#include "io.h"
+#include "system.h"
+#include "alt_types.h"
+#include "sys\alt_irq.h"
+//#include "priv\alt_legacy_irq.h"
+
+alt_u32 refreshIO;
+alt_u32 counter = 0;
+alt_u32 temp_counter = 0;
+
+typedef enum {
+	NORTH,
+	EAST,
+	SOUTH,
+	WEST
+} orientation;
+
+typedef enum {
+	INACTIVE,
+	ACTIVE
+} char_state;
+
+typedef struct {
+	alt_u8 charId;
+	alt_u32 positionX;
+	alt_u32 positionY;
+	alt_u8 state;
+	orientation orientation;
+	alt_u32 bytePacket;
+} position;
+
+void init_position(position* charPosition, alt_u8 charId, alt_u8 state, orientation orientation)
+{
+	charPosition->charId = charId ;
+	charPosition->state = state ;
+	charPosition->orientation = orientation ;
+	compute_byte_packet(charPosition);
+}
+
+void compute_byte_packet(position* charPosition)
+{
+	charPosition->bytePacket = (charPosition->charId << 29) + (charPosition->positionX << 17 ) + (charPosition->positionY << 5) + (charPosition->state << 2) + (charPosition->orientation );
+}
+
+
+void refresh_position(position* charPosition)
+{
+	alt_u8 charId = charPosition->charId;
+	alt_u32 positionX = charPosition->positionX;
+	alt_u32 positionY = charPosition->positionY;
+	alt_u8 state = charPosition->state;
+	orientation orientation = charPosition->orientation;
+	alt_u32 bytePacket = charPosition->bytePacket;
+
+	switch(orientation)
+	{
+		case NORTH :
+			positionY = (positionY > 0) ? positionY - 1 : positionY ;
+		break;
+		case EAST :
+			positionX = (positionX < 1440) ? positionX + 1 : positionX ;
+		break;
+		case SOUTH :
+			positionY = (positionY < 900) ? positionY + 1 : positionY ;
+		break;
+		case WEST :
+			positionX = (positionX > 0) ? positionX - 1 : positionX ;
+		break;
+	}
+	compute_byte_packet(charPosition);
+}
+
+static void refresh_position_interrupt_handler(void* context, alt_u32 id)
+{
+	//position* p_pacmanPosition = (position*) context;
+	//refresh_position(p_pacmanPosition);
+	//IOWR_32DIRECT(POSITION_BASE, 0, p_pacmanPosition->bytePacket);
+	counter++;
+	printf("%lu\n", counter);
+}
+
+int main()
+{
+	position pacmanPosition;
+	init_position(&pacmanPosition, 0, ACTIVE, SOUTH);
+
+	printf("Hello from Nios II!\n");
+	alt_irq_register(REFRESH_IRQ,(void*)&pacmanPosition,refresh_position_interrupt_handler);
+	while(1)
+	{
+		if (temp_counter != counter)
+		{
+			printf("bytePacket : %lu \n", pacmanPosition.bytePacket);
+			printf("charId : %u \n", pacmanPosition.charId);
+			printf("positionX : %lu \n", pacmanPosition.positionX);
+			printf("positionY : %lu \n", pacmanPosition.positionY);
+			printf("state : %u \n", pacmanPosition.state);
+			printf("orientation : %u \n", pacmanPosition.orientation);
+			temp_counter = counter;
+		}
+	}
+}
