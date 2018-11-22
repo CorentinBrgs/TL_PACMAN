@@ -51,33 +51,31 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY, DEBUGGING
  16 .debug_ranges 00001910  00000000  00000000  0006d488  2**3
                   CONTENTS, READONLY, DEBUGGING
- 17 .thread_model 00000003  00000000  00000000  0007224a  2**0
+ 17 .thread_model 00000003  00000000  00000000  0007221d  2**0
                   CONTENTS, READONLY
- 18 .cpu          0000000a  00000000  00000000  0007224d  2**0
+ 18 .cpu          0000000a  00000000  00000000  00072220  2**0
                   CONTENTS, READONLY
- 19 .qsys         00000001  00000000  00000000  00072257  2**0
+ 19 .qsys         00000001  00000000  00000000  0007222a  2**0
                   CONTENTS, READONLY
- 20 .simulation_enabled 00000001  00000000  00000000  00072258  2**0
+ 20 .simulation_enabled 00000001  00000000  00000000  0007222b  2**0
                   CONTENTS, READONLY
- 21 .sysid_hash   00000004  00000000  00000000  00072259  2**0
+ 21 .sysid_hash   00000004  00000000  00000000  0007222c  2**0
                   CONTENTS, READONLY
- 22 .sysid_base   00000004  00000000  00000000  0007225d  2**0
+ 22 .sysid_base   00000004  00000000  00000000  00072230  2**0
                   CONTENTS, READONLY
- 23 .sysid_time   00000004  00000000  00000000  00072261  2**0
+ 23 .sysid_time   00000004  00000000  00000000  00072234  2**0
                   CONTENTS, READONLY
- 24 .stderr_dev   00000009  00000000  00000000  00072265  2**0
+ 24 .stderr_dev   00000009  00000000  00000000  00072238  2**0
                   CONTENTS, READONLY
- 25 .stdin_dev    00000009  00000000  00000000  0007226e  2**0
+ 25 .stdin_dev    00000009  00000000  00000000  00072241  2**0
                   CONTENTS, READONLY
- 26 .stdout_dev   00000009  00000000  00000000  00072277  2**0
+ 26 .stdout_dev   00000009  00000000  00000000  0007224a  2**0
                   CONTENTS, READONLY
- 27 .sopc_system_name 00000009  00000000  00000000  00072280  2**0
+ 27 .sopc_system_name 00000009  00000000  00000000  00072253  2**0
                   CONTENTS, READONLY
- 28 .quartus_project_dir 0000001e  00000000  00000000  00072289  2**0
+ 28 .quartus_project_dir 0000001e  00000000  00000000  0007225c  2**0
                   CONTENTS, READONLY
- 29 .jdi          0000677d  00000000  00000000  000722a7  2**0
-                  CONTENTS, READONLY
- 30 .sopcinfo     00083062  00000000  00000000  00078a24  2**0
+ 29 .sopcinfo     00083062  00000000  00000000  0007227a  2**0
                   CONTENTS, READONLY
 SYMBOL TABLE:
 00080000 l    d  .entry	00000000 .entry
@@ -1762,9 +1760,9 @@ void refresh_position(position* charPosition)
 	compute_collision(charPosition);
    80994:	e13fff17 	ldw	r4,-4(fp)
    80998:	00806e40 	call	806e4 <compute_collision>
-	alt_u8 step = 15;
-   8099c:	008003c4 	movi	r2,15
-   809a0:	e0bffd05 	stb	r2,-12(fp)
+	alt_u16 step = 60;
+   8099c:	00800f04 	movi	r2,60
+   809a0:	e0bffd0d 	sth	r2,-12(fp)
 	
 	srand((unsigned int)time(NULL) + charPosition->positionX);
    809a4:	0009883a 	mov	r4,zero
@@ -1811,7 +1809,7 @@ void refresh_position(position* charPosition)
 				charPosition->positionY = charPosition->positionY - step;
    80a2c:	e0bfff17 	ldw	r2,-4(fp)
    80a30:	10c00217 	ldw	r3,8(r2)
-   80a34:	e0bffd03 	ldbu	r2,-12(fp)
+   80a34:	e0bffd0b 	ldhu	r2,-12(fp)
    80a38:	1887c83a 	sub	r3,r3,r2
    80a3c:	e0bfff17 	ldw	r2,-4(fp)
    80a40:	10c00215 	stw	r3,8(r2)
@@ -1829,7 +1827,7 @@ void refresh_position(position* charPosition)
 				charPosition->directionControl = NONE;
 			} else {
 				refresh_position_keepGoing(charPosition, step);
-   80a50:	e0bffd03 	ldbu	r2,-12(fp)
+   80a50:	e0bffd0b 	ldhu	r2,-12(fp)
    80a54:	100b883a 	mov	r5,r2
    80a58:	e13fff17 	ldw	r4,-4(fp)
    80a5c:	0080b900 	call	80b90 <refresh_position_keepGoing>
@@ -1849,7 +1847,7 @@ void refresh_position(position* charPosition)
 				charPosition->positionX = charPosition->positionX + step;
    80a80:	e0bfff17 	ldw	r2,-4(fp)
    80a84:	10c00117 	ldw	r3,4(r2)
-   80a88:	e0bffd03 	ldbu	r2,-12(fp)
+   80a88:	e0bffd0b 	ldhu	r2,-12(fp)
    80a8c:	1887883a 	add	r3,r3,r2
    80a90:	e0bfff17 	ldw	r2,-4(fp)
    80a94:	10c00115 	stw	r3,4(r2)
@@ -1867,7 +1865,7 @@ void refresh_position(position* charPosition)
 				charPosition->directionControl = NONE;
 			} else {
 				refresh_position_keepGoing(charPosition, step);
-   80aa4:	e0bffd03 	ldbu	r2,-12(fp)
+   80aa4:	e0bffd0b 	ldhu	r2,-12(fp)
    80aa8:	100b883a 	mov	r5,r2
    80aac:	e13fff17 	ldw	r4,-4(fp)
    80ab0:	0080b900 	call	80b90 <refresh_position_keepGoing>
@@ -1887,7 +1885,7 @@ void refresh_position(position* charPosition)
 				charPosition->positionY = charPosition->positionY + step;
    80ad4:	e0bfff17 	ldw	r2,-4(fp)
    80ad8:	10c00217 	ldw	r3,8(r2)
-   80adc:	e0bffd03 	ldbu	r2,-12(fp)
+   80adc:	e0bffd0b 	ldhu	r2,-12(fp)
    80ae0:	1887883a 	add	r3,r3,r2
    80ae4:	e0bfff17 	ldw	r2,-4(fp)
    80ae8:	10c00215 	stw	r3,8(r2)
@@ -1905,7 +1903,7 @@ void refresh_position(position* charPosition)
 				charPosition->directionControl = NONE;
 			} else {
 				refresh_position_keepGoing(charPosition, step);
-   80af8:	e0bffd03 	ldbu	r2,-12(fp)
+   80af8:	e0bffd0b 	ldhu	r2,-12(fp)
    80afc:	100b883a 	mov	r5,r2
    80b00:	e13fff17 	ldw	r4,-4(fp)
    80b04:	0080b900 	call	80b90 <refresh_position_keepGoing>
@@ -1924,7 +1922,7 @@ void refresh_position(position* charPosition)
 				charPosition->positionX = charPosition->positionX - step;
    80b24:	e0bfff17 	ldw	r2,-4(fp)
    80b28:	10c00117 	ldw	r3,4(r2)
-   80b2c:	e0bffd03 	ldbu	r2,-12(fp)
+   80b2c:	e0bffd0b 	ldhu	r2,-12(fp)
    80b30:	1887c83a 	sub	r3,r3,r2
    80b34:	e0bfff17 	ldw	r2,-4(fp)
    80b38:	10c00115 	stw	r3,4(r2)
@@ -1942,7 +1940,7 @@ void refresh_position(position* charPosition)
 				charPosition->directionControl = NONE;
 			} else {
 				refresh_position_keepGoing(charPosition, step);
-   80b48:	e0bffd03 	ldbu	r2,-12(fp)
+   80b48:	e0bffd0b 	ldhu	r2,-12(fp)
    80b4c:	100b883a 	mov	r5,r2
    80b50:	e13fff17 	ldw	r4,-4(fp)
    80b54:	0080b900 	call	80b90 <refresh_position_keepGoing>
@@ -1951,7 +1949,7 @@ void refresh_position(position* charPosition)
    80b58:	00000506 	br	80b70 <refresh_position+0x1f0>
 		default :
 			refresh_position_keepGoing(charPosition, step);
-   80b5c:	e0bffd03 	ldbu	r2,-12(fp)
+   80b5c:	e0bffd0b 	ldhu	r2,-12(fp)
    80b60:	100b883a 	mov	r5,r2
    80b64:	e13fff17 	ldw	r4,-4(fp)
    80b68:	0080b900 	call	80b90 <refresh_position_keepGoing>
@@ -1971,14 +1969,14 @@ void refresh_position(position* charPosition)
 
 00080b90 <refresh_position_keepGoing>:
 
-void refresh_position_keepGoing(position* charPosition, alt_u8 step){
+void refresh_position_keepGoing(position* charPosition, alt_u16 step){
    80b90:	defffc04 	addi	sp,sp,-16
    80b94:	dfc00315 	stw	ra,12(sp)
    80b98:	df000215 	stw	fp,8(sp)
    80b9c:	df000204 	addi	fp,sp,8
    80ba0:	e13ffe15 	stw	r4,-8(fp)
    80ba4:	2805883a 	mov	r2,r5
-   80ba8:	e0bfff05 	stb	r2,-4(fp)
+   80ba8:	e0bfff0d 	sth	r2,-4(fp)
 	switch(charPosition->orientation)
    80bac:	e0bffe17 	ldw	r2,-8(fp)
    80bb0:	10800417 	ldw	r2,16(r2)
@@ -1997,7 +1995,7 @@ void refresh_position_keepGoing(position* charPosition, alt_u8 step){
 }
    80bd0:	00004006 	br	80cd4 <refresh_position_keepGoing+0x144>
 
-void refresh_position_keepGoing(position* charPosition, alt_u8 step){
+void refresh_position_keepGoing(position* charPosition, alt_u16 step){
 	switch(charPosition->orientation)
 	{
 		case NORTH :
@@ -2009,7 +2007,7 @@ void refresh_position_keepGoing(position* charPosition, alt_u8 step){
 				charPosition->positionY = charPosition->positionY - step;	
    80be4:	e0bffe17 	ldw	r2,-8(fp)
    80be8:	10c00217 	ldw	r3,8(r2)
-   80bec:	e0bfff03 	ldbu	r2,-4(fp)
+   80bec:	e0bfff0b 	ldhu	r2,-4(fp)
    80bf0:	1887c83a 	sub	r3,r3,r2
    80bf4:	e0bffe17 	ldw	r2,-8(fp)
    80bf8:	10c00215 	stw	r3,8(r2)
@@ -2024,7 +2022,7 @@ void refresh_position_keepGoing(position* charPosition, alt_u8 step){
 				charPosition->positionY = charPosition->positionY - step;	
 			} else {
 				randomDirection(charPosition, step);
-   80c00:	e0bfff03 	ldbu	r2,-4(fp)
+   80c00:	e0bfff0b 	ldhu	r2,-4(fp)
    80c04:	100b883a 	mov	r5,r2
    80c08:	e13ffe17 	ldw	r4,-8(fp)
    80c0c:	0080cec0 	call	80cec <randomDirection>
@@ -2040,7 +2038,7 @@ void refresh_position_keepGoing(position* charPosition, alt_u8 step){
 				charPosition->positionX = charPosition->positionX + step;
    80c24:	e0bffe17 	ldw	r2,-8(fp)
    80c28:	10c00117 	ldw	r3,4(r2)
-   80c2c:	e0bfff03 	ldbu	r2,-4(fp)
+   80c2c:	e0bfff0b 	ldhu	r2,-4(fp)
    80c30:	1887883a 	add	r3,r3,r2
    80c34:	e0bffe17 	ldw	r2,-8(fp)
    80c38:	10c00115 	stw	r3,4(r2)
@@ -2055,7 +2053,7 @@ void refresh_position_keepGoing(position* charPosition, alt_u8 step){
 				charPosition->positionX = charPosition->positionX + step;
 			} else {
 				randomDirection(charPosition, step);
-   80c40:	e0bfff03 	ldbu	r2,-4(fp)
+   80c40:	e0bfff0b 	ldhu	r2,-4(fp)
    80c44:	100b883a 	mov	r5,r2
    80c48:	e13ffe17 	ldw	r4,-8(fp)
    80c4c:	0080cec0 	call	80cec <randomDirection>
@@ -2071,7 +2069,7 @@ void refresh_position_keepGoing(position* charPosition, alt_u8 step){
 				charPosition->positionY = charPosition->positionY + step;
    80c64:	e0bffe17 	ldw	r2,-8(fp)
    80c68:	10c00217 	ldw	r3,8(r2)
-   80c6c:	e0bfff03 	ldbu	r2,-4(fp)
+   80c6c:	e0bfff0b 	ldhu	r2,-4(fp)
    80c70:	1887883a 	add	r3,r3,r2
    80c74:	e0bffe17 	ldw	r2,-8(fp)
    80c78:	10c00215 	stw	r3,8(r2)
@@ -2086,7 +2084,7 @@ void refresh_position_keepGoing(position* charPosition, alt_u8 step){
 				charPosition->positionY = charPosition->positionY + step;
 			} else {
 				randomDirection(charPosition, step);
-   80c80:	e0bfff03 	ldbu	r2,-4(fp)
+   80c80:	e0bfff0b 	ldhu	r2,-4(fp)
    80c84:	100b883a 	mov	r5,r2
    80c88:	e13ffe17 	ldw	r4,-8(fp)
    80c8c:	0080cec0 	call	80cec <randomDirection>
@@ -2102,7 +2100,7 @@ void refresh_position_keepGoing(position* charPosition, alt_u8 step){
 				charPosition->positionX = charPosition->positionX - step;
    80ca4:	e0bffe17 	ldw	r2,-8(fp)
    80ca8:	10c00117 	ldw	r3,4(r2)
-   80cac:	e0bfff03 	ldbu	r2,-4(fp)
+   80cac:	e0bfff0b 	ldhu	r2,-4(fp)
    80cb0:	1887c83a 	sub	r3,r3,r2
    80cb4:	e0bffe17 	ldw	r2,-8(fp)
    80cb8:	10c00115 	stw	r3,4(r2)
@@ -2117,7 +2115,7 @@ void refresh_position_keepGoing(position* charPosition, alt_u8 step){
 				charPosition->positionX = charPosition->positionX - step;
 			} else {
 				randomDirection(charPosition, step);
-   80cc0:	e0bfff03 	ldbu	r2,-4(fp)
+   80cc0:	e0bfff0b 	ldhu	r2,-4(fp)
    80cc4:	100b883a 	mov	r5,r2
    80cc8:	e13ffe17 	ldw	r4,-8(fp)
    80ccc:	0080cec0 	call	80cec <randomDirection>
@@ -2136,13 +2134,13 @@ void refresh_position_keepGoing(position* charPosition, alt_u8 step){
 00080cec <randomDirection>:
 
 //this function should be removed once the button controls are working
-void randomDirection(position* charPosition, alt_u8 step){
+void randomDirection(position* charPosition, alt_u16 step){
    80cec:	defffd04 	addi	sp,sp,-12
    80cf0:	df000215 	stw	fp,8(sp)
    80cf4:	df000204 	addi	fp,sp,8
    80cf8:	e13ffe15 	stw	r4,-8(fp)
    80cfc:	2805883a 	mov	r2,r5
-   80d00:	e0bfff05 	stb	r2,-4(fp)
+   80d00:	e0bfff0d 	sth	r2,-4(fp)
 	if (charPosition->collision.north == 0){
    80d04:	e0bffe17 	ldw	r2,-8(fp)
    80d08:	10800603 	ldbu	r2,24(r2)
@@ -2155,7 +2153,7 @@ void randomDirection(position* charPosition, alt_u8 step){
 		charPosition->positionY = charPosition->positionY - step;				
    80d20:	e0bffe17 	ldw	r2,-8(fp)
    80d24:	10c00217 	ldw	r3,8(r2)
-   80d28:	e0bfff03 	ldbu	r2,-4(fp)
+   80d28:	e0bfff0b 	ldhu	r2,-4(fp)
    80d2c:	1887c83a 	sub	r3,r3,r2
    80d30:	e0bffe17 	ldw	r2,-8(fp)
    80d34:	10c00215 	stw	r3,8(r2)
@@ -2166,7 +2164,7 @@ void randomDirection(position* charPosition, alt_u8 step){
 	}
 }
    80d38:	00002806 	br	80ddc <randomDirection+0xf0>
-void randomDirection(position* charPosition, alt_u8 step){
+void randomDirection(position* charPosition, alt_u16 step){
 	if (charPosition->collision.north == 0){
 		charPosition->orientation = NORTH;
 		charPosition->positionY = charPosition->positionY - step;				
@@ -2183,7 +2181,7 @@ void randomDirection(position* charPosition, alt_u8 step){
 		charPosition->positionX = charPosition->positionX + step;		
    80d58:	e0bffe17 	ldw	r2,-8(fp)
    80d5c:	10c00117 	ldw	r3,4(r2)
-   80d60:	e0bfff03 	ldbu	r2,-4(fp)
+   80d60:	e0bfff0b 	ldhu	r2,-4(fp)
    80d64:	1887883a 	add	r3,r3,r2
    80d68:	e0bffe17 	ldw	r2,-8(fp)
    80d6c:	10c00115 	stw	r3,4(r2)
@@ -2211,7 +2209,7 @@ void randomDirection(position* charPosition, alt_u8 step){
 		charPosition->positionY = charPosition->positionY + step;				
    80d90:	e0bffe17 	ldw	r2,-8(fp)
    80d94:	10c00217 	ldw	r3,8(r2)
-   80d98:	e0bfff03 	ldbu	r2,-4(fp)
+   80d98:	e0bfff0b 	ldhu	r2,-4(fp)
    80d9c:	1887883a 	add	r3,r3,r2
    80da0:	e0bffe17 	ldw	r2,-8(fp)
    80da4:	10c00215 	stw	r3,8(r2)
@@ -2238,7 +2236,7 @@ void randomDirection(position* charPosition, alt_u8 step){
 		charPosition->positionX = charPosition->positionX - step;		
    80dc4:	e0bffe17 	ldw	r2,-8(fp)
    80dc8:	10c00117 	ldw	r3,4(r2)
-   80dcc:	e0bfff03 	ldbu	r2,-4(fp)
+   80dcc:	e0bfff0b 	ldhu	r2,-4(fp)
    80dd0:	1887c83a 	sub	r3,r3,r2
    80dd4:	e0bffe17 	ldw	r2,-8(fp)
    80dd8:	10c00115 	stw	r3,4(r2)

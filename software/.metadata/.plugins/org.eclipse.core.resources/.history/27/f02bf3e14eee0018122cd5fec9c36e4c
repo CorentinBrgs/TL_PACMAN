@@ -61,9 +61,9 @@ void init_position(position* charPosition, alt_u8 charId, alt_u32 positionX, alt
 void compute_collision(position* charPosition);
 alt_u8 get_block_with_coordinates(alt_u32 positionX, alt_u32 positionY);
 void refresh_position(position* charPosition);
-void refresh_position_keepGoing(position* charPosition, alt_u16 step);
+void refresh_position_keepGoing(position* charPosition, alt_u8 step);
 //this function should be removed once the button controls are working
-void randomDirection(position* charPosition, alt_u16 step);
+void randomDirection(position* charPosition, alt_u8 step);
 static void update_direction(void* context);
 
 #endif /* REFRESH_POSITION_H_ */

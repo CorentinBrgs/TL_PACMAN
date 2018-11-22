@@ -137,7 +137,7 @@ void refresh_position(position* charPosition)
 	compute_byte_packet(charPosition);
 }
 
-void refresh_position_keepGoing(position* charPosition, alt_u16 step){
+void refresh_position_keepGoing(position* charPosition, alt_u8 step){
 	switch(charPosition->orientation)
 	{
 		case NORTH :
@@ -172,7 +172,7 @@ void refresh_position_keepGoing(position* charPosition, alt_u16 step){
 }
 
 //this function should be removed once the button controls are working
-void randomDirection(position* charPosition, alt_u16 step){
+void randomDirection(position* charPosition, alt_u8 step){
 	if (charPosition->collision.north == 0){
 		charPosition->orientation = NORTH;
 		charPosition->positionY = charPosition->positionY - step;				
