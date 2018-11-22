@@ -1,0 +1,57 @@
+#include "background.h"
+#include "refresh_position.h"
+
+#include <stdio.h>
+
+
+#include "io.h"
+#include "system.h"
+#include "alt_types.h"
+#include "sys\alt_irq.h"
+#include "priv\alt_legacy_irq.h"
+
+
+alt_u32 counter = 0;
+alt_8	counter_dir = -1;
+alt_u32 temp_counter = 0;
+
+static void refresh_position_interrupt_handler(void* context)
+/* interrupt handler : this function is called each time a new frame is build (60Hz)
+ * it calls *refresh_position()* function and ensures the char doesn't go out of the frame.
+*/
+{
+	position* p_pacmanPosition = (position*) context;
+	refresh_position(p_pacmanPosition);
+	IOWR_32DIRECT(POSITION_BASE, 0, p_pacmanPosition->bytePacket);
+	IOWR(REFRESH_BASE,3,0xf);
+
+	if(counter > 600){
+		counter_dir = -1;
+		p_pacmanPosition->orientation = NORTH;
+	}
+	if(counter < 60){
+		counter_dir = 1;
+		p_pacmanPosition->orientation = SOUTH;
+	}
+	counter = counter + (1<<2)*counter_dir;
+
+	printf("%lu %u\n", counter, counter_dir);
+}
+
+int main()
+{
+	position pacmanPosition;
+	init_position(&pacmanPosition, 0, 60, 60, ACTIVE, SOUTH);
+	printf("Hello from Nios II!\n");
+
+	//IRQ initialisation
+	IOWR(REFRESH_BASE,2,0xf); //enable interrupt
+	IOWR(REFRESH_BASE,3,0xf); //clear edge register
+	printf("alt_ic_irq_enabled : %lu \n", alt_ic_irq_enabled(REFRESH_IRQ_INTERRUPT_CONTROLLER_ID, REFRESH_IRQ));
+	alt_irq_register(REFRESH_IRQ,(void*)&pacmanPosition,refresh_position_interrupt_handler);
+
+	while(1)
+	{
+
+	}
+}

@@ -46,7 +46,10 @@ module vpg(
 	vpg_vs,
 	vpg_r,
 	vpg_g,
-	vpg_b
+	vpg_b,
+	background_data,
+	background_wraddress,
+	background_wren
 );
 
 
@@ -57,6 +60,9 @@ input			mode_change;
 input	[1:0]	disp_color; 
 
 input	[31:0]	position_data;
+input   [31:0]  background_data;
+input   [3:0]   background_wraddress;
+input           background_wren;
 
 output			vpg_pclk;
 output			vpg_de;
@@ -120,27 +126,31 @@ pll_controller u_pll_controller (
 
 //=============== pattern generator according to vga timing
 vga_generator u_vga_generator (                                    
-  .clk(vpg_pclk),                
-  .reset_n(gen_clk_locked),                                                
-  .h_total(h_total),           
-  .h_sync(h_sync),           
-  .h_start(h_start),             
-  .h_end(h_end),                                                    
-  .v_total(v_total),           
-  .v_sync(v_sync),            
-  .v_start(v_start),           
-  .v_end(v_end), 
-  .v_active_14(v_active_14), 
-  .v_active_24(v_active_24), 
-  .v_active_34(v_active_34), 
+  .clk(vpg_pclk),
+  .reset_n(gen_clk_locked),
+  .h_total(h_total),
+  .h_sync(h_sync),
+  .h_start(h_start),
+  .h_end(h_end),
+  .v_total(v_total),
+  .v_sync(v_sync),
+  .v_start(v_start),
+  .v_end(v_end),
+  .v_active_14(v_active_14),
+  .v_active_24(v_active_24),
+  .v_active_34(v_active_34),
   .vga_hs(vpg_hs),
-  .vga_vs(vpg_vs),           
+  .vga_vs(vpg_vs),
   .vga_de(vpg_de),
   .vga_r(vpg_r),
   .vga_g(vpg_g),
   .vga_b(vpg_b),
   .position_data(position_data),
-  .refresh_image(refresh_image)
+  .refresh_image(refresh_image),
+  .nios_clk(clk_50),
+  .background_data(background_data),
+  .background_wraddress(background_wraddress),
+  .background_wren(background_wren)
 );
 
 

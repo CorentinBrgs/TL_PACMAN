@@ -42,50 +42,52 @@ USE altera_mf.altera_mf_components.all;
 ENTITY background_memory IS
 	PORT
 	(
-		clock		: IN STD_LOGIC  := '1';
-		data		: IN STD_LOGIC_VECTOR (2 DOWNTO 0);
+		data		: IN STD_LOGIC_VECTOR (31 DOWNTO 0);
 		rdaddress		: IN STD_LOGIC_VECTOR (8 DOWNTO 0);
-		wraddress		: IN STD_LOGIC_VECTOR (8 DOWNTO 0);
+		rdclock		: IN STD_LOGIC ;
+		wraddress		: IN STD_LOGIC_VECTOR (3 DOWNTO 0);
+		wrclock		: IN STD_LOGIC  := '1';
 		wren		: IN STD_LOGIC  := '0';
-		q		: OUT STD_LOGIC_VECTOR (2 DOWNTO 0)
+		q		: OUT STD_LOGIC_VECTOR (0 DOWNTO 0)
 	);
 END background_memory;
 
 
 ARCHITECTURE SYN OF background_memory IS
 
-	SIGNAL sub_wire0	: STD_LOGIC_VECTOR (2 DOWNTO 0);
+	SIGNAL sub_wire0	: STD_LOGIC_VECTOR (0 DOWNTO 0);
 
 BEGIN
-	q    <= sub_wire0(2 DOWNTO 0);
+	q    <= sub_wire0(0 DOWNTO 0);
 
 	altsyncram_component : altsyncram
 	GENERIC MAP (
 		address_aclr_b => "NONE",
-		address_reg_b => "CLOCK0",
+		address_reg_b => "CLOCK1",
 		clock_enable_input_a => "BYPASS",
 		clock_enable_input_b => "BYPASS",
 		clock_enable_output_b => "BYPASS",
-		init_file => "image.colour.mif",
+		init_file => "background.mif",
+		init_file_layout => "PORT_B",
 		intended_device_family => "Cyclone V",
 		lpm_type => "altsyncram",
-		numwords_a => 512,
-		numwords_b => 512,
+		numwords_a => 15,
+		numwords_b => 480,
 		operation_mode => "DUAL_PORT",
 		outdata_aclr_b => "NONE",
 		outdata_reg_b => "UNREGISTERED",
 		power_up_uninitialized => "FALSE",
-		read_during_write_mode_mixed_ports => "DONT_CARE",
-		widthad_a => 9,
+		widthad_a => 4,
 		widthad_b => 9,
-		width_a => 3,
-		width_b => 3,
+		width_a => 32,
+		width_b => 1,
 		width_byteena_a => 1
 	)
 	PORT MAP (
 		address_a => wraddress,
 		address_b => rdaddress,
-		clock0 => clock,
+		clock0 => wrclock,
+		clock1 => rdclock,
 		data_a => data,
 		wren_a => wren,
 		q_b => sub_wire0
@@ -116,7 +118,7 @@ END SYN;
 -- Retrieval info: PRIVATE: CLRrren NUMERIC "0"
 -- Retrieval info: PRIVATE: CLRwraddress NUMERIC "0"
 -- Retrieval info: PRIVATE: CLRwren NUMERIC "0"
--- Retrieval info: PRIVATE: Clock NUMERIC "0"
+-- Retrieval info: PRIVATE: Clock NUMERIC "1"
 -- Retrieval info: PRIVATE: Clock_A NUMERIC "0"
 -- Retrieval info: PRIVATE: Clock_B NUMERIC "0"
 -- Retrieval info: PRIVATE: IMPLEMENT_IN_LES NUMERIC "0"
@@ -128,9 +130,9 @@ END SYN;
 -- Retrieval info: PRIVATE: JTAG_ENABLED NUMERIC "0"
 -- Retrieval info: PRIVATE: JTAG_ID STRING "NONE"
 -- Retrieval info: PRIVATE: MAXIMUM_DEPTH NUMERIC "0"
--- Retrieval info: PRIVATE: MEMSIZE NUMERIC "1536"
+-- Retrieval info: PRIVATE: MEMSIZE NUMERIC "480"
 -- Retrieval info: PRIVATE: MEM_IN_BITS NUMERIC "0"
--- Retrieval info: PRIVATE: MIFfilename STRING "../TL_PACMAN_UTILS/bmp2mif/image.colour.mif"
+-- Retrieval info: PRIVATE: MIFfilename STRING "background.mif"
 -- Retrieval info: PRIVATE: OPERATION_MODE NUMERIC "2"
 -- Retrieval info: PRIVATE: OUTDATA_ACLR_B NUMERIC "0"
 -- Retrieval info: PRIVATE: OUTDATA_REG_B NUMERIC "0"
@@ -147,11 +149,11 @@ END SYN;
 -- Retrieval info: PRIVATE: SYNTH_WRAPPER_GEN_POSTFIX STRING "1"
 -- Retrieval info: PRIVATE: USE_DIFF_CLKEN NUMERIC "0"
 -- Retrieval info: PRIVATE: UseDPRAM NUMERIC "1"
--- Retrieval info: PRIVATE: VarWidth NUMERIC "0"
--- Retrieval info: PRIVATE: WIDTH_READ_A NUMERIC "3"
--- Retrieval info: PRIVATE: WIDTH_READ_B NUMERIC "3"
--- Retrieval info: PRIVATE: WIDTH_WRITE_A NUMERIC "3"
--- Retrieval info: PRIVATE: WIDTH_WRITE_B NUMERIC "3"
+-- Retrieval info: PRIVATE: VarWidth NUMERIC "1"
+-- Retrieval info: PRIVATE: WIDTH_READ_A NUMERIC "32"
+-- Retrieval info: PRIVATE: WIDTH_READ_B NUMERIC "1"
+-- Retrieval info: PRIVATE: WIDTH_WRITE_A NUMERIC "32"
+-- Retrieval info: PRIVATE: WIDTH_WRITE_B NUMERIC "1"
 -- Retrieval info: PRIVATE: WRADDR_ACLR_B NUMERIC "0"
 -- Retrieval info: PRIVATE: WRADDR_REG_B NUMERIC "0"
 -- Retrieval info: PRIVATE: WRCTRL_ACLR_B NUMERIC "0"
@@ -159,37 +161,39 @@ END SYN;
 -- Retrieval info: PRIVATE: rden NUMERIC "0"
 -- Retrieval info: LIBRARY: altera_mf altera_mf.altera_mf_components.all
 -- Retrieval info: CONSTANT: ADDRESS_ACLR_B STRING "NONE"
--- Retrieval info: CONSTANT: ADDRESS_REG_B STRING "CLOCK0"
+-- Retrieval info: CONSTANT: ADDRESS_REG_B STRING "CLOCK1"
 -- Retrieval info: CONSTANT: CLOCK_ENABLE_INPUT_A STRING "BYPASS"
 -- Retrieval info: CONSTANT: CLOCK_ENABLE_INPUT_B STRING "BYPASS"
 -- Retrieval info: CONSTANT: CLOCK_ENABLE_OUTPUT_B STRING "BYPASS"
--- Retrieval info: CONSTANT: INIT_FILE STRING "../TL_PACMAN_UTILS/bmp2mif/image.colour.mif"
+-- Retrieval info: CONSTANT: INIT_FILE STRING "background.mif"
+-- Retrieval info: CONSTANT: INIT_FILE_LAYOUT STRING "PORT_B"
 -- Retrieval info: CONSTANT: INTENDED_DEVICE_FAMILY STRING "Cyclone V"
 -- Retrieval info: CONSTANT: LPM_TYPE STRING "altsyncram"
--- Retrieval info: CONSTANT: NUMWORDS_A NUMERIC "512"
--- Retrieval info: CONSTANT: NUMWORDS_B NUMERIC "512"
+-- Retrieval info: CONSTANT: NUMWORDS_A NUMERIC "15"
+-- Retrieval info: CONSTANT: NUMWORDS_B NUMERIC "480"
 -- Retrieval info: CONSTANT: OPERATION_MODE STRING "DUAL_PORT"
 -- Retrieval info: CONSTANT: OUTDATA_ACLR_B STRING "NONE"
 -- Retrieval info: CONSTANT: OUTDATA_REG_B STRING "UNREGISTERED"
 -- Retrieval info: CONSTANT: POWER_UP_UNINITIALIZED STRING "FALSE"
--- Retrieval info: CONSTANT: READ_DURING_WRITE_MODE_MIXED_PORTS STRING "DONT_CARE"
--- Retrieval info: CONSTANT: WIDTHAD_A NUMERIC "9"
+-- Retrieval info: CONSTANT: WIDTHAD_A NUMERIC "4"
 -- Retrieval info: CONSTANT: WIDTHAD_B NUMERIC "9"
--- Retrieval info: CONSTANT: WIDTH_A NUMERIC "3"
--- Retrieval info: CONSTANT: WIDTH_B NUMERIC "3"
+-- Retrieval info: CONSTANT: WIDTH_A NUMERIC "32"
+-- Retrieval info: CONSTANT: WIDTH_B NUMERIC "1"
 -- Retrieval info: CONSTANT: WIDTH_BYTEENA_A NUMERIC "1"
--- Retrieval info: USED_PORT: clock 0 0 0 0 INPUT VCC "clock"
--- Retrieval info: USED_PORT: data 0 0 3 0 INPUT NODEFVAL "data[2..0]"
--- Retrieval info: USED_PORT: q 0 0 3 0 OUTPUT NODEFVAL "q[2..0]"
+-- Retrieval info: USED_PORT: data 0 0 32 0 INPUT NODEFVAL "data[31..0]"
+-- Retrieval info: USED_PORT: q 0 0 1 0 OUTPUT NODEFVAL "q[0..0]"
 -- Retrieval info: USED_PORT: rdaddress 0 0 9 0 INPUT NODEFVAL "rdaddress[8..0]"
--- Retrieval info: USED_PORT: wraddress 0 0 9 0 INPUT NODEFVAL "wraddress[8..0]"
+-- Retrieval info: USED_PORT: rdclock 0 0 0 0 INPUT NODEFVAL "rdclock"
+-- Retrieval info: USED_PORT: wraddress 0 0 4 0 INPUT NODEFVAL "wraddress[3..0]"
+-- Retrieval info: USED_PORT: wrclock 0 0 0 0 INPUT VCC "wrclock"
 -- Retrieval info: USED_PORT: wren 0 0 0 0 INPUT GND "wren"
--- Retrieval info: CONNECT: @address_a 0 0 9 0 wraddress 0 0 9 0
+-- Retrieval info: CONNECT: @address_a 0 0 4 0 wraddress 0 0 4 0
 -- Retrieval info: CONNECT: @address_b 0 0 9 0 rdaddress 0 0 9 0
--- Retrieval info: CONNECT: @clock0 0 0 0 0 clock 0 0 0 0
--- Retrieval info: CONNECT: @data_a 0 0 3 0 data 0 0 3 0
+-- Retrieval info: CONNECT: @clock0 0 0 0 0 wrclock 0 0 0 0
+-- Retrieval info: CONNECT: @clock1 0 0 0 0 rdclock 0 0 0 0
+-- Retrieval info: CONNECT: @data_a 0 0 32 0 data 0 0 32 0
 -- Retrieval info: CONNECT: @wren_a 0 0 0 0 wren 0 0 0 0
--- Retrieval info: CONNECT: q 0 0 3 0 @q_b 0 0 3 0
+-- Retrieval info: CONNECT: q 0 0 1 0 @q_b 0 0 1 0
 -- Retrieval info: GEN_FILE: TYPE_NORMAL background_memory.vhd TRUE
 -- Retrieval info: GEN_FILE: TYPE_NORMAL background_memory.inc TRUE
 -- Retrieval info: GEN_FILE: TYPE_NORMAL background_memory.cmp TRUE

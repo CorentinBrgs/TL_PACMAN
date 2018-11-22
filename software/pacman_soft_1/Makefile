@@ -142,7 +142,9 @@ ACDS_VERSION := 18.0
 ELF := pacman_soft_1.elf
 
 # Paths to C, C++, and assembly source files.
-C_SRCS := main.c
+C_SRCS += main.c
+C_SRCS += background.c
+C_SRCS += refresh_position.c
 CXX_SRCS :=
 ASM_SRCS :=
 

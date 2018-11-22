@@ -1,0 +1,23 @@
+/*
+ * background.h
+ *
+ *  Created on: 21 nov. 2018
+ *      Author: berges_cor
+ */
+
+
+#include <stdio.h>
+
+#include "io.h"
+#include "system.h"
+#include "alt_types.h"
+
+#ifndef BACKGROUND_H_
+#define BACKGROUND_H_
+
+
+alt_u32 background[15];
+
+void set_background_in_memory(alt_u32 background[15]);
+
+#endif /* BACKGROUND_H_ */

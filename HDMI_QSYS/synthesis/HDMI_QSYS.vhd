@@ -8,6 +8,8 @@ use IEEE.numeric_std.all;
 
 entity HDMI_QSYS is
 	port (
+		background_data_export                   : out   std_logic_vector(31 downto 0);        --                   background_data.export
+		background_wr_export                     : out   std_logic_vector(4 downto 0);         --                     background_wr.export
 		clk_clk                                  : in    std_logic                     := '0'; --                               clk.clk
 		hdmi_tx_int_n_external_connection_export : in    std_logic                     := '0'; -- hdmi_tx_int_n_external_connection.export
 		i2c_scl_external_connection_export       : out   std_logic;                            --       i2c_scl_external_connection.export
@@ -20,6 +22,32 @@ entity HDMI_QSYS is
 end entity HDMI_QSYS;
 
 architecture rtl of HDMI_QSYS is
+	component HDMI_QSYS_background_data is
+		port (
+			clk        : in  std_logic                     := 'X';             -- clk
+			reset_n    : in  std_logic                     := 'X';             -- reset_n
+			address    : in  std_logic_vector(1 downto 0)  := (others => 'X'); -- address
+			write_n    : in  std_logic                     := 'X';             -- write_n
+			writedata  : in  std_logic_vector(31 downto 0) := (others => 'X'); -- writedata
+			chipselect : in  std_logic                     := 'X';             -- chipselect
+			readdata   : out std_logic_vector(31 downto 0);                    -- readdata
+			out_port   : out std_logic_vector(31 downto 0)                     -- export
+		);
+	end component HDMI_QSYS_background_data;
+
+	component HDMI_QSYS_background_wr is
+		port (
+			clk        : in  std_logic                     := 'X';             -- clk
+			reset_n    : in  std_logic                     := 'X';             -- reset_n
+			address    : in  std_logic_vector(1 downto 0)  := (others => 'X'); -- address
+			write_n    : in  std_logic                     := 'X';             -- write_n
+			writedata  : in  std_logic_vector(31 downto 0) := (others => 'X'); -- writedata
+			chipselect : in  std_logic                     := 'X';             -- chipselect
+			readdata   : out std_logic_vector(31 downto 0);                    -- readdata
+			out_port   : out std_logic_vector(4 downto 0)                      -- export
+		);
+	end component HDMI_QSYS_background_wr;
+
 	component HDMI_QSYS_hdmi_tx_int_n is
 		port (
 			clk        : in  std_logic                     := 'X';             -- clk
@@ -146,19 +174,6 @@ architecture rtl of HDMI_QSYS is
 		);
 	end component HDMI_QSYS_pll_sys;
 
-	component HDMI_QSYS_position is
-		port (
-			clk        : in  std_logic                     := 'X';             -- clk
-			reset_n    : in  std_logic                     := 'X';             -- reset_n
-			address    : in  std_logic_vector(1 downto 0)  := (others => 'X'); -- address
-			write_n    : in  std_logic                     := 'X';             -- write_n
-			writedata  : in  std_logic_vector(31 downto 0) := (others => 'X'); -- writedata
-			chipselect : in  std_logic                     := 'X';             -- chipselect
-			readdata   : out std_logic_vector(31 downto 0);                    -- readdata
-			out_port   : out std_logic_vector(31 downto 0)                     -- export
-		);
-	end component HDMI_QSYS_position;
-
 	component HDMI_QSYS_refresh is
 		port (
 			clk        : in  std_logic                     := 'X';             -- clk
@@ -215,6 +230,16 @@ architecture rtl of HDMI_QSYS is
 			nios2_qsys_instruction_master_read           : in  std_logic                     := 'X';             -- read
 			nios2_qsys_instruction_master_readdata       : out std_logic_vector(31 downto 0);                    -- readdata
 			nios2_qsys_instruction_master_readdatavalid  : out std_logic;                                        -- readdatavalid
+			background_data_s1_address                   : out std_logic_vector(1 downto 0);                     -- address
+			background_data_s1_write                     : out std_logic;                                        -- write
+			background_data_s1_readdata                  : in  std_logic_vector(31 downto 0) := (others => 'X'); -- readdata
+			background_data_s1_writedata                 : out std_logic_vector(31 downto 0);                    -- writedata
+			background_data_s1_chipselect                : out std_logic;                                        -- chipselect
+			background_wr_s1_address                     : out std_logic_vector(1 downto 0);                     -- address
+			background_wr_s1_write                       : out std_logic;                                        -- write
+			background_wr_s1_readdata                    : in  std_logic_vector(31 downto 0) := (others => 'X'); -- readdata
+			background_wr_s1_writedata                   : out std_logic_vector(31 downto 0);                    -- writedata
+			background_wr_s1_chipselect                  : out std_logic;                                        -- chipselect
 			hdmi_tx_int_n_s1_address                     : out std_logic_vector(1 downto 0);                     -- address
 			hdmi_tx_int_n_s1_write                       : out std_logic;                                        -- write
 			hdmi_tx_int_n_s1_readdata                    : in  std_logic_vector(31 downto 0) := (others => 'X'); -- readdata
@@ -334,7 +359,6 @@ architecture rtl of HDMI_QSYS is
 			reset_in0      : in  std_logic := 'X'; -- reset_in0.reset
 			clk            : in  std_logic := 'X'; --       clk.clk
 			reset_out      : out std_logic;        -- reset_out.reset
-			reset_req      : out std_logic;        --          .reset_req
 			reset_in1      : in  std_logic := 'X';
 			reset_in10     : in  std_logic := 'X';
 			reset_in11     : in  std_logic := 'X';
@@ -350,6 +374,7 @@ architecture rtl of HDMI_QSYS is
 			reset_in7      : in  std_logic := 'X';
 			reset_in8      : in  std_logic := 'X';
 			reset_in9      : in  std_logic := 'X';
+			reset_req      : out std_logic;
 			reset_req_in0  : in  std_logic := 'X';
 			reset_req_in1  : in  std_logic := 'X';
 			reset_req_in10 : in  std_logic := 'X';
@@ -400,6 +425,7 @@ architecture rtl of HDMI_QSYS is
 			reset_in0      : in  std_logic := 'X'; -- reset_in0.reset
 			clk            : in  std_logic := 'X'; --       clk.clk
 			reset_out      : out std_logic;        -- reset_out.reset
+			reset_req      : out std_logic;        --          .reset_req
 			reset_in1      : in  std_logic := 'X';
 			reset_in10     : in  std_logic := 'X';
 			reset_in11     : in  std_logic := 'X';
@@ -415,7 +441,6 @@ architecture rtl of HDMI_QSYS is
 			reset_in7      : in  std_logic := 'X';
 			reset_in8      : in  std_logic := 'X';
 			reset_in9      : in  std_logic := 'X';
-			reset_req      : out std_logic;
 			reset_req_in0  : in  std_logic := 'X';
 			reset_req_in1  : in  std_logic := 'X';
 			reset_req_in10 : in  std_logic := 'X';
@@ -435,7 +460,7 @@ architecture rtl of HDMI_QSYS is
 		);
 	end component hdmi_qsys_rst_controller_001;
 
-	signal pll_sys_outclk0_clk                                           : std_logic;                     -- pll_sys:outclk_0 -> [hdmi_tx_int_n:clk, i2c_scl:clk, i2c_sda:clk, irq_mapper:clk, irq_synchronizer:sender_clk, jtag_uart:clk, led:clk, mm_interconnect_0:pll_sys_outclk0_clk, nios2_qsys:clk, onchip_memory2:clk, rst_controller:clk, sysid_qsys:clock, timer:clk]
+	signal pll_sys_outclk0_clk                                           : std_logic;                     -- pll_sys:outclk_0 -> [hdmi_tx_int_n:clk, i2c_scl:clk, i2c_sda:clk, irq_mapper:clk, irq_synchronizer:sender_clk, jtag_uart:clk, led:clk, mm_interconnect_0:pll_sys_outclk0_clk, nios2_qsys:clk, onchip_memory2:clk, rst_controller_001:clk, sysid_qsys:clock, timer:clk]
 	signal nios2_qsys_data_master_readdata                               : std_logic_vector(31 downto 0); -- mm_interconnect_0:nios2_qsys_data_master_readdata -> nios2_qsys:d_readdata
 	signal nios2_qsys_data_master_waitrequest                            : std_logic;                     -- mm_interconnect_0:nios2_qsys_data_master_waitrequest -> nios2_qsys:d_waitrequest
 	signal nios2_qsys_data_master_debugaccess                            : std_logic;                     -- nios2_qsys:debug_mem_slave_debugaccess_to_roms -> mm_interconnect_0:nios2_qsys_data_master_debugaccess
@@ -509,15 +534,25 @@ architecture rtl of HDMI_QSYS is
 	signal mm_interconnect_0_refresh_s1_address                          : std_logic_vector(1 downto 0);  -- mm_interconnect_0:refresh_s1_address -> refresh:address
 	signal mm_interconnect_0_refresh_s1_write                            : std_logic;                     -- mm_interconnect_0:refresh_s1_write -> mm_interconnect_0_refresh_s1_write:in
 	signal mm_interconnect_0_refresh_s1_writedata                        : std_logic_vector(31 downto 0); -- mm_interconnect_0:refresh_s1_writedata -> refresh:writedata
+	signal mm_interconnect_0_background_data_s1_chipselect               : std_logic;                     -- mm_interconnect_0:background_data_s1_chipselect -> background_data:chipselect
+	signal mm_interconnect_0_background_data_s1_readdata                 : std_logic_vector(31 downto 0); -- background_data:readdata -> mm_interconnect_0:background_data_s1_readdata
+	signal mm_interconnect_0_background_data_s1_address                  : std_logic_vector(1 downto 0);  -- mm_interconnect_0:background_data_s1_address -> background_data:address
+	signal mm_interconnect_0_background_data_s1_write                    : std_logic;                     -- mm_interconnect_0:background_data_s1_write -> mm_interconnect_0_background_data_s1_write:in
+	signal mm_interconnect_0_background_data_s1_writedata                : std_logic_vector(31 downto 0); -- mm_interconnect_0:background_data_s1_writedata -> background_data:writedata
+	signal mm_interconnect_0_background_wr_s1_chipselect                 : std_logic;                     -- mm_interconnect_0:background_wr_s1_chipselect -> background_wr:chipselect
+	signal mm_interconnect_0_background_wr_s1_readdata                   : std_logic_vector(31 downto 0); -- background_wr:readdata -> mm_interconnect_0:background_wr_s1_readdata
+	signal mm_interconnect_0_background_wr_s1_address                    : std_logic_vector(1 downto 0);  -- mm_interconnect_0:background_wr_s1_address -> background_wr:address
+	signal mm_interconnect_0_background_wr_s1_write                      : std_logic;                     -- mm_interconnect_0:background_wr_s1_write -> mm_interconnect_0_background_wr_s1_write:in
+	signal mm_interconnect_0_background_wr_s1_writedata                  : std_logic_vector(31 downto 0); -- mm_interconnect_0:background_wr_s1_writedata -> background_wr:writedata
 	signal irq_mapper_receiver0_irq                                      : std_logic;                     -- timer:irq -> irq_mapper:receiver0_irq
 	signal irq_mapper_receiver1_irq                                      : std_logic;                     -- jtag_uart:av_irq -> irq_mapper:receiver1_irq
 	signal irq_mapper_receiver2_irq                                      : std_logic;                     -- hdmi_tx_int_n:irq -> irq_mapper:receiver2_irq
 	signal nios2_qsys_irq_irq                                            : std_logic_vector(31 downto 0); -- irq_mapper:sender_irq -> nios2_qsys:irq
 	signal irq_mapper_receiver3_irq                                      : std_logic;                     -- irq_synchronizer:sender_irq -> irq_mapper:receiver3_irq
 	signal irq_synchronizer_receiver_irq                                 : std_logic_vector(0 downto 0);  -- refresh:irq -> irq_synchronizer:receiver_irq
-	signal rst_controller_reset_out_reset                                : std_logic;                     -- rst_controller:reset_out -> [irq_mapper:reset, irq_synchronizer:sender_reset, mm_interconnect_0:nios2_qsys_reset_reset_bridge_in_reset_reset, onchip_memory2:reset, rst_controller_reset_out_reset:in, rst_translator:in_reset]
-	signal rst_controller_reset_out_reset_req                            : std_logic;                     -- rst_controller:reset_req -> [nios2_qsys:reset_req, onchip_memory2:reset_req, rst_translator:reset_req_in]
-	signal rst_controller_001_reset_out_reset                            : std_logic;                     -- rst_controller_001:reset_out -> [irq_synchronizer:receiver_reset, mm_interconnect_0:position_reset_reset_bridge_in_reset_reset, rst_controller_001_reset_out_reset:in]
+	signal rst_controller_reset_out_reset                                : std_logic;                     -- rst_controller:reset_out -> [irq_synchronizer:receiver_reset, mm_interconnect_0:position_reset_reset_bridge_in_reset_reset, rst_controller_reset_out_reset:in]
+	signal rst_controller_001_reset_out_reset                            : std_logic;                     -- rst_controller_001:reset_out -> [irq_mapper:reset, irq_synchronizer:sender_reset, mm_interconnect_0:nios2_qsys_reset_reset_bridge_in_reset_reset, onchip_memory2:reset, rst_controller_001_reset_out_reset:in, rst_translator:in_reset]
+	signal rst_controller_001_reset_out_reset_req                        : std_logic;                     -- rst_controller_001:reset_req -> [nios2_qsys:reset_req, onchip_memory2:reset_req, rst_translator:reset_req_in]
 	signal reset_reset_n_ports_inv                                       : std_logic;                     -- reset_reset_n:inv -> [pll_sys:rst, rst_controller:reset_in0, rst_controller_001:reset_in0]
 	signal mm_interconnect_0_jtag_uart_avalon_jtag_slave_read_ports_inv  : std_logic;                     -- mm_interconnect_0_jtag_uart_avalon_jtag_slave_read:inv -> jtag_uart:av_read_n
 	signal mm_interconnect_0_jtag_uart_avalon_jtag_slave_write_ports_inv : std_logic;                     -- mm_interconnect_0_jtag_uart_avalon_jtag_slave_write:inv -> jtag_uart:av_write_n
@@ -528,15 +563,41 @@ architecture rtl of HDMI_QSYS is
 	signal mm_interconnect_0_hdmi_tx_int_n_s1_write_ports_inv            : std_logic;                     -- mm_interconnect_0_hdmi_tx_int_n_s1_write:inv -> hdmi_tx_int_n:write_n
 	signal mm_interconnect_0_position_s1_write_ports_inv                 : std_logic;                     -- mm_interconnect_0_position_s1_write:inv -> position:write_n
 	signal mm_interconnect_0_refresh_s1_write_ports_inv                  : std_logic;                     -- mm_interconnect_0_refresh_s1_write:inv -> refresh:write_n
-	signal rst_controller_reset_out_reset_ports_inv                      : std_logic;                     -- rst_controller_reset_out_reset:inv -> [hdmi_tx_int_n:reset_n, i2c_scl:reset_n, i2c_sda:reset_n, jtag_uart:rst_n, led:reset_n, nios2_qsys:reset_n, sysid_qsys:reset_n, timer:reset_n]
-	signal rst_controller_001_reset_out_reset_ports_inv                  : std_logic;                     -- rst_controller_001_reset_out_reset:inv -> [position:reset_n, refresh:reset_n]
+	signal mm_interconnect_0_background_data_s1_write_ports_inv          : std_logic;                     -- mm_interconnect_0_background_data_s1_write:inv -> background_data:write_n
+	signal mm_interconnect_0_background_wr_s1_write_ports_inv            : std_logic;                     -- mm_interconnect_0_background_wr_s1_write:inv -> background_wr:write_n
+	signal rst_controller_reset_out_reset_ports_inv                      : std_logic;                     -- rst_controller_reset_out_reset:inv -> [background_data:reset_n, background_wr:reset_n, position:reset_n, refresh:reset_n]
+	signal rst_controller_001_reset_out_reset_ports_inv                  : std_logic;                     -- rst_controller_001_reset_out_reset:inv -> [hdmi_tx_int_n:reset_n, i2c_scl:reset_n, i2c_sda:reset_n, jtag_uart:rst_n, led:reset_n, nios2_qsys:reset_n, sysid_qsys:reset_n, timer:reset_n]
 
 begin
+
+	background_data : component HDMI_QSYS_background_data
+		port map (
+			clk        => clk_clk,                                              --                 clk.clk
+			reset_n    => rst_controller_reset_out_reset_ports_inv,             --               reset.reset_n
+			address    => mm_interconnect_0_background_data_s1_address,         --                  s1.address
+			write_n    => mm_interconnect_0_background_data_s1_write_ports_inv, --                    .write_n
+			writedata  => mm_interconnect_0_background_data_s1_writedata,       --                    .writedata
+			chipselect => mm_interconnect_0_background_data_s1_chipselect,      --                    .chipselect
+			readdata   => mm_interconnect_0_background_data_s1_readdata,        --                    .readdata
+			out_port   => background_data_export                                -- external_connection.export
+		);
+
+	background_wr : component HDMI_QSYS_background_wr
+		port map (
+			clk        => clk_clk,                                            --                 clk.clk
+			reset_n    => rst_controller_reset_out_reset_ports_inv,           --               reset.reset_n
+			address    => mm_interconnect_0_background_wr_s1_address,         --                  s1.address
+			write_n    => mm_interconnect_0_background_wr_s1_write_ports_inv, --                    .write_n
+			writedata  => mm_interconnect_0_background_wr_s1_writedata,       --                    .writedata
+			chipselect => mm_interconnect_0_background_wr_s1_chipselect,      --                    .chipselect
+			readdata   => mm_interconnect_0_background_wr_s1_readdata,        --                    .readdata
+			out_port   => background_wr_export                                -- external_connection.export
+		);
 
 	hdmi_tx_int_n : component HDMI_QSYS_hdmi_tx_int_n
 		port map (
 			clk        => pll_sys_outclk0_clk,                                --                 clk.clk
-			reset_n    => rst_controller_reset_out_reset_ports_inv,           --               reset.reset_n
+			reset_n    => rst_controller_001_reset_out_reset_ports_inv,       --               reset.reset_n
 			address    => mm_interconnect_0_hdmi_tx_int_n_s1_address,         --                  s1.address
 			write_n    => mm_interconnect_0_hdmi_tx_int_n_s1_write_ports_inv, --                    .write_n
 			writedata  => mm_interconnect_0_hdmi_tx_int_n_s1_writedata,       --                    .writedata
@@ -549,7 +610,7 @@ begin
 	i2c_scl : component HDMI_QSYS_i2c_scl
 		port map (
 			clk        => pll_sys_outclk0_clk,                          --                 clk.clk
-			reset_n    => rst_controller_reset_out_reset_ports_inv,     --               reset.reset_n
+			reset_n    => rst_controller_001_reset_out_reset_ports_inv, --               reset.reset_n
 			address    => mm_interconnect_0_i2c_scl_s1_address,         --                  s1.address
 			write_n    => mm_interconnect_0_i2c_scl_s1_write_ports_inv, --                    .write_n
 			writedata  => mm_interconnect_0_i2c_scl_s1_writedata,       --                    .writedata
@@ -561,7 +622,7 @@ begin
 	i2c_sda : component HDMI_QSYS_i2c_sda
 		port map (
 			clk        => pll_sys_outclk0_clk,                          --                 clk.clk
-			reset_n    => rst_controller_reset_out_reset_ports_inv,     --               reset.reset_n
+			reset_n    => rst_controller_001_reset_out_reset_ports_inv, --               reset.reset_n
 			address    => mm_interconnect_0_i2c_sda_s1_address,         --                  s1.address
 			write_n    => mm_interconnect_0_i2c_sda_s1_write_ports_inv, --                    .write_n
 			writedata  => mm_interconnect_0_i2c_sda_s1_writedata,       --                    .writedata
@@ -573,7 +634,7 @@ begin
 	jtag_uart : component HDMI_QSYS_jtag_uart
 		port map (
 			clk            => pll_sys_outclk0_clk,                                           --               clk.clk
-			rst_n          => rst_controller_reset_out_reset_ports_inv,                      --             reset.reset_n
+			rst_n          => rst_controller_001_reset_out_reset_ports_inv,                  --             reset.reset_n
 			av_chipselect  => mm_interconnect_0_jtag_uart_avalon_jtag_slave_chipselect,      -- avalon_jtag_slave.chipselect
 			av_address     => mm_interconnect_0_jtag_uart_avalon_jtag_slave_address(0),      --                  .address
 			av_read_n      => mm_interconnect_0_jtag_uart_avalon_jtag_slave_read_ports_inv,  --                  .read_n
@@ -586,21 +647,21 @@ begin
 
 	led : component HDMI_QSYS_led
 		port map (
-			clk        => pll_sys_outclk0_clk,                      --                 clk.clk
-			reset_n    => rst_controller_reset_out_reset_ports_inv, --               reset.reset_n
-			address    => mm_interconnect_0_led_s1_address,         --                  s1.address
-			write_n    => mm_interconnect_0_led_s1_write_ports_inv, --                    .write_n
-			writedata  => mm_interconnect_0_led_s1_writedata,       --                    .writedata
-			chipselect => mm_interconnect_0_led_s1_chipselect,      --                    .chipselect
-			readdata   => mm_interconnect_0_led_s1_readdata,        --                    .readdata
-			out_port   => led_external_connection_export            -- external_connection.export
+			clk        => pll_sys_outclk0_clk,                          --                 clk.clk
+			reset_n    => rst_controller_001_reset_out_reset_ports_inv, --               reset.reset_n
+			address    => mm_interconnect_0_led_s1_address,             --                  s1.address
+			write_n    => mm_interconnect_0_led_s1_write_ports_inv,     --                    .write_n
+			writedata  => mm_interconnect_0_led_s1_writedata,           --                    .writedata
+			chipselect => mm_interconnect_0_led_s1_chipselect,          --                    .chipselect
+			readdata   => mm_interconnect_0_led_s1_readdata,            --                    .readdata
+			out_port   => led_external_connection_export                -- external_connection.export
 		);
 
 	nios2_qsys : component HDMI_QSYS_nios2_qsys
 		port map (
 			clk                                 => pll_sys_outclk0_clk,                                      --                       clk.clk
-			reset_n                             => rst_controller_reset_out_reset_ports_inv,                 --                     reset.reset_n
-			reset_req                           => rst_controller_reset_out_reset_req,                       --                          .reset_req
+			reset_n                             => rst_controller_001_reset_out_reset_ports_inv,             --                     reset.reset_n
+			reset_req                           => rst_controller_001_reset_out_reset_req,                   --                          .reset_req
 			d_address                           => nios2_qsys_data_master_address,                           --               data_master.address
 			d_byteenable                        => nios2_qsys_data_master_byteenable,                        --                          .byteenable
 			d_read                              => nios2_qsys_data_master_read,                              --                          .read
@@ -638,8 +699,8 @@ begin
 			readdata   => mm_interconnect_0_onchip_memory2_s1_readdata,   --       .readdata
 			writedata  => mm_interconnect_0_onchip_memory2_s1_writedata,  --       .writedata
 			byteenable => mm_interconnect_0_onchip_memory2_s1_byteenable, --       .byteenable
-			reset      => rst_controller_reset_out_reset,                 -- reset1.reset
-			reset_req  => rst_controller_reset_out_reset_req,             --       .reset_req
+			reset      => rst_controller_001_reset_out_reset,             -- reset1.reset
+			reset_req  => rst_controller_001_reset_out_reset_req,         --       .reset_req
 			freeze     => '0'                                             -- (terminated)
 		);
 
@@ -651,10 +712,10 @@ begin
 			locked   => open                     --  locked.export
 		);
 
-	position : component HDMI_QSYS_position
+	position : component HDMI_QSYS_background_data
 		port map (
 			clk        => clk_clk,                                       --                 clk.clk
-			reset_n    => rst_controller_001_reset_out_reset_ports_inv,  --               reset.reset_n
+			reset_n    => rst_controller_reset_out_reset_ports_inv,      --               reset.reset_n
 			address    => mm_interconnect_0_position_s1_address,         --                  s1.address
 			write_n    => mm_interconnect_0_position_s1_write_ports_inv, --                    .write_n
 			writedata  => mm_interconnect_0_position_s1_writedata,       --                    .writedata
@@ -666,7 +727,7 @@ begin
 	refresh : component HDMI_QSYS_refresh
 		port map (
 			clk        => clk_clk,                                      --                 clk.clk
-			reset_n    => rst_controller_001_reset_out_reset_ports_inv, --               reset.reset_n
+			reset_n    => rst_controller_reset_out_reset_ports_inv,     --               reset.reset_n
 			address    => mm_interconnect_0_refresh_s1_address,         --                  s1.address
 			write_n    => mm_interconnect_0_refresh_s1_write_ports_inv, --                    .write_n
 			writedata  => mm_interconnect_0_refresh_s1_writedata,       --                    .writedata
@@ -679,29 +740,29 @@ begin
 	sysid_qsys : component HDMI_QSYS_sysid_qsys
 		port map (
 			clock    => pll_sys_outclk0_clk,                                   --           clk.clk
-			reset_n  => rst_controller_reset_out_reset_ports_inv,              --         reset.reset_n
+			reset_n  => rst_controller_001_reset_out_reset_ports_inv,          --         reset.reset_n
 			readdata => mm_interconnect_0_sysid_qsys_control_slave_readdata,   -- control_slave.readdata
 			address  => mm_interconnect_0_sysid_qsys_control_slave_address(0)  --              .address
 		);
 
 	timer : component HDMI_QSYS_timer
 		port map (
-			clk        => pll_sys_outclk0_clk,                        --   clk.clk
-			reset_n    => rst_controller_reset_out_reset_ports_inv,   -- reset.reset_n
-			address    => mm_interconnect_0_timer_s1_address,         --    s1.address
-			writedata  => mm_interconnect_0_timer_s1_writedata,       --      .writedata
-			readdata   => mm_interconnect_0_timer_s1_readdata,        --      .readdata
-			chipselect => mm_interconnect_0_timer_s1_chipselect,      --      .chipselect
-			write_n    => mm_interconnect_0_timer_s1_write_ports_inv, --      .write_n
-			irq        => irq_mapper_receiver0_irq                    --   irq.irq
+			clk        => pll_sys_outclk0_clk,                          --   clk.clk
+			reset_n    => rst_controller_001_reset_out_reset_ports_inv, -- reset.reset_n
+			address    => mm_interconnect_0_timer_s1_address,           --    s1.address
+			writedata  => mm_interconnect_0_timer_s1_writedata,         --      .writedata
+			readdata   => mm_interconnect_0_timer_s1_readdata,          --      .readdata
+			chipselect => mm_interconnect_0_timer_s1_chipselect,        --      .chipselect
+			write_n    => mm_interconnect_0_timer_s1_write_ports_inv,   --      .write_n
+			irq        => irq_mapper_receiver0_irq                      --   irq.irq
 		);
 
 	mm_interconnect_0 : component HDMI_QSYS_mm_interconnect_0
 		port map (
 			clk_50_clk_clk                               => clk_clk,                                                   --                             clk_50_clk.clk
 			pll_sys_outclk0_clk                          => pll_sys_outclk0_clk,                                       --                        pll_sys_outclk0.clk
-			nios2_qsys_reset_reset_bridge_in_reset_reset => rst_controller_reset_out_reset,                            -- nios2_qsys_reset_reset_bridge_in_reset.reset
-			position_reset_reset_bridge_in_reset_reset   => rst_controller_001_reset_out_reset,                        --   position_reset_reset_bridge_in_reset.reset
+			nios2_qsys_reset_reset_bridge_in_reset_reset => rst_controller_001_reset_out_reset,                        -- nios2_qsys_reset_reset_bridge_in_reset.reset
+			position_reset_reset_bridge_in_reset_reset   => rst_controller_reset_out_reset,                            --   position_reset_reset_bridge_in_reset.reset
 			nios2_qsys_data_master_address               => nios2_qsys_data_master_address,                            --                 nios2_qsys_data_master.address
 			nios2_qsys_data_master_waitrequest           => nios2_qsys_data_master_waitrequest,                        --                                       .waitrequest
 			nios2_qsys_data_master_byteenable            => nios2_qsys_data_master_byteenable,                         --                                       .byteenable
@@ -716,6 +777,16 @@ begin
 			nios2_qsys_instruction_master_read           => nios2_qsys_instruction_master_read,                        --                                       .read
 			nios2_qsys_instruction_master_readdata       => nios2_qsys_instruction_master_readdata,                    --                                       .readdata
 			nios2_qsys_instruction_master_readdatavalid  => nios2_qsys_instruction_master_readdatavalid,               --                                       .readdatavalid
+			background_data_s1_address                   => mm_interconnect_0_background_data_s1_address,              --                     background_data_s1.address
+			background_data_s1_write                     => mm_interconnect_0_background_data_s1_write,                --                                       .write
+			background_data_s1_readdata                  => mm_interconnect_0_background_data_s1_readdata,             --                                       .readdata
+			background_data_s1_writedata                 => mm_interconnect_0_background_data_s1_writedata,            --                                       .writedata
+			background_data_s1_chipselect                => mm_interconnect_0_background_data_s1_chipselect,           --                                       .chipselect
+			background_wr_s1_address                     => mm_interconnect_0_background_wr_s1_address,                --                       background_wr_s1.address
+			background_wr_s1_write                       => mm_interconnect_0_background_wr_s1_write,                  --                                       .write
+			background_wr_s1_readdata                    => mm_interconnect_0_background_wr_s1_readdata,               --                                       .readdata
+			background_wr_s1_writedata                   => mm_interconnect_0_background_wr_s1_writedata,              --                                       .writedata
+			background_wr_s1_chipselect                  => mm_interconnect_0_background_wr_s1_chipselect,             --                                       .chipselect
 			hdmi_tx_int_n_s1_address                     => mm_interconnect_0_hdmi_tx_int_n_s1_address,                --                       hdmi_tx_int_n_s1.address
 			hdmi_tx_int_n_s1_write                       => mm_interconnect_0_hdmi_tx_int_n_s1_write,                  --                                       .write
 			hdmi_tx_int_n_s1_readdata                    => mm_interconnect_0_hdmi_tx_int_n_s1_readdata,               --                                       .readdata
@@ -779,13 +850,13 @@ begin
 
 	irq_mapper : component HDMI_QSYS_irq_mapper
 		port map (
-			clk           => pll_sys_outclk0_clk,            --       clk.clk
-			reset         => rst_controller_reset_out_reset, -- clk_reset.reset
-			receiver0_irq => irq_mapper_receiver0_irq,       -- receiver0.irq
-			receiver1_irq => irq_mapper_receiver1_irq,       -- receiver1.irq
-			receiver2_irq => irq_mapper_receiver2_irq,       -- receiver2.irq
-			receiver3_irq => irq_mapper_receiver3_irq,       -- receiver3.irq
-			sender_irq    => nios2_qsys_irq_irq              --    sender.irq
+			clk           => pll_sys_outclk0_clk,                --       clk.clk
+			reset         => rst_controller_001_reset_out_reset, -- clk_reset.reset
+			receiver0_irq => irq_mapper_receiver0_irq,           -- receiver0.irq
+			receiver1_irq => irq_mapper_receiver1_irq,           -- receiver1.irq
+			receiver2_irq => irq_mapper_receiver2_irq,           -- receiver2.irq
+			receiver3_irq => irq_mapper_receiver3_irq,           -- receiver3.irq
+			sender_irq    => nios2_qsys_irq_irq                  --    sender.irq
 		);
 
 	irq_synchronizer : component altera_irq_clock_crosser
@@ -795,78 +866,13 @@ begin
 		port map (
 			receiver_clk   => clk_clk,                            --       receiver_clk.clk
 			sender_clk     => pll_sys_outclk0_clk,                --         sender_clk.clk
-			receiver_reset => rst_controller_001_reset_out_reset, -- receiver_clk_reset.reset
-			sender_reset   => rst_controller_reset_out_reset,     --   sender_clk_reset.reset
+			receiver_reset => rst_controller_reset_out_reset,     -- receiver_clk_reset.reset
+			sender_reset   => rst_controller_001_reset_out_reset, --   sender_clk_reset.reset
 			receiver_irq   => irq_synchronizer_receiver_irq,      --           receiver.irq
 			sender_irq(0)  => irq_mapper_receiver3_irq            --             sender.irq
 		);
 
 	rst_controller : component hdmi_qsys_rst_controller
-		generic map (
-			NUM_RESET_INPUTS          => 1,
-			OUTPUT_RESET_SYNC_EDGES   => "deassert",
-			SYNC_DEPTH                => 2,
-			RESET_REQUEST_PRESENT     => 1,
-			RESET_REQ_WAIT_TIME       => 1,
-			MIN_RST_ASSERTION_TIME    => 3,
-			RESET_REQ_EARLY_DSRT_TIME => 1,
-			USE_RESET_REQUEST_IN0     => 0,
-			USE_RESET_REQUEST_IN1     => 0,
-			USE_RESET_REQUEST_IN2     => 0,
-			USE_RESET_REQUEST_IN3     => 0,
-			USE_RESET_REQUEST_IN4     => 0,
-			USE_RESET_REQUEST_IN5     => 0,
-			USE_RESET_REQUEST_IN6     => 0,
-			USE_RESET_REQUEST_IN7     => 0,
-			USE_RESET_REQUEST_IN8     => 0,
-			USE_RESET_REQUEST_IN9     => 0,
-			USE_RESET_REQUEST_IN10    => 0,
-			USE_RESET_REQUEST_IN11    => 0,
-			USE_RESET_REQUEST_IN12    => 0,
-			USE_RESET_REQUEST_IN13    => 0,
-			USE_RESET_REQUEST_IN14    => 0,
-			USE_RESET_REQUEST_IN15    => 0,
-			ADAPT_RESET_REQUEST       => 0
-		)
-		port map (
-			reset_in0      => reset_reset_n_ports_inv,            -- reset_in0.reset
-			clk            => pll_sys_outclk0_clk,                --       clk.clk
-			reset_out      => rst_controller_reset_out_reset,     -- reset_out.reset
-			reset_req      => rst_controller_reset_out_reset_req, --          .reset_req
-			reset_req_in0  => '0',                                -- (terminated)
-			reset_in1      => '0',                                -- (terminated)
-			reset_req_in1  => '0',                                -- (terminated)
-			reset_in2      => '0',                                -- (terminated)
-			reset_req_in2  => '0',                                -- (terminated)
-			reset_in3      => '0',                                -- (terminated)
-			reset_req_in3  => '0',                                -- (terminated)
-			reset_in4      => '0',                                -- (terminated)
-			reset_req_in4  => '0',                                -- (terminated)
-			reset_in5      => '0',                                -- (terminated)
-			reset_req_in5  => '0',                                -- (terminated)
-			reset_in6      => '0',                                -- (terminated)
-			reset_req_in6  => '0',                                -- (terminated)
-			reset_in7      => '0',                                -- (terminated)
-			reset_req_in7  => '0',                                -- (terminated)
-			reset_in8      => '0',                                -- (terminated)
-			reset_req_in8  => '0',                                -- (terminated)
-			reset_in9      => '0',                                -- (terminated)
-			reset_req_in9  => '0',                                -- (terminated)
-			reset_in10     => '0',                                -- (terminated)
-			reset_req_in10 => '0',                                -- (terminated)
-			reset_in11     => '0',                                -- (terminated)
-			reset_req_in11 => '0',                                -- (terminated)
-			reset_in12     => '0',                                -- (terminated)
-			reset_req_in12 => '0',                                -- (terminated)
-			reset_in13     => '0',                                -- (terminated)
-			reset_req_in13 => '0',                                -- (terminated)
-			reset_in14     => '0',                                -- (terminated)
-			reset_req_in14 => '0',                                -- (terminated)
-			reset_in15     => '0',                                -- (terminated)
-			reset_req_in15 => '0'                                 -- (terminated)
-		);
-
-	rst_controller_001 : component hdmi_qsys_rst_controller_001
 		generic map (
 			NUM_RESET_INPUTS          => 1,
 			OUTPUT_RESET_SYNC_EDGES   => "deassert",
@@ -894,41 +900,106 @@ begin
 			ADAPT_RESET_REQUEST       => 0
 		)
 		port map (
-			reset_in0      => reset_reset_n_ports_inv,            -- reset_in0.reset
-			clk            => clk_clk,                            --       clk.clk
-			reset_out      => rst_controller_001_reset_out_reset, -- reset_out.reset
-			reset_req      => open,                               -- (terminated)
-			reset_req_in0  => '0',                                -- (terminated)
-			reset_in1      => '0',                                -- (terminated)
-			reset_req_in1  => '0',                                -- (terminated)
-			reset_in2      => '0',                                -- (terminated)
-			reset_req_in2  => '0',                                -- (terminated)
-			reset_in3      => '0',                                -- (terminated)
-			reset_req_in3  => '0',                                -- (terminated)
-			reset_in4      => '0',                                -- (terminated)
-			reset_req_in4  => '0',                                -- (terminated)
-			reset_in5      => '0',                                -- (terminated)
-			reset_req_in5  => '0',                                -- (terminated)
-			reset_in6      => '0',                                -- (terminated)
-			reset_req_in6  => '0',                                -- (terminated)
-			reset_in7      => '0',                                -- (terminated)
-			reset_req_in7  => '0',                                -- (terminated)
-			reset_in8      => '0',                                -- (terminated)
-			reset_req_in8  => '0',                                -- (terminated)
-			reset_in9      => '0',                                -- (terminated)
-			reset_req_in9  => '0',                                -- (terminated)
-			reset_in10     => '0',                                -- (terminated)
-			reset_req_in10 => '0',                                -- (terminated)
-			reset_in11     => '0',                                -- (terminated)
-			reset_req_in11 => '0',                                -- (terminated)
-			reset_in12     => '0',                                -- (terminated)
-			reset_req_in12 => '0',                                -- (terminated)
-			reset_in13     => '0',                                -- (terminated)
-			reset_req_in13 => '0',                                -- (terminated)
-			reset_in14     => '0',                                -- (terminated)
-			reset_req_in14 => '0',                                -- (terminated)
-			reset_in15     => '0',                                -- (terminated)
-			reset_req_in15 => '0'                                 -- (terminated)
+			reset_in0      => reset_reset_n_ports_inv,        -- reset_in0.reset
+			clk            => clk_clk,                        --       clk.clk
+			reset_out      => rst_controller_reset_out_reset, -- reset_out.reset
+			reset_req      => open,                           -- (terminated)
+			reset_req_in0  => '0',                            -- (terminated)
+			reset_in1      => '0',                            -- (terminated)
+			reset_req_in1  => '0',                            -- (terminated)
+			reset_in2      => '0',                            -- (terminated)
+			reset_req_in2  => '0',                            -- (terminated)
+			reset_in3      => '0',                            -- (terminated)
+			reset_req_in3  => '0',                            -- (terminated)
+			reset_in4      => '0',                            -- (terminated)
+			reset_req_in4  => '0',                            -- (terminated)
+			reset_in5      => '0',                            -- (terminated)
+			reset_req_in5  => '0',                            -- (terminated)
+			reset_in6      => '0',                            -- (terminated)
+			reset_req_in6  => '0',                            -- (terminated)
+			reset_in7      => '0',                            -- (terminated)
+			reset_req_in7  => '0',                            -- (terminated)
+			reset_in8      => '0',                            -- (terminated)
+			reset_req_in8  => '0',                            -- (terminated)
+			reset_in9      => '0',                            -- (terminated)
+			reset_req_in9  => '0',                            -- (terminated)
+			reset_in10     => '0',                            -- (terminated)
+			reset_req_in10 => '0',                            -- (terminated)
+			reset_in11     => '0',                            -- (terminated)
+			reset_req_in11 => '0',                            -- (terminated)
+			reset_in12     => '0',                            -- (terminated)
+			reset_req_in12 => '0',                            -- (terminated)
+			reset_in13     => '0',                            -- (terminated)
+			reset_req_in13 => '0',                            -- (terminated)
+			reset_in14     => '0',                            -- (terminated)
+			reset_req_in14 => '0',                            -- (terminated)
+			reset_in15     => '0',                            -- (terminated)
+			reset_req_in15 => '0'                             -- (terminated)
+		);
+
+	rst_controller_001 : component hdmi_qsys_rst_controller_001
+		generic map (
+			NUM_RESET_INPUTS          => 1,
+			OUTPUT_RESET_SYNC_EDGES   => "deassert",
+			SYNC_DEPTH                => 2,
+			RESET_REQUEST_PRESENT     => 1,
+			RESET_REQ_WAIT_TIME       => 1,
+			MIN_RST_ASSERTION_TIME    => 3,
+			RESET_REQ_EARLY_DSRT_TIME => 1,
+			USE_RESET_REQUEST_IN0     => 0,
+			USE_RESET_REQUEST_IN1     => 0,
+			USE_RESET_REQUEST_IN2     => 0,
+			USE_RESET_REQUEST_IN3     => 0,
+			USE_RESET_REQUEST_IN4     => 0,
+			USE_RESET_REQUEST_IN5     => 0,
+			USE_RESET_REQUEST_IN6     => 0,
+			USE_RESET_REQUEST_IN7     => 0,
+			USE_RESET_REQUEST_IN8     => 0,
+			USE_RESET_REQUEST_IN9     => 0,
+			USE_RESET_REQUEST_IN10    => 0,
+			USE_RESET_REQUEST_IN11    => 0,
+			USE_RESET_REQUEST_IN12    => 0,
+			USE_RESET_REQUEST_IN13    => 0,
+			USE_RESET_REQUEST_IN14    => 0,
+			USE_RESET_REQUEST_IN15    => 0,
+			ADAPT_RESET_REQUEST       => 0
+		)
+		port map (
+			reset_in0      => reset_reset_n_ports_inv,                -- reset_in0.reset
+			clk            => pll_sys_outclk0_clk,                    --       clk.clk
+			reset_out      => rst_controller_001_reset_out_reset,     -- reset_out.reset
+			reset_req      => rst_controller_001_reset_out_reset_req, --          .reset_req
+			reset_req_in0  => '0',                                    -- (terminated)
+			reset_in1      => '0',                                    -- (terminated)
+			reset_req_in1  => '0',                                    -- (terminated)
+			reset_in2      => '0',                                    -- (terminated)
+			reset_req_in2  => '0',                                    -- (terminated)
+			reset_in3      => '0',                                    -- (terminated)
+			reset_req_in3  => '0',                                    -- (terminated)
+			reset_in4      => '0',                                    -- (terminated)
+			reset_req_in4  => '0',                                    -- (terminated)
+			reset_in5      => '0',                                    -- (terminated)
+			reset_req_in5  => '0',                                    -- (terminated)
+			reset_in6      => '0',                                    -- (terminated)
+			reset_req_in6  => '0',                                    -- (terminated)
+			reset_in7      => '0',                                    -- (terminated)
+			reset_req_in7  => '0',                                    -- (terminated)
+			reset_in8      => '0',                                    -- (terminated)
+			reset_req_in8  => '0',                                    -- (terminated)
+			reset_in9      => '0',                                    -- (terminated)
+			reset_req_in9  => '0',                                    -- (terminated)
+			reset_in10     => '0',                                    -- (terminated)
+			reset_req_in10 => '0',                                    -- (terminated)
+			reset_in11     => '0',                                    -- (terminated)
+			reset_req_in11 => '0',                                    -- (terminated)
+			reset_in12     => '0',                                    -- (terminated)
+			reset_req_in12 => '0',                                    -- (terminated)
+			reset_in13     => '0',                                    -- (terminated)
+			reset_req_in13 => '0',                                    -- (terminated)
+			reset_in14     => '0',                                    -- (terminated)
+			reset_req_in14 => '0',                                    -- (terminated)
+			reset_in15     => '0',                                    -- (terminated)
+			reset_req_in15 => '0'                                     -- (terminated)
 		);
 
 	reset_reset_n_ports_inv <= not reset_reset_n;
@@ -950,6 +1021,10 @@ begin
 	mm_interconnect_0_position_s1_write_ports_inv <= not mm_interconnect_0_position_s1_write;
 
 	mm_interconnect_0_refresh_s1_write_ports_inv <= not mm_interconnect_0_refresh_s1_write;
+
+	mm_interconnect_0_background_data_s1_write_ports_inv <= not mm_interconnect_0_background_data_s1_write;
+
+	mm_interconnect_0_background_wr_s1_write_ports_inv <= not mm_interconnect_0_background_wr_s1_write;
 
 	rst_controller_reset_out_reset_ports_inv <= not rst_controller_reset_out_reset;
 

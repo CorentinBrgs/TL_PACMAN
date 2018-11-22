@@ -1,0 +1,28 @@
+/*
+ * direction_control.c
+ *
+ *  Created on: 21 nov. 2018
+ *      Author: berges_cor
+ */
+#include "direction_control.h"
+
+static void update_direction(void* context)
+/* interrupt handler : this function is called each time a new frame is build (60Hz)
+ * it calls *refresh_position()* function and ensures the char doesn't go out of the frame.
+*/
+{
+	position* p_pacmanPosition = (position*) context;
+	refresh_position(p_pacmanPosition);
+	IOWR_32DIRECT(POSITION_BASE, 0, p_pacmanPosition->bytePacket);
+	IOWR(REFRESH_BASE,3,0xf);
+
+	if(counter > 600){
+		counter_dir = -1;
+		p_pacmanPosition->orientation = NORTH;
+	}
+	if(counter < 60){
+		counter_dir = 1;
+		p_pacmanPosition->orientation = SOUTH;
+	}
+	counter = counter + (1<<0)*counter_dir;
+}

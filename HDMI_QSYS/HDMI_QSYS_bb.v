@@ -1,5 +1,7 @@
 
 module HDMI_QSYS (
+	background_data_export,
+	background_wr_export,
 	clk_clk,
 	hdmi_tx_int_n_external_connection_export,
 	i2c_scl_external_connection_export,
@@ -9,6 +11,8 @@ module HDMI_QSYS (
 	refresh_image_export,
 	reset_reset_n);	
 
+	output	[31:0]	background_data_export;
+	output	[4:0]	background_wr_export;
 	input		clk_clk;
 	input		hdmi_tx_int_n_external_connection_export;
 	output		i2c_scl_external_connection_export;

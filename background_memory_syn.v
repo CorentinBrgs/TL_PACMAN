@@ -33,7 +33,7 @@
 //refer to the applicable agreement for further details.
 
 
-//altsyncram ADDRESS_ACLR_B="NONE" ADDRESS_REG_B="CLOCK0" CLOCK_ENABLE_INPUT_A="BYPASS" CLOCK_ENABLE_INPUT_B="BYPASS" CLOCK_ENABLE_OUTPUT_B="BYPASS" DEVICE_FAMILY="Cyclone V" INIT_FILE="../TL_PACMAN_UTILS/bmp2mif/image.colour.mif" NUMWORDS_A=512 NUMWORDS_B=512 OPERATION_MODE="DUAL_PORT" OUTDATA_ACLR_B="NONE" OUTDATA_REG_B="UNREGISTERED" POWER_UP_UNINITIALIZED="FALSE" READ_DURING_WRITE_MODE_MIXED_PORTS="DONT_CARE" WIDTH_A=3 WIDTH_B=3 WIDTH_BYTEENA_A=1 WIDTHAD_A=9 WIDTHAD_B=9 address_a address_b clock0 data_a q_b wren_a
+//altsyncram ADDRESS_ACLR_B="NONE" ADDRESS_REG_B="CLOCK1" CLOCK_ENABLE_INPUT_A="BYPASS" CLOCK_ENABLE_INPUT_B="BYPASS" CLOCK_ENABLE_OUTPUT_B="BYPASS" DEVICE_FAMILY="Cyclone V" INIT_FILE="background.mif" INIT_FILE_LAYOUT="PORT_B" NUMWORDS_A=15 NUMWORDS_B=480 OPERATION_MODE="DUAL_PORT" OUTDATA_ACLR_B="NONE" OUTDATA_REG_B="UNREGISTERED" POWER_UP_UNINITIALIZED="FALSE" WIDTH_A=32 WIDTH_B=1 WIDTH_BYTEENA_A=1 WIDTHAD_A=4 WIDTHAD_B=9 address_a address_b clock0 clock1 data_a q_b wren_a
 //VERSION_BEGIN 18.0 cbx_altera_syncram_nd_impl 2018:04:24:18:04:18:SJ cbx_altsyncram 2018:04:24:18:04:18:SJ cbx_cycloneii 2018:04:24:18:04:18:SJ cbx_lpm_add_sub 2018:04:24:18:04:18:SJ cbx_lpm_compare 2018:04:24:18:04:18:SJ cbx_lpm_decode 2018:04:24:18:04:18:SJ cbx_lpm_mux 2018:04:24:18:04:18:SJ cbx_mgl 2018:04:24:18:08:49:SJ cbx_nadder 2018:04:24:18:04:18:SJ cbx_stratix 2018:04:24:18:04:18:SJ cbx_stratixii 2018:04:24:18:04:18:SJ cbx_stratixiii 2018:04:24:18:04:18:SJ cbx_stratixv 2018:04:24:18:04:18:SJ cbx_util_mgl 2018:04:24:18:04:18:SJ  VERSION_END
 // synthesis VERILOG_INPUT_VERSION VERILOG_2001
 // altera message_off 10463
@@ -49,41 +49,42 @@ module  background_memory_altsyncram
 	address_a,
 	address_b,
 	clock0,
+	clock1,
 	data_a,
 	q_b,
 	wren_a) /* synthesis synthesis_clearbox=1 */;
-	input   [8:0]  address_a;
+	input   [3:0]  address_a;
 	input   [8:0]  address_b;
 	input   clock0;
-	input   [2:0]  data_a;
-	output   [2:0]  q_b;
+	input   clock1;
+	input   [31:0]  data_a;
+	output   [0:0]  q_b;
 	input   wren_a;
 `ifndef ALTERA_RESERVED_QIS
 // synopsys translate_off
 `endif
 	tri1   [8:0]  address_b;
 	tri1   clock0;
-	tri1   [2:0]  data_a;
+	tri1   clock1;
+	tri1   [31:0]  data_a;
 	tri0   wren_a;
 `ifndef ALTERA_RESERVED_QIS
 // synopsys translate_on
 `endif
 
 	wire  [0:0]   wire_ram_block1a_0portbdataout;
-	wire  [0:0]   wire_ram_block1a_1portbdataout;
-	wire  [0:0]   wire_ram_block1a_2portbdataout;
-	wire  [8:0]  address_a_wire;
+	wire  [3:0]  address_a_wire;
 	wire  [8:0]  address_b_wire;
 
 	cyclonev_ram_block   ram_block1a_0
 	( 
 	.clk0(clock0),
-	.clk1(clock0),
+	.clk1(clock1),
 	.dftout(),
 	.eccstatus(),
 	.ena0(wren_a),
-	.portaaddr({address_a_wire[8:0]}),
-	.portadatain({data_a[0]}),
+	.portaaddr({address_a_wire[3:0]}),
+	.portadatain({data_a[31:0]}),
 	.portadataout(),
 	.portawe(wren_a),
 	.portbaddr({address_b_wire[8:0]}),
@@ -121,19 +122,21 @@ module  background_memory_altsyncram
 		ram_block1a_0.clk1_core_clock_enable = "none",
 		ram_block1a_0.clk1_input_clock_enable = "none",
 		ram_block1a_0.connectivity_checking = "OFF",
-		ram_block1a_0.init_file = "../TL_PACMAN_UTILS/bmp2mif/image.colour.mif",
+		ram_block1a_0.data_interleave_offset_in_bits = 1,
+		ram_block1a_0.data_interleave_width_in_bits = 1,
+		ram_block1a_0.init_file = "background.mif",
 		ram_block1a_0.init_file_layout = "port_b",
 		ram_block1a_0.logical_ram_name = "ALTSYNCRAM",
-		ram_block1a_0.mem_init0 = 512'h000000000000000000000000000000000000000000000000003BFFFF220A013FFA7F20020527FA05240BFD24EA0924AFC924800927FFFF3C04492004493FFF7F,
+		ram_block1a_0.mem_init0 = 480'h000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000007FFF,
 		ram_block1a_0.mixed_port_feed_through_mode = "dont_care",
 		ram_block1a_0.operation_mode = "dual_port",
-		ram_block1a_0.port_a_address_width = 9,
-		ram_block1a_0.port_a_data_width = 1,
+		ram_block1a_0.port_a_address_width = 4,
+		ram_block1a_0.port_a_data_width = 32,
 		ram_block1a_0.port_a_first_address = 0,
 		ram_block1a_0.port_a_first_bit_number = 0,
-		ram_block1a_0.port_a_last_address = 511,
-		ram_block1a_0.port_a_logical_ram_depth = 512,
-		ram_block1a_0.port_a_logical_ram_width = 3,
+		ram_block1a_0.port_a_last_address = 14,
+		ram_block1a_0.port_a_logical_ram_depth = 15,
+		ram_block1a_0.port_a_logical_ram_width = 32,
 		ram_block1a_0.port_b_address_clear = "none",
 		ram_block1a_0.port_b_address_clock = "clock1",
 		ram_block1a_0.port_b_address_width = 9,
@@ -141,166 +144,20 @@ module  background_memory_altsyncram
 		ram_block1a_0.port_b_data_width = 1,
 		ram_block1a_0.port_b_first_address = 0,
 		ram_block1a_0.port_b_first_bit_number = 0,
-		ram_block1a_0.port_b_last_address = 511,
-		ram_block1a_0.port_b_logical_ram_depth = 512,
-		ram_block1a_0.port_b_logical_ram_width = 3,
+		ram_block1a_0.port_b_last_address = 479,
+		ram_block1a_0.port_b_logical_ram_depth = 480,
+		ram_block1a_0.port_b_logical_ram_width = 1,
 		ram_block1a_0.port_b_read_enable_clock = "clock1",
 		ram_block1a_0.power_up_uninitialized = "false",
 		ram_block1a_0.ram_block_type = "AUTO",
 		ram_block1a_0.lpm_type = "cyclonev_ram_block";
-	cyclonev_ram_block   ram_block1a_1
-	( 
-	.clk0(clock0),
-	.clk1(clock0),
-	.dftout(),
-	.eccstatus(),
-	.ena0(wren_a),
-	.portaaddr({address_a_wire[8:0]}),
-	.portadatain({data_a[1]}),
-	.portadataout(),
-	.portawe(wren_a),
-	.portbaddr({address_b_wire[8:0]}),
-	.portbdataout(wire_ram_block1a_1portbdataout[0:0]),
-	.portbre(1'b1)
-	`ifndef FORMAL_VERIFICATION
-	// synopsys translate_off
-	`endif
-	,
-	.clr0(1'b0),
-	.clr1(1'b0),
-	.ena1(1'b1),
-	.ena2(1'b1),
-	.ena3(1'b1),
-	.portaaddrstall(1'b0),
-	.portabyteenamasks({1{1'b1}}),
-	.portare(1'b1),
-	.portbaddrstall(1'b0),
-	.portbbyteenamasks({1{1'b1}}),
-	.portbdatain({1{1'b0}}),
-	.portbwe(1'b0)
-	`ifndef FORMAL_VERIFICATION
-	// synopsys translate_on
-	`endif
-	// synopsys translate_off
-	,
-	.devclrn(1'b1),
-	.devpor(1'b1),
-	.nerror(1'b1)
-	// synopsys translate_on
-	);
-	defparam
-		ram_block1a_1.clk0_core_clock_enable = "ena0",
-		ram_block1a_1.clk0_input_clock_enable = "none",
-		ram_block1a_1.clk1_core_clock_enable = "none",
-		ram_block1a_1.clk1_input_clock_enable = "none",
-		ram_block1a_1.connectivity_checking = "OFF",
-		ram_block1a_1.init_file = "../TL_PACMAN_UTILS/bmp2mif/image.colour.mif",
-		ram_block1a_1.init_file_layout = "port_b",
-		ram_block1a_1.logical_ram_name = "ALTSYNCRAM",
-		ram_block1a_1.mem_init0 = 512'h000000000000000000000000000000000000000000000000003BFFFF220A013FFA7F20020527FA05240BFD24EA0924AFC924800927FFFF3C04492004493FFF7F,
-		ram_block1a_1.mixed_port_feed_through_mode = "dont_care",
-		ram_block1a_1.operation_mode = "dual_port",
-		ram_block1a_1.port_a_address_width = 9,
-		ram_block1a_1.port_a_data_width = 1,
-		ram_block1a_1.port_a_first_address = 0,
-		ram_block1a_1.port_a_first_bit_number = 1,
-		ram_block1a_1.port_a_last_address = 511,
-		ram_block1a_1.port_a_logical_ram_depth = 512,
-		ram_block1a_1.port_a_logical_ram_width = 3,
-		ram_block1a_1.port_b_address_clear = "none",
-		ram_block1a_1.port_b_address_clock = "clock1",
-		ram_block1a_1.port_b_address_width = 9,
-		ram_block1a_1.port_b_data_out_clear = "none",
-		ram_block1a_1.port_b_data_width = 1,
-		ram_block1a_1.port_b_first_address = 0,
-		ram_block1a_1.port_b_first_bit_number = 1,
-		ram_block1a_1.port_b_last_address = 511,
-		ram_block1a_1.port_b_logical_ram_depth = 512,
-		ram_block1a_1.port_b_logical_ram_width = 3,
-		ram_block1a_1.port_b_read_enable_clock = "clock1",
-		ram_block1a_1.power_up_uninitialized = "false",
-		ram_block1a_1.ram_block_type = "AUTO",
-		ram_block1a_1.lpm_type = "cyclonev_ram_block";
-	cyclonev_ram_block   ram_block1a_2
-	( 
-	.clk0(clock0),
-	.clk1(clock0),
-	.dftout(),
-	.eccstatus(),
-	.ena0(wren_a),
-	.portaaddr({address_a_wire[8:0]}),
-	.portadatain({data_a[2]}),
-	.portadataout(),
-	.portawe(wren_a),
-	.portbaddr({address_b_wire[8:0]}),
-	.portbdataout(wire_ram_block1a_2portbdataout[0:0]),
-	.portbre(1'b1)
-	`ifndef FORMAL_VERIFICATION
-	// synopsys translate_off
-	`endif
-	,
-	.clr0(1'b0),
-	.clr1(1'b0),
-	.ena1(1'b1),
-	.ena2(1'b1),
-	.ena3(1'b1),
-	.portaaddrstall(1'b0),
-	.portabyteenamasks({1{1'b1}}),
-	.portare(1'b1),
-	.portbaddrstall(1'b0),
-	.portbbyteenamasks({1{1'b1}}),
-	.portbdatain({1{1'b0}}),
-	.portbwe(1'b0)
-	`ifndef FORMAL_VERIFICATION
-	// synopsys translate_on
-	`endif
-	// synopsys translate_off
-	,
-	.devclrn(1'b1),
-	.devpor(1'b1),
-	.nerror(1'b1)
-	// synopsys translate_on
-	);
-	defparam
-		ram_block1a_2.clk0_core_clock_enable = "ena0",
-		ram_block1a_2.clk0_input_clock_enable = "none",
-		ram_block1a_2.clk1_core_clock_enable = "none",
-		ram_block1a_2.clk1_input_clock_enable = "none",
-		ram_block1a_2.connectivity_checking = "OFF",
-		ram_block1a_2.init_file = "../TL_PACMAN_UTILS/bmp2mif/image.colour.mif",
-		ram_block1a_2.init_file_layout = "port_b",
-		ram_block1a_2.logical_ram_name = "ALTSYNCRAM",
-		ram_block1a_2.mem_init0 = 512'h000000000000000000000000000000000000000000008000009DFFFF9105009FFD3F90010293FD029205FE9275049257E492400493FFFF9E02249002241FFFBF,
-		ram_block1a_2.mixed_port_feed_through_mode = "dont_care",
-		ram_block1a_2.operation_mode = "dual_port",
-		ram_block1a_2.port_a_address_width = 9,
-		ram_block1a_2.port_a_data_width = 1,
-		ram_block1a_2.port_a_first_address = 0,
-		ram_block1a_2.port_a_first_bit_number = 2,
-		ram_block1a_2.port_a_last_address = 511,
-		ram_block1a_2.port_a_logical_ram_depth = 512,
-		ram_block1a_2.port_a_logical_ram_width = 3,
-		ram_block1a_2.port_b_address_clear = "none",
-		ram_block1a_2.port_b_address_clock = "clock1",
-		ram_block1a_2.port_b_address_width = 9,
-		ram_block1a_2.port_b_data_out_clear = "none",
-		ram_block1a_2.port_b_data_width = 1,
-		ram_block1a_2.port_b_first_address = 0,
-		ram_block1a_2.port_b_first_bit_number = 2,
-		ram_block1a_2.port_b_last_address = 511,
-		ram_block1a_2.port_b_logical_ram_depth = 512,
-		ram_block1a_2.port_b_logical_ram_width = 3,
-		ram_block1a_2.port_b_read_enable_clock = "clock1",
-		ram_block1a_2.power_up_uninitialized = "false",
-		ram_block1a_2.ram_block_type = "AUTO",
-		ram_block1a_2.lpm_type = "cyclonev_ram_block";
 	assign
 		address_a_wire = address_a,
 		address_b_wire = address_b,
-		q_b = {wire_ram_block1a_2portbdataout[0], wire_ram_block1a_1portbdataout[0], wire_ram_block1a_0portbdataout[0]};
+		q_b = {wire_ram_block1a_0portbdataout[0]};
 	initial/*synthesis enable_verilog_initial_construct*/
  	begin
-		$display("Warning: Memory initialization file ../TL_PACMAN_UTILS/bmp2mif/image.colour.mif is not of the dimensions 512 X 3, the resulting memory design may not produce consistent simulation results.");
+		$display("Warning: Memory initialization file background.mif is not of the dimensions 480 X 1, the resulting memory design may not produce consistent simulation results.");
 	end
 endmodule //background_memory_altsyncram
 //VALID FILE
@@ -310,35 +167,38 @@ endmodule //background_memory_altsyncram
 `timescale 1 ps / 1 ps
 // synopsys translate_on
 module background_memory (
-	clock,
 	data,
 	rdaddress,
+	rdclock,
 	wraddress,
+	wrclock,
 	wren,
 	q)/* synthesis synthesis_clearbox = 1 */;
 
-	input	  clock;
-	input	[2:0]  data;
+	input	[31:0]  data;
 	input	[8:0]  rdaddress;
-	input	[8:0]  wraddress;
+	input	  rdclock;
+	input	[3:0]  wraddress;
+	input	  wrclock;
 	input	  wren;
-	output	[2:0]  q;
+	output	[0:0]  q;
 `ifndef ALTERA_RESERVED_QIS
 // synopsys translate_off
 `endif
-	tri1	  clock;
+	tri1	  wrclock;
 	tri0	  wren;
 `ifndef ALTERA_RESERVED_QIS
 // synopsys translate_on
 `endif
 
-	wire [2:0] sub_wire0;
-	wire [2:0] q = sub_wire0[2:0];
+	wire [0:0] sub_wire0;
+	wire [0:0] q = sub_wire0[0:0];
 
 	background_memory_altsyncram	background_memory_altsyncram_component (
 				.address_a (wraddress),
 				.address_b (rdaddress),
-				.clock0 (clock),
+				.clock0 (wrclock),
+				.clock1 (rdclock),
 				.data_a (data),
 				.wren_a (wren),
 				.q_b (sub_wire0));
@@ -366,7 +226,7 @@ endmodule
 // Retrieval info: PRIVATE: CLRrren NUMERIC "0"
 // Retrieval info: PRIVATE: CLRwraddress NUMERIC "0"
 // Retrieval info: PRIVATE: CLRwren NUMERIC "0"
-// Retrieval info: PRIVATE: Clock NUMERIC "0"
+// Retrieval info: PRIVATE: Clock NUMERIC "1"
 // Retrieval info: PRIVATE: Clock_A NUMERIC "0"
 // Retrieval info: PRIVATE: Clock_B NUMERIC "0"
 // Retrieval info: PRIVATE: IMPLEMENT_IN_LES NUMERIC "0"
@@ -378,9 +238,9 @@ endmodule
 // Retrieval info: PRIVATE: JTAG_ENABLED NUMERIC "0"
 // Retrieval info: PRIVATE: JTAG_ID STRING "NONE"
 // Retrieval info: PRIVATE: MAXIMUM_DEPTH NUMERIC "0"
-// Retrieval info: PRIVATE: MEMSIZE NUMERIC "1536"
+// Retrieval info: PRIVATE: MEMSIZE NUMERIC "480"
 // Retrieval info: PRIVATE: MEM_IN_BITS NUMERIC "0"
-// Retrieval info: PRIVATE: MIFfilename STRING "../TL_PACMAN_UTILS/bmp2mif/image.colour.mif"
+// Retrieval info: PRIVATE: MIFfilename STRING "background.mif"
 // Retrieval info: PRIVATE: OPERATION_MODE NUMERIC "2"
 // Retrieval info: PRIVATE: OUTDATA_ACLR_B NUMERIC "0"
 // Retrieval info: PRIVATE: OUTDATA_REG_B NUMERIC "0"
@@ -397,11 +257,11 @@ endmodule
 // Retrieval info: PRIVATE: SYNTH_WRAPPER_GEN_POSTFIX STRING "1"
 // Retrieval info: PRIVATE: USE_DIFF_CLKEN NUMERIC "0"
 // Retrieval info: PRIVATE: UseDPRAM NUMERIC "1"
-// Retrieval info: PRIVATE: VarWidth NUMERIC "0"
-// Retrieval info: PRIVATE: WIDTH_READ_A NUMERIC "3"
-// Retrieval info: PRIVATE: WIDTH_READ_B NUMERIC "3"
-// Retrieval info: PRIVATE: WIDTH_WRITE_A NUMERIC "3"
-// Retrieval info: PRIVATE: WIDTH_WRITE_B NUMERIC "3"
+// Retrieval info: PRIVATE: VarWidth NUMERIC "1"
+// Retrieval info: PRIVATE: WIDTH_READ_A NUMERIC "32"
+// Retrieval info: PRIVATE: WIDTH_READ_B NUMERIC "1"
+// Retrieval info: PRIVATE: WIDTH_WRITE_A NUMERIC "32"
+// Retrieval info: PRIVATE: WIDTH_WRITE_B NUMERIC "1"
 // Retrieval info: PRIVATE: WRADDR_ACLR_B NUMERIC "0"
 // Retrieval info: PRIVATE: WRADDR_REG_B NUMERIC "0"
 // Retrieval info: PRIVATE: WRCTRL_ACLR_B NUMERIC "0"
@@ -409,37 +269,39 @@ endmodule
 // Retrieval info: PRIVATE: rden NUMERIC "0"
 // Retrieval info: LIBRARY: altera_mf altera_mf.altera_mf_components.all
 // Retrieval info: CONSTANT: ADDRESS_ACLR_B STRING "NONE"
-// Retrieval info: CONSTANT: ADDRESS_REG_B STRING "CLOCK0"
+// Retrieval info: CONSTANT: ADDRESS_REG_B STRING "CLOCK1"
 // Retrieval info: CONSTANT: CLOCK_ENABLE_INPUT_A STRING "BYPASS"
 // Retrieval info: CONSTANT: CLOCK_ENABLE_INPUT_B STRING "BYPASS"
 // Retrieval info: CONSTANT: CLOCK_ENABLE_OUTPUT_B STRING "BYPASS"
-// Retrieval info: CONSTANT: INIT_FILE STRING "../TL_PACMAN_UTILS/bmp2mif/image.colour.mif"
+// Retrieval info: CONSTANT: INIT_FILE STRING "background.mif"
+// Retrieval info: CONSTANT: INIT_FILE_LAYOUT STRING "PORT_B"
 // Retrieval info: CONSTANT: INTENDED_DEVICE_FAMILY STRING "Cyclone V"
 // Retrieval info: CONSTANT: LPM_TYPE STRING "altsyncram"
-// Retrieval info: CONSTANT: NUMWORDS_A NUMERIC "512"
-// Retrieval info: CONSTANT: NUMWORDS_B NUMERIC "512"
+// Retrieval info: CONSTANT: NUMWORDS_A NUMERIC "15"
+// Retrieval info: CONSTANT: NUMWORDS_B NUMERIC "480"
 // Retrieval info: CONSTANT: OPERATION_MODE STRING "DUAL_PORT"
 // Retrieval info: CONSTANT: OUTDATA_ACLR_B STRING "NONE"
 // Retrieval info: CONSTANT: OUTDATA_REG_B STRING "UNREGISTERED"
 // Retrieval info: CONSTANT: POWER_UP_UNINITIALIZED STRING "FALSE"
-// Retrieval info: CONSTANT: READ_DURING_WRITE_MODE_MIXED_PORTS STRING "DONT_CARE"
-// Retrieval info: CONSTANT: WIDTHAD_A NUMERIC "9"
+// Retrieval info: CONSTANT: WIDTHAD_A NUMERIC "4"
 // Retrieval info: CONSTANT: WIDTHAD_B NUMERIC "9"
-// Retrieval info: CONSTANT: WIDTH_A NUMERIC "3"
-// Retrieval info: CONSTANT: WIDTH_B NUMERIC "3"
+// Retrieval info: CONSTANT: WIDTH_A NUMERIC "32"
+// Retrieval info: CONSTANT: WIDTH_B NUMERIC "1"
 // Retrieval info: CONSTANT: WIDTH_BYTEENA_A NUMERIC "1"
-// Retrieval info: USED_PORT: clock 0 0 0 0 INPUT VCC "clock"
-// Retrieval info: USED_PORT: data 0 0 3 0 INPUT NODEFVAL "data[2..0]"
-// Retrieval info: USED_PORT: q 0 0 3 0 OUTPUT NODEFVAL "q[2..0]"
+// Retrieval info: USED_PORT: data 0 0 32 0 INPUT NODEFVAL "data[31..0]"
+// Retrieval info: USED_PORT: q 0 0 1 0 OUTPUT NODEFVAL "q[0..0]"
 // Retrieval info: USED_PORT: rdaddress 0 0 9 0 INPUT NODEFVAL "rdaddress[8..0]"
-// Retrieval info: USED_PORT: wraddress 0 0 9 0 INPUT NODEFVAL "wraddress[8..0]"
+// Retrieval info: USED_PORT: rdclock 0 0 0 0 INPUT NODEFVAL "rdclock"
+// Retrieval info: USED_PORT: wraddress 0 0 4 0 INPUT NODEFVAL "wraddress[3..0]"
+// Retrieval info: USED_PORT: wrclock 0 0 0 0 INPUT VCC "wrclock"
 // Retrieval info: USED_PORT: wren 0 0 0 0 INPUT GND "wren"
-// Retrieval info: CONNECT: @address_a 0 0 9 0 wraddress 0 0 9 0
+// Retrieval info: CONNECT: @address_a 0 0 4 0 wraddress 0 0 4 0
 // Retrieval info: CONNECT: @address_b 0 0 9 0 rdaddress 0 0 9 0
-// Retrieval info: CONNECT: @clock0 0 0 0 0 clock 0 0 0 0
-// Retrieval info: CONNECT: @data_a 0 0 3 0 data 0 0 3 0
+// Retrieval info: CONNECT: @clock0 0 0 0 0 wrclock 0 0 0 0
+// Retrieval info: CONNECT: @clock1 0 0 0 0 rdclock 0 0 0 0
+// Retrieval info: CONNECT: @data_a 0 0 32 0 data 0 0 32 0
 // Retrieval info: CONNECT: @wren_a 0 0 0 0 wren 0 0 0 0
-// Retrieval info: CONNECT: q 0 0 3 0 @q_b 0 0 3 0
+// Retrieval info: CONNECT: q 0 0 1 0 @q_b 0 0 1 0
 // Retrieval info: GEN_FILE: TYPE_NORMAL background_memory.vhd TRUE
 // Retrieval info: GEN_FILE: TYPE_NORMAL background_memory.inc TRUE
 // Retrieval info: GEN_FILE: TYPE_NORMAL background_memory.cmp TRUE

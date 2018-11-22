@@ -1,5 +1,7 @@
 	component HDMI_QSYS is
 		port (
+			background_data_export                   : out   std_logic_vector(31 downto 0);        -- export
+			background_wr_export                     : out   std_logic_vector(4 downto 0);         -- export
 			clk_clk                                  : in    std_logic                     := 'X'; -- clk
 			hdmi_tx_int_n_external_connection_export : in    std_logic                     := 'X'; -- export
 			i2c_scl_external_connection_export       : out   std_logic;                            -- export
@@ -13,6 +15,8 @@
 
 	u0 : component HDMI_QSYS
 		port map (
+			background_data_export                   => CONNECTED_TO_background_data_export,                   --                   background_data.export
+			background_wr_export                     => CONNECTED_TO_background_wr_export,                     --                     background_wr.export
 			clk_clk                                  => CONNECTED_TO_clk_clk,                                  --                               clk.clk
 			hdmi_tx_int_n_external_connection_export => CONNECTED_TO_hdmi_tx_int_n_external_connection_export, -- hdmi_tx_int_n_external_connection.export
 			i2c_scl_external_connection_export       => CONNECTED_TO_i2c_scl_external_connection_export,       --       i2c_scl_external_connection.export

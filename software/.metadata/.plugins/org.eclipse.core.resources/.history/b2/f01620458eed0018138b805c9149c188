@@ -1,0 +1,108 @@
+/*
+ * refresh_position.h
+ *
+ *  Created on: 21 nov. 2018
+ *      Author: berges_cor
+ */
+#include <stdio.h>
+
+#include "io.h"
+#include "system.h"
+#include "alt_types.h"
+
+#ifndef REFRESH_POSITION_H_
+#define REFRESH_POSITION_H_
+
+alt_u32 refreshIO;
+alt_u32 counter = 0;
+alt_8	counter_dir = -1;
+alt_u32 temp_counter = 0;
+
+typedef enum {
+	WEST,
+	NORTH,
+	EAST,
+	SOUTH
+} orientation;
+
+typedef enum {
+	INACTIVE,
+	ACTIVE
+} char_state;
+
+typedef struct {
+	alt_u8 charId;
+	alt_u32 positionX;
+	alt_u32 positionY;
+	alt_u8 state;
+	orientation orientation;
+	alt_u32 bytePacket;
+} position;
+
+void compute_byte_packet(position* charPosition)
+//computes the binary data sent to the logic given the other arguments (position, orientation,...)
+//contained in the structure position
+{
+	charPosition->bytePacket = (charPosition->charId << 29) + (charPosition->positionX << 17 ) + (charPosition->positionY << 5) + (charPosition->state << 2) + (charPosition->orientation );
+}
+
+void init_position(position* charPosition, alt_u8 charId, alt_u32 positionX, alt_u32 positionY, alt_u8 state, orientation orientation)
+//initialize the charPosition with the given arguments
+{
+	charPosition->charId = charId ;
+	charPosition->positionX = positionX ;
+	charPosition->positionY = positionY ;
+	charPosition->state = state ;
+	charPosition->orientation = orientation ;
+	compute_byte_packet(charPosition);
+}
+
+void refresh_position(position* charPosition, collision* charCollision)
+/*this function computes the new position of the pacman given :
+ * - the orientation
+ * - the collisions around the character
+ */
+{
+	alt_u8 step = 1<<2;
+	switch(charPosition->orientation)
+	{
+		case NORTH :
+			charPosition->positionY = (charPosition->positionY > 0) ? charPosition->positionY - step : charPosition->positionY ;
+		break;
+		case EAST :
+			charPosition->positionX = (charPosition->positionX < 1440) ? charPosition->positionX + step : charPosition->positionX ;
+		break;
+		case SOUTH :
+			charPosition->positionY = (charPosition->positionY < 900) ? charPosition->positionY + step : charPosition->positionY ;
+		break;
+		case WEST :
+			charPosition->positionX = (charPosition->positionX > 0) ? charPosition->positionX - step : charPosition->positionX ;
+		break;
+	}
+	compute_byte_packet(charPosition);
+}
+
+static void refresh_position_interrupt_handler(void* context)
+/* interrupt handler : this function is called each time a new frame is build (60Hz)
+ * it calls *refresh_position()* function and ensures the char doesn't go out of the frame.
+*/
+{
+	position* p_pacmanPosition = (position*) context;
+	refresh_position(p_pacmanPosition);
+	IOWR_32DIRECT(POSITION_BASE, 0, p_pacmanPosition->bytePacket);
+	IOWR(REFRESH_BASE,3,0xf);
+
+	if(counter > 600){
+		counter_dir = -1;
+		p_pacmanPosition->orientation = NORTH;
+	}
+	if(counter < 60){
+		counter_dir = 1;
+		p_pacmanPosition->orientation = SOUTH;
+	}
+	counter = counter + (1<<2)*counter_dir;
+
+	printf("%lu %u\n", counter, counter_dir);
+}
+
+#endif /* REFRESH_POSITION_H_ */

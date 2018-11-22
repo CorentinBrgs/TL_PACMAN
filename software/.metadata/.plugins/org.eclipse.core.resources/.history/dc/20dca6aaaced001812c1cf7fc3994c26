@@ -1,0 +1,27 @@
+/*
+ * direction_control.h
+ *
+ *  Created on: 21 nov. 2018
+ *      Author: berges_cor
+ */
+
+#ifndef DIRECTION_CONTROL_H_
+#define DIRECTION_CONTROL_H_
+
+#include <stdio.h>
+
+#include "io.h"
+#include "system.h"
+#include "alt_types.h"
+
+#include "background.h"
+
+typedef enum {
+	NONE,
+	UP,
+	RIGHT,
+	DOWN,
+	LEFT
+} orientation;
+
+#endif /* DIRECTION_CONTROL_H_ */

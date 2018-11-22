@@ -1,0 +1,31 @@
+#include "background.h"
+#include "refresh_position.h"
+
+#include <stdio.h>
+
+
+#include "io.h"
+#include "system.h"
+#include "alt_types.h"
+#include "sys\alt_irq.h"
+#include "priv\alt_legacy_irq.h"
+
+int main()
+{
+	position pacmanPosition;
+	init_position(&pacmanPosition, 0, 60, 60, ACTIVE, SOUTH);
+	printf("Hello from Nios II!\n");
+
+	//IRQ initialisation
+	IOWR(REFRESH_BASE,2,0xf); //enable interrupt
+	IOWR(REFRESH_BASE,3,0xf); //clear edge register
+	printf("alt_ic_irq_enabled : %lu \n", alt_ic_irq_enabled(REFRESH_IRQ_INTERRUPT_CONTROLLER_ID, REFRESH_IRQ));
+	alt_irq_register(REFRESH_IRQ,(void*)&pacmanPosition,refresh_position_interrupt_handler);
+
+	int counter_dir = 1;
+
+	while(1)
+	{
+
+	}
+}

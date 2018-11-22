@@ -1,0 +1,59 @@
+/*
+ * refresh_position.h
+ *
+ *  Created on: 21 nov. 2018
+ *      Author: berges_cor
+ */
+#include <stdio.h>
+
+#include "io.h"
+#include "system.h"
+#include "alt_types.h"
+
+#include "background.h"
+
+#ifndef REFRESH_POSITION_H_
+#define REFRESH_POSITION_H_
+
+alt_u32 refreshIO;
+alt_u32 counter = 0;
+alt_8	counter_dir = -1;
+alt_u32 temp_counter = 0;
+
+typedef enum {
+	WEST,
+	NORTH,
+	EAST,
+	SOUTH
+} orientation;
+
+typedef enum {
+	INACTIVE,
+	ACTIVE
+} char_state;
+
+typedef struct {
+	alt_u8 charId;
+	alt_u32 positionX;
+	alt_u32 positionY;
+	alt_u8 state;
+	orientation orientation;
+	alt_u32 bytePacket;
+	collision* collision;
+} position;
+
+typedef struct {
+	alt_u8 north;
+	alt_u8 east;
+	alt_u8 south;
+	alt_u8 west;
+} collision;
+
+void compute_byte_packet(position* charPosition);
+void init_position(position* charPosition, alt_u8 charId, alt_u32 positionX, alt_u32 positionY, alt_u8 state, orientation orientation);
+void compute_collision(position* charPosition);
+alt_u8 get_block_with_coordinates(alt_u32 positionX, alt_u32 positionY, alt_u32 background[]);
+void refresh_position(position* charPosition);
+static void refresh_position_interrupt_handler(void* context);
+
+#endif /* REFRESH_POSITION_H_ */

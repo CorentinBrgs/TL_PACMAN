@@ -1,0 +1,88 @@
+/*
+ * refresh_position.c
+ *
+ *  Created on: 21 nov. 2018
+ *      Author: berges_cor
+ */
+#include "refresh_position.h"
+
+void compute_byte_packet(position* charPosition)
+//computes the binary data sent to the logic given the other arguments (position, orientation,...)
+//contained in the structure position
+{
+	charPosition->bytePacket = (charPosition->charId << 29) + (charPosition->positionX << 17 ) + (charPosition->positionY << 5) + (charPosition->state << 2) + (charPosition->orientation );
+}
+
+void initCollision(position* charPosition){
+	charPosition->collision->north = 0;
+	charPosition->collision->east = 0;
+	charPosition->collision->south = 0;
+	charPosition->collision->west = 0;
+}
+
+void init_position(position* charPosition, alt_u8 charId, alt_u32 positionX, alt_u32 positionY, alt_u8 state, orientation orientation)
+//initialize the charPosition with the given arguments
+{
+	charPosition->charId = charId ;
+	charPosition->positionX = positionX ;
+	charPosition->positionY = positionY ;
+	charPosition->state = state ;
+	charPosition->orientation = orientation ;
+	initCollision(charPosition);
+	compute_byte_packet(charPosition);
+}
+
+void compute_collision(position* charPosition){
+	charPosition->collision->north = 
+	(get_block_with_coordinates(charPosition->positionX, charPosition->positionY - 1, background) == 0) 
+	&& 
+	(get_block_with_coordinates(charPosition->positionX + 59, charPosition->positionY - 1, background) == 0);
+
+	charPosition->collision->east = 
+	(get_block_with_coordinates(charPosition->positionX + 60, charPosition->positionY, background) == 0) 
+	&& 
+	(get_block_with_coordinates(charPosition->positionX + 60, charPosition->positionY + 59, background) == 0);
+
+	charPosition->collision->south = 
+	(get_block_with_coordinates(charPosition->positionX, charPosition->positionY + 60, background) == 0) 
+	&& 
+	(get_block_with_coordinates(charPosition->positionX + 59, charPosition->positionY + 60, background) == 0);
+
+	charPosition->collision->west = 
+	(get_block_with_coordinates(charPosition->positionX - 1, charPosition->positionY, background) == 0) 
+	&& 
+	(get_block_with_coordinates(charPosition->positionX - 1, charPosition->positionY + 59, background) == 0);
+}
+
+alt_u8 get_block_with_coordinates(alt_u32 positionX, alt_u32 positionY, alt_u32 background[]){
+	alt_u16 blockX = positionX / 60;
+	alt_u16 blockY = positionY / 60;
+	//return ((background[blockY] & 1<<(8+blockX))>>(8+blockX));
+	return 3;
+}
+
+void refresh_position(position* charPosition)
+/*this function computes the new position of the pacman given :
+ * - the orientation
+ * - the collisions around the character
+ */
+{
+	compute_collision(charPosition);
+	alt_u8 step = 1<<2;
+	switch(charPosition->orientation)
+	{
+		case NORTH :
+			charPosition->positionY = ((charPosition->positionY > 0)&&(charPosition->collision->north == 0)) ? charPosition->positionY - step : charPosition->positionY ;
+		break;
+		case EAST :
+			charPosition->positionX = ((charPosition->positionX < 1440)&&(charPosition->collision->east == 0)) ? charPosition->positionX + step : charPosition->positionX ;
+		break;
+		case SOUTH :
+			charPosition->positionY = ((charPosition->positionY < 900)&&(charPosition->collision->south == 0)) ? charPosition->positionY + step : charPosition->positionY ;
+		break;
+		case WEST :
+			charPosition->positionX = ((charPosition->positionX > 0)&&(charPosition->collision->west == 0)) ? charPosition->positionX - step : charPosition->positionX ;
+		break;
+	}
+	compute_byte_packet(charPosition);
+}

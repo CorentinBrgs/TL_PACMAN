@@ -192,7 +192,8 @@ wire [23:0]	vpg_data;
 
 wire [31:0] position_table_data;
 wire        refresh_image;
-
+wire [31:0] background_data;
+wire [4:0]  background_wr;
 
 //parallelizer outputs signals
 wire [11:0] paral_data_pos;
@@ -234,7 +235,10 @@ vpg	u_vpg (
 	.vpg_g(vpg_data[15:8]),
 	.vpg_b(vpg_data[7:0]), 
 	.position_data(position_table_data),
-	.refresh_image(refresh_image)
+	.refresh_image(refresh_image),
+	.background_data(background_data),
+	.background_wraddress(background_wr[3:0]),
+	.background_wren(background_wr[4])
 );
 	
 assign HDMI_TX_CLK = vpg_pclk;
@@ -277,7 +281,9 @@ end
         .i2c_scl_external_connection_export (I2C_SCL),  // i2c_scl_external_connection.export
         .hdmi_tx_int_n_external_connection_export  (~HDMI_TX_INT),   // hdmi_tx_int_n_external_connection.export
         .position_table_export(position_table_data),
-        .refresh_image_export(refresh_image)
+        .refresh_image_export(refresh_image),
+        .background_data_export(background_data),
+		.background_wr_export(background_wr)
     );
 
 

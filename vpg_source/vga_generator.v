@@ -53,15 +53,25 @@ module vga_generator(
   output  reg [7:0]  	vga_b,
 
   input       [31:0]	position_data,
-  output  reg			refresh_image                                               
+  output  reg			refresh_image,
+
+  input                 nios_clk,
+  input       [31:0]    background_data,
+  input       [3:0]     background_wraddress,
+  input                 background_wren
+
 );
 
 background_generator background_generator_inst0 (
+	.clk(clk),
+	.nios_clk(nios_clk),
 	.row_x(pixel_x),
 	.line_y(pixel_y),
 	.enable(pre_vga_de),
 	.reset(end_image),
-	.clk(clk),
+	.data(background_data),
+	.wraddress(background_wraddress),
+	.wren(background_wren),
 	.vga_r(s_vga_r_2),
 	.vga_g(s_vga_g_2),
 	.vga_b(s_vga_b_2)

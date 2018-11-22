@@ -1,4 +1,6 @@
 	HDMI_QSYS u0 (
+		.background_data_export                   (<connected-to-background_data_export>),                   //                   background_data.export
+		.background_wr_export                     (<connected-to-background_wr_export>),                     //                     background_wr.export
 		.clk_clk                                  (<connected-to-clk_clk>),                                  //                               clk.clk
 		.hdmi_tx_int_n_external_connection_export (<connected-to-hdmi_tx_int_n_external_connection_export>), // hdmi_tx_int_n_external_connection.export
 		.i2c_scl_external_connection_export       (<connected-to-i2c_scl_external_connection_export>),       //       i2c_scl_external_connection.export

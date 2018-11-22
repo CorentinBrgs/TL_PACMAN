@@ -4,7 +4,7 @@
  * Machine generated for CPU 'nios2_qsys' in SOPC Builder design 'HDMI_QSYS'
  * SOPC Builder design path: ../../HDMI_QSYS.sopcinfo
  *
- * Generated: Wed Nov 14 12:44:10 CET 2018
+ * Generated: Mon Nov 19 18:33:39 CET 2018
  */
 
 /*

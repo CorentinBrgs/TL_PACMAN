@@ -9,6 +9,38 @@
    categories="System" />
  <parameter name="bonusData"><![CDATA[bonusData 
 {
+   element background_data
+   {
+      datum _sortIndex
+      {
+         value = "13";
+         type = "int";
+      }
+   }
+   element background_data.s1
+   {
+      datum baseAddress
+      {
+         value = "1052720";
+         type = "String";
+      }
+   }
+   element background_wr
+   {
+      datum _sortIndex
+      {
+         value = "14";
+         type = "int";
+      }
+   }
+   element background_wr.s1
+   {
+      datum baseAddress
+      {
+         value = "1052704";
+         type = "String";
+      }
+   }
    element clk_50
    {
       datum _sortIndex
@@ -39,7 +71,7 @@
    {
       datum baseAddress
       {
-         value = "1052736";
+         value = "1052768";
          type = "String";
       }
    }
@@ -60,7 +92,7 @@
    {
       datum baseAddress
       {
-         value = "1052768";
+         value = "1052800";
          type = "String";
       }
    }
@@ -81,7 +113,7 @@
    {
       datum baseAddress
       {
-         value = "1052784";
+         value = "1052816";
          type = "String";
       }
    }
@@ -102,7 +134,7 @@
    {
       datum baseAddress
       {
-         value = "1052808";
+         value = "1052840";
          type = "String";
       }
    }
@@ -123,7 +155,7 @@
    {
       datum baseAddress
       {
-         value = "1052752";
+         value = "1052784";
          type = "String";
       }
    }
@@ -202,7 +234,7 @@
    {
       datum baseAddress
       {
-         value = "1052720";
+         value = "1052752";
          type = "String";
       }
    }
@@ -223,7 +255,7 @@
       }
       datum baseAddress
       {
-         value = "1052704";
+         value = "1052736";
          type = "String";
       }
    }
@@ -244,7 +276,7 @@
    {
       datum baseAddress
       {
-         value = "1052800";
+         value = "1052832";
          type = "String";
       }
    }
@@ -290,6 +322,16 @@
  <parameter name="timeStamp" value="0" />
  <parameter name="useTestBenchNamingPattern" value="false" />
  <instanceScript></instanceScript>
+ <interface
+   name="background_data"
+   internal="background_data.external_connection"
+   type="conduit"
+   dir="end" />
+ <interface
+   name="background_wr"
+   internal="background_wr.external_connection"
+   type="conduit"
+   dir="end" />
  <interface name="clk" internal="clk_50.clk_in" type="clock" dir="end" />
  <interface
    name="hdmi_tx_int_n_external_connection"
@@ -322,6 +364,42 @@
    type="conduit"
    dir="end" />
  <interface name="reset" internal="clk_50.clk_in_reset" type="reset" dir="end" />
+ <module
+   name="background_data"
+   kind="altera_avalon_pio"
+   version="18.0"
+   enabled="1">
+  <parameter name="bitClearingEdgeCapReg" value="false" />
+  <parameter name="bitModifyingOutReg" value="false" />
+  <parameter name="captureEdge" value="false" />
+  <parameter name="clockRate" value="50000000" />
+  <parameter name="direction" value="Output" />
+  <parameter name="edgeType" value="RISING" />
+  <parameter name="generateIRQ" value="false" />
+  <parameter name="irqType" value="LEVEL" />
+  <parameter name="resetValue" value="0" />
+  <parameter name="simDoTestBenchWiring" value="false" />
+  <parameter name="simDrivenValue" value="0" />
+  <parameter name="width" value="32" />
+ </module>
+ <module
+   name="background_wr"
+   kind="altera_avalon_pio"
+   version="18.0"
+   enabled="1">
+  <parameter name="bitClearingEdgeCapReg" value="false" />
+  <parameter name="bitModifyingOutReg" value="false" />
+  <parameter name="captureEdge" value="false" />
+  <parameter name="clockRate" value="50000000" />
+  <parameter name="direction" value="Output" />
+  <parameter name="edgeType" value="RISING" />
+  <parameter name="generateIRQ" value="false" />
+  <parameter name="irqType" value="LEVEL" />
+  <parameter name="resetValue" value="0" />
+  <parameter name="simDoTestBenchWiring" value="false" />
+  <parameter name="simDrivenValue" value="0" />
+  <parameter name="width" value="5" />
+ </module>
  <module name="clk_50" kind="clock_source" version="18.0" enabled="1">
   <parameter name="clockFrequency" value="50000000" />
   <parameter name="clockFrequencyKnown" value="true" />
@@ -427,7 +505,7 @@
   <parameter name="dataAddrWidth" value="21" />
   <parameter name="dataMasterHighPerformanceAddrWidth" value="1" />
   <parameter name="dataMasterHighPerformanceMapParam" value="" />
-  <parameter name="dataSlaveMapParam"><![CDATA[<address-map><slave name='onchip_memory2.s1' start='0x80000' end='0xCBAF0' type='altera_avalon_onchip_memory2.s1' /><slave name='nios2_qsys.debug_mem_slave' start='0x100800' end='0x101000' type='altera_nios2_gen2.debug_mem_slave' /><slave name='timer.s1' start='0x101000' end='0x101020' type='altera_avalon_timer.s1' /><slave name='refresh.s1' start='0x101020' end='0x101030' type='altera_avalon_pio.s1' /><slave name='position.s1' start='0x101030' end='0x101040' type='altera_avalon_pio.s1' /><slave name='hdmi_tx_int_n.s1' start='0x101040' end='0x101050' type='altera_avalon_pio.s1' /><slave name='led.s1' start='0x101050' end='0x101060' type='altera_avalon_pio.s1' /><slave name='i2c_scl.s1' start='0x101060' end='0x101070' type='altera_avalon_pio.s1' /><slave name='i2c_sda.s1' start='0x101070' end='0x101080' type='altera_avalon_pio.s1' /><slave name='sysid_qsys.control_slave' start='0x101080' end='0x101088' type='altera_avalon_sysid_qsys.control_slave' /><slave name='jtag_uart.avalon_jtag_slave' start='0x101088' end='0x101090' type='altera_avalon_jtag_uart.avalon_jtag_slave' /></address-map>]]></parameter>
+  <parameter name="dataSlaveMapParam"><![CDATA[<address-map><slave name='onchip_memory2.s1' start='0x80000' end='0xCBAF0' type='altera_avalon_onchip_memory2.s1' /><slave name='nios2_qsys.debug_mem_slave' start='0x100800' end='0x101000' type='altera_nios2_gen2.debug_mem_slave' /><slave name='timer.s1' start='0x101000' end='0x101020' type='altera_avalon_timer.s1' /><slave name='background_wr.s1' start='0x101020' end='0x101030' type='altera_avalon_pio.s1' /><slave name='background_data.s1' start='0x101030' end='0x101040' type='altera_avalon_pio.s1' /><slave name='refresh.s1' start='0x101040' end='0x101050' type='altera_avalon_pio.s1' /><slave name='position.s1' start='0x101050' end='0x101060' type='altera_avalon_pio.s1' /><slave name='hdmi_tx_int_n.s1' start='0x101060' end='0x101070' type='altera_avalon_pio.s1' /><slave name='led.s1' start='0x101070' end='0x101080' type='altera_avalon_pio.s1' /><slave name='i2c_scl.s1' start='0x101080' end='0x101090' type='altera_avalon_pio.s1' /><slave name='i2c_sda.s1' start='0x101090' end='0x1010A0' type='altera_avalon_pio.s1' /><slave name='sysid_qsys.control_slave' start='0x1010A0' end='0x1010A8' type='altera_avalon_sysid_qsys.control_slave' /><slave name='jtag_uart.avalon_jtag_slave' start='0x1010A8' end='0x1010B0' type='altera_avalon_jtag_uart.avalon_jtag_slave' /></address-map>]]></parameter>
   <parameter name="data_master_high_performance_paddr_base" value="0" />
   <parameter name="data_master_high_performance_paddr_size" value="0" />
   <parameter name="data_master_paddr_base" value="0" />
@@ -873,7 +951,7 @@
    start="nios2_qsys.data_master"
    end="jtag_uart.avalon_jtag_slave">
   <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x00101088" />
+  <parameter name="baseAddress" value="0x001010a8" />
   <parameter name="defaultConnection" value="false" />
  </connection>
  <connection
@@ -882,7 +960,7 @@
    start="nios2_qsys.data_master"
    end="sysid_qsys.control_slave">
   <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x00101080" />
+  <parameter name="baseAddress" value="0x001010a0" />
   <parameter name="defaultConnection" value="false" />
  </connection>
  <connection
@@ -918,7 +996,7 @@
    start="nios2_qsys.data_master"
    end="i2c_sda.s1">
   <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x00101070" />
+  <parameter name="baseAddress" value="0x00101090" />
   <parameter name="defaultConnection" value="false" />
  </connection>
  <connection
@@ -927,7 +1005,7 @@
    start="nios2_qsys.data_master"
    end="i2c_scl.s1">
   <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x00101060" />
+  <parameter name="baseAddress" value="0x00101080" />
   <parameter name="defaultConnection" value="false" />
  </connection>
  <connection
@@ -936,7 +1014,7 @@
    start="nios2_qsys.data_master"
    end="led.s1">
   <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x00101050" />
+  <parameter name="baseAddress" value="0x00101070" />
   <parameter name="defaultConnection" value="false" />
  </connection>
  <connection
@@ -945,7 +1023,7 @@
    start="nios2_qsys.data_master"
    end="hdmi_tx_int_n.s1">
   <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x00101040" />
+  <parameter name="baseAddress" value="0x00101060" />
   <parameter name="defaultConnection" value="false" />
  </connection>
  <connection
@@ -954,7 +1032,7 @@
    start="nios2_qsys.data_master"
    end="position.s1">
   <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x00101030" />
+  <parameter name="baseAddress" value="0x00101050" />
   <parameter name="defaultConnection" value="false" />
  </connection>
  <connection
@@ -962,6 +1040,24 @@
    version="18.0"
    start="nios2_qsys.data_master"
    end="refresh.s1">
+  <parameter name="arbitrationPriority" value="1" />
+  <parameter name="baseAddress" value="0x00101040" />
+  <parameter name="defaultConnection" value="false" />
+ </connection>
+ <connection
+   kind="avalon"
+   version="18.0"
+   start="nios2_qsys.data_master"
+   end="background_data.s1">
+  <parameter name="arbitrationPriority" value="1" />
+  <parameter name="baseAddress" value="0x00101030" />
+  <parameter name="defaultConnection" value="false" />
+ </connection>
+ <connection
+   kind="avalon"
+   version="18.0"
+   start="nios2_qsys.data_master"
+   end="background_wr.s1">
   <parameter name="arbitrationPriority" value="1" />
   <parameter name="baseAddress" value="0x00101020" />
   <parameter name="defaultConnection" value="false" />
@@ -986,6 +1082,16 @@
  </connection>
  <connection kind="clock" version="18.0" start="clk_50.clk" end="position.clk" />
  <connection kind="clock" version="18.0" start="clk_50.clk" end="refresh.clk" />
+ <connection
+   kind="clock"
+   version="18.0"
+   start="clk_50.clk"
+   end="background_data.clk" />
+ <connection
+   kind="clock"
+   version="18.0"
+   start="clk_50.clk"
+   end="background_wr.clk" />
  <connection kind="clock" version="18.0" start="clk_50.clk" end="pll_sys.refclk" />
  <connection
    kind="clock"
@@ -1095,6 +1201,16 @@
    version="18.0"
    start="clk_50.clk_reset"
    end="refresh.reset" />
+ <connection
+   kind="reset"
+   version="18.0"
+   start="clk_50.clk_reset"
+   end="background_data.reset" />
+ <connection
+   kind="reset"
+   version="18.0"
+   start="clk_50.clk_reset"
+   end="background_wr.reset" />
  <connection
    kind="reset"
    version="18.0"
