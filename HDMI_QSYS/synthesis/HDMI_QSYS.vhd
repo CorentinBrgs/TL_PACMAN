@@ -12,6 +12,8 @@ entity HDMI_QSYS is
 		background_wr_export                     : out   std_logic_vector(4 downto 0);         --                     background_wr.export
 		clk_clk                                  : in    std_logic                     := '0'; --                               clk.clk
 		down_button_export                       : in    std_logic                     := '0'; --                       down_button.export
+		food_layer_data_export                   : out   std_logic_vector(31 downto 0);        --                   food_layer_data.export
+		food_layer_wr_export                     : out   std_logic_vector(4 downto 0);         --                     food_layer_wr.export
 		hdmi_tx_int_n_external_connection_export : in    std_logic                     := '0'; -- hdmi_tx_int_n_external_connection.export
 		i2c_scl_external_connection_export       : out   std_logic;                            --       i2c_scl_external_connection.export
 		i2c_sda_external_connection_export       : inout std_logic                     := '0'; --       i2c_sda_external_connection.export
@@ -263,6 +265,16 @@ architecture rtl of HDMI_QSYS is
 			down_button_s1_readdata                      : in  std_logic_vector(31 downto 0) := (others => 'X'); -- readdata
 			down_button_s1_writedata                     : out std_logic_vector(31 downto 0);                    -- writedata
 			down_button_s1_chipselect                    : out std_logic;                                        -- chipselect
+			food_layer_data_s1_address                   : out std_logic_vector(1 downto 0);                     -- address
+			food_layer_data_s1_write                     : out std_logic;                                        -- write
+			food_layer_data_s1_readdata                  : in  std_logic_vector(31 downto 0) := (others => 'X'); -- readdata
+			food_layer_data_s1_writedata                 : out std_logic_vector(31 downto 0);                    -- writedata
+			food_layer_data_s1_chipselect                : out std_logic;                                        -- chipselect
+			food_layer_wr_s1_address                     : out std_logic_vector(1 downto 0);                     -- address
+			food_layer_wr_s1_write                       : out std_logic;                                        -- write
+			food_layer_wr_s1_readdata                    : in  std_logic_vector(31 downto 0) := (others => 'X'); -- readdata
+			food_layer_wr_s1_writedata                   : out std_logic_vector(31 downto 0);                    -- writedata
+			food_layer_wr_s1_chipselect                  : out std_logic;                                        -- chipselect
 			hdmi_tx_int_n_s1_address                     : out std_logic_vector(1 downto 0);                     -- address
 			hdmi_tx_int_n_s1_write                       : out std_logic;                                        -- write
 			hdmi_tx_int_n_s1_readdata                    : in  std_logic_vector(31 downto 0) := (others => 'X'); -- readdata
@@ -606,6 +618,16 @@ architecture rtl of HDMI_QSYS is
 	signal mm_interconnect_0_right_button_s1_address                     : std_logic_vector(1 downto 0);  -- mm_interconnect_0:right_button_s1_address -> right_button:address
 	signal mm_interconnect_0_right_button_s1_write                       : std_logic;                     -- mm_interconnect_0:right_button_s1_write -> mm_interconnect_0_right_button_s1_write:in
 	signal mm_interconnect_0_right_button_s1_writedata                   : std_logic_vector(31 downto 0); -- mm_interconnect_0:right_button_s1_writedata -> right_button:writedata
+	signal mm_interconnect_0_food_layer_data_s1_chipselect               : std_logic;                     -- mm_interconnect_0:food_layer_data_s1_chipselect -> food_layer_data:chipselect
+	signal mm_interconnect_0_food_layer_data_s1_readdata                 : std_logic_vector(31 downto 0); -- food_layer_data:readdata -> mm_interconnect_0:food_layer_data_s1_readdata
+	signal mm_interconnect_0_food_layer_data_s1_address                  : std_logic_vector(1 downto 0);  -- mm_interconnect_0:food_layer_data_s1_address -> food_layer_data:address
+	signal mm_interconnect_0_food_layer_data_s1_write                    : std_logic;                     -- mm_interconnect_0:food_layer_data_s1_write -> mm_interconnect_0_food_layer_data_s1_write:in
+	signal mm_interconnect_0_food_layer_data_s1_writedata                : std_logic_vector(31 downto 0); -- mm_interconnect_0:food_layer_data_s1_writedata -> food_layer_data:writedata
+	signal mm_interconnect_0_food_layer_wr_s1_chipselect                 : std_logic;                     -- mm_interconnect_0:food_layer_wr_s1_chipselect -> food_layer_wr:chipselect
+	signal mm_interconnect_0_food_layer_wr_s1_readdata                   : std_logic_vector(31 downto 0); -- food_layer_wr:readdata -> mm_interconnect_0:food_layer_wr_s1_readdata
+	signal mm_interconnect_0_food_layer_wr_s1_address                    : std_logic_vector(1 downto 0);  -- mm_interconnect_0:food_layer_wr_s1_address -> food_layer_wr:address
+	signal mm_interconnect_0_food_layer_wr_s1_write                      : std_logic;                     -- mm_interconnect_0:food_layer_wr_s1_write -> mm_interconnect_0_food_layer_wr_s1_write:in
+	signal mm_interconnect_0_food_layer_wr_s1_writedata                  : std_logic_vector(31 downto 0); -- mm_interconnect_0:food_layer_wr_s1_writedata -> food_layer_wr:writedata
 	signal irq_mapper_receiver0_irq                                      : std_logic;                     -- timer:irq -> irq_mapper:receiver0_irq
 	signal irq_mapper_receiver1_irq                                      : std_logic;                     -- jtag_uart:av_irq -> irq_mapper:receiver1_irq
 	signal irq_mapper_receiver2_irq                                      : std_logic;                     -- hdmi_tx_int_n:irq -> irq_mapper:receiver2_irq
@@ -639,7 +661,9 @@ architecture rtl of HDMI_QSYS is
 	signal mm_interconnect_0_up_button_s1_write_ports_inv                : std_logic;                     -- mm_interconnect_0_up_button_s1_write:inv -> up_button:write_n
 	signal mm_interconnect_0_down_button_s1_write_ports_inv              : std_logic;                     -- mm_interconnect_0_down_button_s1_write:inv -> down_button:write_n
 	signal mm_interconnect_0_right_button_s1_write_ports_inv             : std_logic;                     -- mm_interconnect_0_right_button_s1_write:inv -> right_button:write_n
-	signal rst_controller_reset_out_reset_ports_inv                      : std_logic;                     -- rst_controller_reset_out_reset:inv -> [background_data:reset_n, background_wr:reset_n, down_button:reset_n, left_button:reset_n, position:reset_n, refresh:reset_n, right_button:reset_n, up_button:reset_n]
+	signal mm_interconnect_0_food_layer_data_s1_write_ports_inv          : std_logic;                     -- mm_interconnect_0_food_layer_data_s1_write:inv -> food_layer_data:write_n
+	signal mm_interconnect_0_food_layer_wr_s1_write_ports_inv            : std_logic;                     -- mm_interconnect_0_food_layer_wr_s1_write:inv -> food_layer_wr:write_n
+	signal rst_controller_reset_out_reset_ports_inv                      : std_logic;                     -- rst_controller_reset_out_reset:inv -> [background_data:reset_n, background_wr:reset_n, down_button:reset_n, food_layer_data:reset_n, food_layer_wr:reset_n, left_button:reset_n, position:reset_n, refresh:reset_n, right_button:reset_n, up_button:reset_n]
 	signal rst_controller_001_reset_out_reset_ports_inv                  : std_logic;                     -- rst_controller_001_reset_out_reset:inv -> [hdmi_tx_int_n:reset_n, i2c_scl:reset_n, i2c_sda:reset_n, jtag_uart:rst_n, led:reset_n, nios2_qsys:reset_n, sysid_qsys:reset_n, timer:reset_n]
 
 begin
@@ -679,6 +703,30 @@ begin
 			readdata   => mm_interconnect_0_down_button_s1_readdata,        --                    .readdata
 			in_port    => down_button_export,                               -- external_connection.export
 			irq        => irq_synchronizer_003_receiver_irq(0)              --                 irq.irq
+		);
+
+	food_layer_data : component HDMI_QSYS_background_data
+		port map (
+			clk        => clk_clk,                                              --                 clk.clk
+			reset_n    => rst_controller_reset_out_reset_ports_inv,             --               reset.reset_n
+			address    => mm_interconnect_0_food_layer_data_s1_address,         --                  s1.address
+			write_n    => mm_interconnect_0_food_layer_data_s1_write_ports_inv, --                    .write_n
+			writedata  => mm_interconnect_0_food_layer_data_s1_writedata,       --                    .writedata
+			chipselect => mm_interconnect_0_food_layer_data_s1_chipselect,      --                    .chipselect
+			readdata   => mm_interconnect_0_food_layer_data_s1_readdata,        --                    .readdata
+			out_port   => food_layer_data_export                                -- external_connection.export
+		);
+
+	food_layer_wr : component HDMI_QSYS_background_wr
+		port map (
+			clk        => clk_clk,                                            --                 clk.clk
+			reset_n    => rst_controller_reset_out_reset_ports_inv,           --               reset.reset_n
+			address    => mm_interconnect_0_food_layer_wr_s1_address,         --                  s1.address
+			write_n    => mm_interconnect_0_food_layer_wr_s1_write_ports_inv, --                    .write_n
+			writedata  => mm_interconnect_0_food_layer_wr_s1_writedata,       --                    .writedata
+			chipselect => mm_interconnect_0_food_layer_wr_s1_chipselect,      --                    .chipselect
+			readdata   => mm_interconnect_0_food_layer_wr_s1_readdata,        --                    .readdata
+			out_port   => food_layer_wr_export                                -- external_connection.export
 		);
 
 	hdmi_tx_int_n : component HDMI_QSYS_hdmi_tx_int_n
@@ -918,6 +966,16 @@ begin
 			down_button_s1_readdata                      => mm_interconnect_0_down_button_s1_readdata,                 --                                       .readdata
 			down_button_s1_writedata                     => mm_interconnect_0_down_button_s1_writedata,                --                                       .writedata
 			down_button_s1_chipselect                    => mm_interconnect_0_down_button_s1_chipselect,               --                                       .chipselect
+			food_layer_data_s1_address                   => mm_interconnect_0_food_layer_data_s1_address,              --                     food_layer_data_s1.address
+			food_layer_data_s1_write                     => mm_interconnect_0_food_layer_data_s1_write,                --                                       .write
+			food_layer_data_s1_readdata                  => mm_interconnect_0_food_layer_data_s1_readdata,             --                                       .readdata
+			food_layer_data_s1_writedata                 => mm_interconnect_0_food_layer_data_s1_writedata,            --                                       .writedata
+			food_layer_data_s1_chipselect                => mm_interconnect_0_food_layer_data_s1_chipselect,           --                                       .chipselect
+			food_layer_wr_s1_address                     => mm_interconnect_0_food_layer_wr_s1_address,                --                       food_layer_wr_s1.address
+			food_layer_wr_s1_write                       => mm_interconnect_0_food_layer_wr_s1_write,                  --                                       .write
+			food_layer_wr_s1_readdata                    => mm_interconnect_0_food_layer_wr_s1_readdata,               --                                       .readdata
+			food_layer_wr_s1_writedata                   => mm_interconnect_0_food_layer_wr_s1_writedata,              --                                       .writedata
+			food_layer_wr_s1_chipselect                  => mm_interconnect_0_food_layer_wr_s1_chipselect,             --                                       .chipselect
 			hdmi_tx_int_n_s1_address                     => mm_interconnect_0_hdmi_tx_int_n_s1_address,                --                       hdmi_tx_int_n_s1.address
 			hdmi_tx_int_n_s1_write                       => mm_interconnect_0_hdmi_tx_int_n_s1_write,                  --                                       .write
 			hdmi_tx_int_n_s1_readdata                    => mm_interconnect_0_hdmi_tx_int_n_s1_readdata,               --                                       .readdata
@@ -1235,6 +1293,10 @@ begin
 	mm_interconnect_0_down_button_s1_write_ports_inv <= not mm_interconnect_0_down_button_s1_write;
 
 	mm_interconnect_0_right_button_s1_write_ports_inv <= not mm_interconnect_0_right_button_s1_write;
+
+	mm_interconnect_0_food_layer_data_s1_write_ports_inv <= not mm_interconnect_0_food_layer_data_s1_write;
+
+	mm_interconnect_0_food_layer_wr_s1_write_ports_inv <= not mm_interconnect_0_food_layer_wr_s1_write;
 
 	rst_controller_reset_out_reset_ports_inv <= not rst_controller_reset_out_reset;
 

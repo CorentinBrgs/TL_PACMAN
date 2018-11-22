@@ -39,47 +39,34 @@ void compute_collision(position* charPosition){
 	charPosition->collision.north = 1 -
 		(int)
 		(
-			(get_block_with_coordinates(charPosition->positionX, 		charPosition->positionY - 1) 	== 0)
+			(get_block_with_coordinates(charPosition->positionX, 		charPosition->positionY - 1, background) 	== 0)
 			&& 
-			(get_block_with_coordinates(charPosition->positionX + 59, 	charPosition->positionY - 1) 	== 0)
+			(get_block_with_coordinates(charPosition->positionX + 59, 	charPosition->positionY - 1, background) 	== 0)
 		);
 
 	charPosition->collision.east = 1 -
 		(int)
 		(
-			(get_block_with_coordinates(charPosition->positionX + 60, 	charPosition->positionY) 		== 0)
+			(get_block_with_coordinates(charPosition->positionX + 60, 	charPosition->positionY, background) 		== 0)
 			&& 
-			(get_block_with_coordinates(charPosition->positionX + 60, 	charPosition->positionY + 59) 	== 0)
+			(get_block_with_coordinates(charPosition->positionX + 60, 	charPosition->positionY + 59, background) 	== 0)
 		);
 
 	charPosition->collision.south = 1 -
 		(int)
 		(
-			(get_block_with_coordinates(charPosition->positionX, 		charPosition->positionY + 60) 	== 0)
+			(get_block_with_coordinates(charPosition->positionX, 		charPosition->positionY + 60, background) 	== 0)
 			&& 
-			(get_block_with_coordinates(charPosition->positionX + 59, 	charPosition->positionY + 60) 	== 0)
+			(get_block_with_coordinates(charPosition->positionX + 59, 	charPosition->positionY + 60, background) 	== 0)
 		);
 
 	charPosition->collision.west = 1 -
 		(int)
 		(
-			(get_block_with_coordinates(charPosition->positionX - 1, 	charPosition->positionY) 		== 0)
+			(get_block_with_coordinates(charPosition->positionX - 1, 	charPosition->positionY, background) 		== 0)
 			&& 
-			(get_block_with_coordinates(charPosition->positionX - 1, 	charPosition->positionY + 59) 	== 0)
+			(get_block_with_coordinates(charPosition->positionX - 1, 	charPosition->positionY + 59, background) 	== 0)
 		);
-}
-
-// void compute_collision(position* charPosition){
-// 	charPosition->collision.north = 2;
-// 	charPosition->collision.east = 2;
-// 	charPosition->collision.south = 2;
-// 	charPosition->collision.west = 2;
-// }
-
-alt_u8 get_block_with_coordinates(alt_u32 positionX, alt_u32 positionY){
-	alt_u16 blockX = positionX / 60;
-	alt_u16 blockY = positionY / 60;
-	return ((background[blockY] & 1<<(8+blockX))>>(8+blockX));
 }
 
 void refresh_position(position* charPosition, alt_u8 autoMode)

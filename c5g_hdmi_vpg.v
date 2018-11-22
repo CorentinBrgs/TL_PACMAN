@@ -194,6 +194,10 @@ wire [31:0] position_table_data;
 wire        refresh_image;
 wire [31:0] background_data;
 wire [4:0]  background_wr;
+wire [31:0] food_layer_data;
+wire [4:0]  food_layer_wr;
+
+
 
 //parallelizer outputs signals
 wire [11:0] paral_data_pos;
@@ -238,7 +242,10 @@ vpg	u_vpg (
 	.refresh_image(refresh_image),
 	.background_data(background_data),
 	.background_wraddress(background_wr[3:0]),
-	.background_wren(background_wr[4])
+	.background_wren(background_wr[4]),
+	.food_layer_data(food_layer_data),
+	.food_layer_wraddress(food_layer_wr[3:0]),
+	.food_layer_wren(food_layer_wr[4])
 );
 	
 assign HDMI_TX_CLK = vpg_pclk;
@@ -283,11 +290,13 @@ end
         .position_table_export(position_table_data),
         .refresh_image_export(refresh_image),
         .background_data_export(background_data),
+		.background_wr_export(background_wr),
+		.food_layer_data_export(food_layer_data),
+		.food_layer_wr_export(food_layer_wr),		
         .left_button_export(KEY[3]),
         .up_button_export(KEY[2]),
         .down_button_export(KEY[1]),
-        .right_button_export(KEY[0]),
-		.background_wr_export(background_wr)
+        .right_button_export(KEY[0])
     );
 
 

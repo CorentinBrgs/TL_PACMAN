@@ -4,7 +4,7 @@
  * Machine generated for CPU 'nios2_qsys' in SOPC Builder design 'HDMI_QSYS'
  * SOPC Builder design path: ../../HDMI_QSYS.sopcinfo
  *
- * Generated: Thu Nov 22 16:02:04 CET 2018
+ * Generated: Thu Nov 22 18:08:20 CET 2018
  */
 
 /*
@@ -165,19 +165,19 @@
 #define ALT_NUM_INTERNAL_INTERRUPT_CONTROLLERS 1
 #define ALT_NUM_INTERRUPT_CONTROLLERS 1
 #define ALT_STDERR "/dev/jtag_uart"
-#define ALT_STDERR_BASE 0x101128
+#define ALT_STDERR_BASE 0x101108
 #define ALT_STDERR_DEV jtag_uart
 #define ALT_STDERR_IS_JTAG_UART
 #define ALT_STDERR_PRESENT
 #define ALT_STDERR_TYPE "altera_avalon_jtag_uart"
 #define ALT_STDIN "/dev/jtag_uart"
-#define ALT_STDIN_BASE 0x101128
+#define ALT_STDIN_BASE 0x101108
 #define ALT_STDIN_DEV jtag_uart
 #define ALT_STDIN_IS_JTAG_UART
 #define ALT_STDIN_PRESENT
 #define ALT_STDIN_TYPE "altera_avalon_jtag_uart"
 #define ALT_STDOUT "/dev/jtag_uart"
-#define ALT_STDOUT_BASE 0x101128
+#define ALT_STDOUT_BASE 0x101108
 #define ALT_STDOUT_DEV jtag_uart
 #define ALT_STDOUT_IS_JTAG_UART
 #define ALT_STDOUT_PRESENT
@@ -191,7 +191,7 @@
  */
 
 #define ALT_MODULE_CLASS_background_data altera_avalon_pio
-#define BACKGROUND_DATA_BASE 0x1010b0
+#define BACKGROUND_DATA_BASE 0x101090
 #define BACKGROUND_DATA_BIT_CLEARING_EDGE_REGISTER 0
 #define BACKGROUND_DATA_BIT_MODIFYING_OUTPUT_REGISTER 0
 #define BACKGROUND_DATA_CAPTURE 0
@@ -218,7 +218,7 @@
  */
 
 #define ALT_MODULE_CLASS_background_wr altera_avalon_pio
-#define BACKGROUND_WR_BASE 0x1010a0
+#define BACKGROUND_WR_BASE 0x101080
 #define BACKGROUND_WR_BIT_CLEARING_EDGE_REGISTER 0
 #define BACKGROUND_WR_BIT_MODIFYING_OUTPUT_REGISTER 0
 #define BACKGROUND_WR_CAPTURE 0
@@ -245,7 +245,7 @@
  */
 
 #define ALT_MODULE_CLASS_down_button altera_avalon_pio
-#define DOWN_BUTTON_BASE 0x101070
+#define DOWN_BUTTON_BASE 0x101050
 #define DOWN_BUTTON_BIT_CLEARING_EDGE_REGISTER 0
 #define DOWN_BUTTON_BIT_MODIFYING_OUTPUT_REGISTER 0
 #define DOWN_BUTTON_CAPTURE 1
@@ -267,6 +267,60 @@
 
 
 /*
+ * food_layer_data configuration
+ *
+ */
+
+#define ALT_MODULE_CLASS_food_layer_data altera_avalon_pio
+#define FOOD_LAYER_DATA_BASE 0x101030
+#define FOOD_LAYER_DATA_BIT_CLEARING_EDGE_REGISTER 0
+#define FOOD_LAYER_DATA_BIT_MODIFYING_OUTPUT_REGISTER 0
+#define FOOD_LAYER_DATA_CAPTURE 0
+#define FOOD_LAYER_DATA_DATA_WIDTH 32
+#define FOOD_LAYER_DATA_DO_TEST_BENCH_WIRING 0
+#define FOOD_LAYER_DATA_DRIVEN_SIM_VALUE 0
+#define FOOD_LAYER_DATA_EDGE_TYPE "NONE"
+#define FOOD_LAYER_DATA_FREQ 50000000
+#define FOOD_LAYER_DATA_HAS_IN 0
+#define FOOD_LAYER_DATA_HAS_OUT 1
+#define FOOD_LAYER_DATA_HAS_TRI 0
+#define FOOD_LAYER_DATA_IRQ -1
+#define FOOD_LAYER_DATA_IRQ_INTERRUPT_CONTROLLER_ID -1
+#define FOOD_LAYER_DATA_IRQ_TYPE "NONE"
+#define FOOD_LAYER_DATA_NAME "/dev/food_layer_data"
+#define FOOD_LAYER_DATA_RESET_VALUE 0
+#define FOOD_LAYER_DATA_SPAN 16
+#define FOOD_LAYER_DATA_TYPE "altera_avalon_pio"
+
+
+/*
+ * food_layer_wr configuration
+ *
+ */
+
+#define ALT_MODULE_CLASS_food_layer_wr altera_avalon_pio
+#define FOOD_LAYER_WR_BASE 0x101020
+#define FOOD_LAYER_WR_BIT_CLEARING_EDGE_REGISTER 0
+#define FOOD_LAYER_WR_BIT_MODIFYING_OUTPUT_REGISTER 0
+#define FOOD_LAYER_WR_CAPTURE 0
+#define FOOD_LAYER_WR_DATA_WIDTH 5
+#define FOOD_LAYER_WR_DO_TEST_BENCH_WIRING 0
+#define FOOD_LAYER_WR_DRIVEN_SIM_VALUE 0
+#define FOOD_LAYER_WR_EDGE_TYPE "NONE"
+#define FOOD_LAYER_WR_FREQ 50000000
+#define FOOD_LAYER_WR_HAS_IN 0
+#define FOOD_LAYER_WR_HAS_OUT 1
+#define FOOD_LAYER_WR_HAS_TRI 0
+#define FOOD_LAYER_WR_IRQ -1
+#define FOOD_LAYER_WR_IRQ_INTERRUPT_CONTROLLER_ID -1
+#define FOOD_LAYER_WR_IRQ_TYPE "NONE"
+#define FOOD_LAYER_WR_NAME "/dev/food_layer_wr"
+#define FOOD_LAYER_WR_RESET_VALUE 0
+#define FOOD_LAYER_WR_SPAN 16
+#define FOOD_LAYER_WR_TYPE "altera_avalon_pio"
+
+
+/*
  * hal configuration
  *
  */
@@ -283,7 +337,7 @@
  */
 
 #define ALT_MODULE_CLASS_hdmi_tx_int_n altera_avalon_pio
-#define HDMI_TX_INT_N_BASE 0x1010e0
+#define HDMI_TX_INT_N_BASE 0x1010c0
 #define HDMI_TX_INT_N_BIT_CLEARING_EDGE_REGISTER 1
 #define HDMI_TX_INT_N_BIT_MODIFYING_OUTPUT_REGISTER 0
 #define HDMI_TX_INT_N_CAPTURE 1
@@ -310,7 +364,7 @@
  */
 
 #define ALT_MODULE_CLASS_i2c_scl altera_avalon_pio
-#define I2C_SCL_BASE 0x101100
+#define I2C_SCL_BASE 0x1010e0
 #define I2C_SCL_BIT_CLEARING_EDGE_REGISTER 0
 #define I2C_SCL_BIT_MODIFYING_OUTPUT_REGISTER 0
 #define I2C_SCL_CAPTURE 0
@@ -337,7 +391,7 @@
  */
 
 #define ALT_MODULE_CLASS_i2c_sda altera_avalon_pio
-#define I2C_SDA_BASE 0x101110
+#define I2C_SDA_BASE 0x1010f0
 #define I2C_SDA_BIT_CLEARING_EDGE_REGISTER 0
 #define I2C_SDA_BIT_MODIFYING_OUTPUT_REGISTER 0
 #define I2C_SDA_CAPTURE 0
@@ -364,7 +418,7 @@
  */
 
 #define ALT_MODULE_CLASS_jtag_uart altera_avalon_jtag_uart
-#define JTAG_UART_BASE 0x101128
+#define JTAG_UART_BASE 0x101108
 #define JTAG_UART_IRQ 1
 #define JTAG_UART_IRQ_INTERRUPT_CONTROLLER_ID 0
 #define JTAG_UART_NAME "/dev/jtag_uart"
@@ -382,7 +436,7 @@
  */
 
 #define ALT_MODULE_CLASS_led altera_avalon_pio
-#define LED_BASE 0x1010f0
+#define LED_BASE 0x1010d0
 #define LED_BIT_CLEARING_EDGE_REGISTER 0
 #define LED_BIT_MODIFYING_OUTPUT_REGISTER 0
 #define LED_CAPTURE 0
@@ -409,7 +463,7 @@
  */
 
 #define ALT_MODULE_CLASS_left_button altera_avalon_pio
-#define LEFT_BUTTON_BASE 0x101090
+#define LEFT_BUTTON_BASE 0x101070
 #define LEFT_BUTTON_BIT_CLEARING_EDGE_REGISTER 0
 #define LEFT_BUTTON_BIT_MODIFYING_OUTPUT_REGISTER 0
 #define LEFT_BUTTON_CAPTURE 1
@@ -465,7 +519,7 @@
  */
 
 #define ALT_MODULE_CLASS_position altera_avalon_pio
-#define POSITION_BASE 0x1010d0
+#define POSITION_BASE 0x1010b0
 #define POSITION_BIT_CLEARING_EDGE_REGISTER 0
 #define POSITION_BIT_MODIFYING_OUTPUT_REGISTER 0
 #define POSITION_CAPTURE 0
@@ -492,7 +546,7 @@
  */
 
 #define ALT_MODULE_CLASS_refresh altera_avalon_pio
-#define REFRESH_BASE 0x1010c0
+#define REFRESH_BASE 0x1010a0
 #define REFRESH_BIT_CLEARING_EDGE_REGISTER 0
 #define REFRESH_BIT_MODIFYING_OUTPUT_REGISTER 0
 #define REFRESH_CAPTURE 1
@@ -519,7 +573,7 @@
  */
 
 #define ALT_MODULE_CLASS_right_button altera_avalon_pio
-#define RIGHT_BUTTON_BASE 0x101060
+#define RIGHT_BUTTON_BASE 0x101040
 #define RIGHT_BUTTON_BIT_CLEARING_EDGE_REGISTER 0
 #define RIGHT_BUTTON_BIT_MODIFYING_OUTPUT_REGISTER 0
 #define RIGHT_BUTTON_CAPTURE 1
@@ -546,13 +600,13 @@
  */
 
 #define ALT_MODULE_CLASS_sysid_qsys altera_avalon_sysid_qsys
-#define SYSID_QSYS_BASE 0x101120
+#define SYSID_QSYS_BASE 0x101100
 #define SYSID_QSYS_ID 0
 #define SYSID_QSYS_IRQ -1
 #define SYSID_QSYS_IRQ_INTERRUPT_CONTROLLER_ID -1
 #define SYSID_QSYS_NAME "/dev/sysid_qsys"
 #define SYSID_QSYS_SPAN 8
-#define SYSID_QSYS_TIMESTAMP 1542898398
+#define SYSID_QSYS_TIMESTAMP 1542906047
 #define SYSID_QSYS_TYPE "altera_avalon_sysid_qsys"
 
 
@@ -588,7 +642,7 @@
  */
 
 #define ALT_MODULE_CLASS_up_button altera_avalon_pio
-#define UP_BUTTON_BASE 0x101080
+#define UP_BUTTON_BASE 0x101060
 #define UP_BUTTON_BIT_CLEARING_EDGE_REGISTER 0
 #define UP_BUTTON_BIT_MODIFYING_OUTPUT_REGISTER 0
 #define UP_BUTTON_CAPTURE 1

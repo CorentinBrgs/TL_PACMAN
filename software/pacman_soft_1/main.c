@@ -10,6 +10,7 @@
 #include "sys\alt_irq.h"
 #include "priv\alt_legacy_irq.h"
 
+alt_u16 score = 0;
 
 static void refresh_position_interrupt_handler(void* context)
 /* interrupt handler : this function is called each time a new frame is build (60Hz)
@@ -18,6 +19,7 @@ static void refresh_position_interrupt_handler(void* context)
 {
 	position* p_pacmanPosition = (position*) context;
 	refresh_position(p_pacmanPosition, 0);
+	refresh_food_layer(p_pacmanPosition, foodLayer, &score);
 	IOWR_32DIRECT(POSITION_BASE, 0, p_pacmanPosition->bytePacket);
 	IOWR(REFRESH_BASE,3,0xf);
 }
@@ -57,6 +59,8 @@ static void right_button_interrupt_handler(void* context)
 int main()
 {
 	set_background_in_memory(background);
+	init_foodLayer(background, foodLayer, 15);
+	set_foodLayer_in_memory(foodLayer);
 
 	position pacmanPosition;
 	init_position(&pacmanPosition, 0, 60, 60, ACTIVE, SOUTH);
@@ -105,10 +109,11 @@ int main()
 	while(1)
 	{
 		whileCounter++;
-		if (whileCounter > 30000){
-			printf("directionControl : %u, orientation : %u \n",
+		if (whileCounter > 500000){
+			printf("directionControl : %u, orientation : %u , Score : %u\n",
 					pacmanPosition.directionControl,
-					pacmanPosition.orientation
+					pacmanPosition.orientation,
+					score
 			);
 			whileCounter = 0;
 		}

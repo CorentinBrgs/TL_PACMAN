@@ -58,7 +58,11 @@ module vga_generator(
   input                 nios_clk,
   input       [31:0]    background_data,
   input       [3:0]     background_wraddress,
-  input                 background_wren
+  input                 background_wren,
+
+  input       [31:0]    food_layer_data,
+  input       [3:0]     food_layer_wraddress,
+  input                 food_layer_wren
 
 );
 
@@ -75,6 +79,21 @@ background_generator background_generator_inst0 (
 	.vga_r(s_vga_r_2),
 	.vga_g(s_vga_g_2),
 	.vga_b(s_vga_b_2)
+);
+
+food_layer_generator food_layer_generator_inst0 (
+	.clk(clk),
+	.nios_clk(nios_clk),
+	.row_x(pixel_x),
+	.line_y(pixel_y),
+	.enable(pre_vga_de),
+	.reset(end_image),
+	.data(food_layer_data),
+	.wraddress(food_layer_wraddress),
+	.wren(food_layer_wren),
+	.vga_r(s_vga_r_3),
+	.vga_g(s_vga_g_3),
+	.vga_b(s_vga_b_3)
 );
 
 character_generator pacman_generator(
@@ -154,9 +173,9 @@ reg [7:0] 	s_vga_b_1;
 reg [7:0] 	s_vga_r_2;
 reg [7:0] 	s_vga_g_2;
 reg [7:0] 	s_vga_b_2;
-reg [7:0] 	s_vga_g_3 = 0;
-reg [7:0] 	s_vga_r_3 = 0;
-reg [7:0] 	s_vga_b_3 = 0;
+reg [7:0] 	s_vga_g_3;
+reg [7:0] 	s_vga_r_3;
+reg [7:0] 	s_vga_b_3;
 reg [7:0] 	s_vga_b_4 = 0;
 reg [7:0] 	s_vga_r_4 = 0;
 reg [7:0] 	s_vga_g_4 = 0;

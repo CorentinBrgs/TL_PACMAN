@@ -1,383 +1,1070 @@
-16:02:37 **** Incremental Build of configuration Nios II for project pacman_soft_1 ****
+18:31:33 **** Incremental Build of configuration Nios II for project pacman_soft_1 ****
 make all 
 Info: Building ../pacman_soft_1_bsp/
 C:/intelFPGA/18.0/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../pacman_soft_1_bsp/
 [BSP build complete]
 [pacman_soft_1 build complete]
-16:02:47 **** Incremental Build of configuration Nios II for project pacman_soft_1 ****
+18:31:36 **** Incremental Build of configuration Nios II for project pacman_soft_1 ****
 make all 
 Info: Building ../pacman_soft_1_bsp/
 C:/intelFPGA/18.0/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../pacman_soft_1_bsp/
 [BSP build complete]
 [pacman_soft_1 build complete]
-16:03:11 **** Incremental Build of configuration Nios II for project pacman_soft_1 ****
+18:45:54 **** Incremental Build of configuration Nios II for project pacman_soft_1 ****
 make all 
 Info: Building ../pacman_soft_1_bsp/
 C:/intelFPGA/18.0/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../pacman_soft_1_bsp/
 [BSP build complete]
-[pacman_soft_1 build complete]
-16:03:44 **** Incremental Build of configuration Nios II for project pacman_soft_1 ****
+Info: Compiling background.c to obj/default/background.o
+nios2-elf-gcc -xc -MP -MMD -c -I../pacman_soft_1_bsp//HAL/inc -I../pacman_soft_1_bsp/ -I../pacman_soft_1_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mno-hw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/background.o background.c
+background.c:31:25: error: unknown type name 'position'
+ void refresh_food_layer(position* charPosition, alt_u32 foodLayer[15])
+                         ^
+In file included from background.c:9:0:
+background.h:21:16: warning: 'foodLayer' defined but not used [-Wunused-variable]
+ static alt_u32 foodLayer[15] = {
+                ^
+background.h:39:16: warning: 'background' defined but not used [-Wunused-variable]
+ static alt_u32 background[15] = {
+                ^
+make: *** [obj/default/background.o] Error 1
+18:45:55 **** Incremental Build of configuration Nios II for project pacman_soft_1_bsp ****
+make all 
+[BSP build complete]
+18:51:28 **** Incremental Build of configuration Nios II for project pacman_soft_1 ****
 make all 
 Info: Building ../pacman_soft_1_bsp/
 C:/intelFPGA/18.0/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../pacman_soft_1_bsp/
 [BSP build complete]
-[pacman_soft_1 build complete]
-16:04:15 **** Incremental Build of configuration Nios II for project pacman_soft_1 ****
+Info: Compiling background.c to obj/default/background.o
+nios2-elf-gcc -xc -MP -MMD -c -I../pacman_soft_1_bsp//HAL/inc -I../pacman_soft_1_bsp/ -I../pacman_soft_1_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mno-hw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/background.o background.c
+background.c:31:6: error: conflicting types for 'refresh_food_layer'
+ void refresh_food_layer(position* charPosition, alt_u32 foodLayer[15])
+      ^
+In file included from background.c:9:0:
+background.h:59:6: note: previous declaration of 'refresh_food_layer' was here
+ void refresh_food_layer(alt_u32 foodLayer[15]);
+      ^
+background.h:21:16: warning: 'foodLayer' defined but not used [-Wunused-variable]
+ static alt_u32 foodLayer[15] = {
+                ^
+background.h:39:16: warning: 'background' defined but not used [-Wunused-variable]
+ static alt_u32 background[15] = {
+                ^
+make: *** [obj/default/background.o] Error 1
+18:51:29 **** Incremental Build of configuration Nios II for project pacman_soft_1_bsp ****
+make all 
+[BSP build complete]
+18:51:45 **** Incremental Build of configuration Nios II for project pacman_soft_1 ****
 make all 
 Info: Building ../pacman_soft_1_bsp/
 C:/intelFPGA/18.0/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../pacman_soft_1_bsp/
 [BSP build complete]
-[pacman_soft_1 build complete]
-16:04:53 **** Incremental Build of configuration Nios II for project pacman_soft_1 ****
+Info: Compiling background.c to obj/default/background.o
+nios2-elf-gcc -xc -MP -MMD -c -I../pacman_soft_1_bsp//HAL/inc -I../pacman_soft_1_bsp/ -I../pacman_soft_1_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mno-hw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/background.o background.c
+In file included from background.c:9:0:
+background.h:21:16: warning: 'foodLayer' defined but not used [-Wunused-variable]
+ static alt_u32 foodLayer[15] = {
+                ^
+background.h:39:16: warning: 'background' defined but not used [-Wunused-variable]
+ static alt_u32 background[15] = {
+                ^
+Info: Compiling general.c to obj/default/general.o
+nios2-elf-gcc -xc -MP -MMD -c -I../pacman_soft_1_bsp//HAL/inc -I../pacman_soft_1_bsp/ -I../pacman_soft_1_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mno-hw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/general.o general.c
+general.c:8:21: fatal error: general.h: No such file or directory
+compilation terminated.
+make: *** [obj/default/general.o] Error 1
+18:51:46 **** Incremental Build of configuration Nios II for project pacman_soft_1_bsp ****
+make all 
+[BSP build complete]
+18:54:10 **** Incremental Build of configuration Nios II for project pacman_soft_1 ****
 make all 
 Info: Building ../pacman_soft_1_bsp/
 C:/intelFPGA/18.0/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../pacman_soft_1_bsp/
 [BSP build complete]
-[pacman_soft_1 build complete]
-16:07:59 **** Incremental Build of configuration Nios II for project pacman_soft_1 ****
+Info: Compiling background.c to obj/default/background.o
+nios2-elf-gcc -xc -MP -MMD -c -I../pacman_soft_1_bsp//HAL/inc -I../pacman_soft_1_bsp/ -I../pacman_soft_1_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mno-hw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/background.o background.c
+In file included from background.c:9:0:
+background.h:21:16: warning: 'foodLayer' defined but not used [-Wunused-variable]
+ static alt_u32 foodLayer[15] = {
+                ^
+background.h:39:16: warning: 'background' defined but not used [-Wunused-variable]
+ static alt_u32 background[15] = {
+                ^
+Info: Compiling general.c to obj/default/general.o
+nios2-elf-gcc -xc -MP -MMD -c -I../pacman_soft_1_bsp//HAL/inc -I../pacman_soft_1_bsp/ -I../pacman_soft_1_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mno-hw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/general.o general.c
+general.c:8:21: fatal error: general.h: No such file or directory
+compilation terminated.
+make: *** [obj/default/general.o] Error 1
+18:54:11 **** Incremental Build of configuration Nios II for project pacman_soft_1_bsp ****
+make all 
+[BSP build complete]
+18:54:13 **** Incremental Build of configuration Nios II for project pacman_soft_1 ****
 make all 
 Info: Building ../pacman_soft_1_bsp/
 C:/intelFPGA/18.0/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../pacman_soft_1_bsp/
 [BSP build complete]
+Info: Compiling general.c to obj/default/general.o
+nios2-elf-gcc -xc -MP -MMD -c -I../pacman_soft_1_bsp//HAL/inc -I../pacman_soft_1_bsp/ -I../pacman_soft_1_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mno-hw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/general.o general.c
+general.c:8:21: fatal error: general.h: No such file or directory
+compilation terminated.
+make: *** [obj/default/general.o] Error 1
+18:54:47 **** Incremental Build of configuration Nios II for project pacman_soft_1 ****
+make all 
+Info: Building ../pacman_soft_1_bsp/
+C:/intelFPGA/18.0/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../pacman_soft_1_bsp/
+[BSP build complete]
+Info: Compiling general.c to obj/default/general.o
+nios2-elf-gcc -xc -MP -MMD -c -I../pacman_soft_1_bsp//HAL/inc -I../pacman_soft_1_bsp/ -I../pacman_soft_1_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mno-hw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/general.o general.c
+In file included from general.c:8:0:
+general.h:24:2: error: unknown type name 'alt_u8'
+  alt_u8 north;
+  ^
+general.h:25:2: error: unknown type name 'alt_u8'
+  alt_u8 east;
+  ^
+general.h:26:2: error: unknown type name 'alt_u8'
+  alt_u8 south;
+  ^
+general.h:27:2: error: unknown type name 'alt_u8'
+  alt_u8 west;
+  ^
+general.h:39:2: error: unknown type name 'alt_u8'
+  alt_u8 charId;
+  ^
+general.h:40:2: error: unknown type name 'alt_u32'
+  alt_u32 positionX;
+  ^
+general.h:41:2: error: unknown type name 'alt_u32'
+  alt_u32 positionY;
+  ^
+general.h:42:2: error: unknown type name 'alt_u8'
+  alt_u8 state;
+  ^
+general.h:44:2: error: unknown type name 'alt_u32'
+  alt_u32 bytePacket;
+  ^
+general.h:49:1: error: unknown type name 'alt_u8'
+ alt_u8 get_block_with_coordinates(alt_u32 positionX, alt_u32 positionY, alt_u32 layer);
+ ^
+general.h:49:35: error: unknown type name 'alt_u32'
+ alt_u8 get_block_with_coordinates(alt_u32 positionX, alt_u32 positionY, alt_u32 layer);
+                                   ^
+general.h:49:54: error: unknown type name 'alt_u32'
+ alt_u8 get_block_with_coordinates(alt_u32 positionX, alt_u32 positionY, alt_u32 layer);
+                                                      ^
+general.h:49:73: error: unknown type name 'alt_u32'
+ alt_u8 get_block_with_coordinates(alt_u32 positionX, alt_u32 positionY, alt_u32 layer);
+                                                                         ^
+general.c:11:1: error: unknown type name 'alt_u8'
+ alt_u8 get_block_with_coordinates(alt_u32 positionX, alt_u32 positionY, alt_u32 layer){
+ ^
+general.c:11:35: error: unknown type name 'alt_u32'
+ alt_u8 get_block_with_coordinates(alt_u32 positionX, alt_u32 positionY, alt_u32 layer){
+                                   ^
+general.c:11:54: error: unknown type name 'alt_u32'
+ alt_u8 get_block_with_coordinates(alt_u32 positionX, alt_u32 positionY, alt_u32 layer){
+                                                      ^
+general.c:11:73: error: unknown type name 'alt_u32'
+ alt_u8 get_block_with_coordinates(alt_u32 positionX, alt_u32 positionY, alt_u32 layer){
+                                                                         ^
+make: *** [obj/default/general.o] Error 1
+18:54:47 **** Incremental Build of configuration Nios II for project pacman_soft_1_bsp ****
+make all 
+[BSP build complete]
+18:55:11 **** Incremental Build of configuration Nios II for project pacman_soft_1 ****
+make all 
+Info: Building ../pacman_soft_1_bsp/
+C:/intelFPGA/18.0/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../pacman_soft_1_bsp/
+[BSP build complete]
+Info: Compiling background.c to obj/default/background.o
+nios2-elf-gcc -xc -MP -MMD -c -I../pacman_soft_1_bsp//HAL/inc -I../pacman_soft_1_bsp/ -I../pacman_soft_1_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mno-hw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/background.o background.c
+In file included from background.c:9:0:
+background.h:21:16: warning: 'foodLayer' defined but not used [-Wunused-variable]
+ static alt_u32 foodLayer[15] = {
+                ^
+background.h:39:16: warning: 'background' defined but not used [-Wunused-variable]
+ static alt_u32 background[15] = {
+                ^
+Info: Compiling general.c to obj/default/general.o
+nios2-elf-gcc -xc -MP -MMD -c -I../pacman_soft_1_bsp//HAL/inc -I../pacman_soft_1_bsp/ -I../pacman_soft_1_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mno-hw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/general.o general.c
+general.c: In function 'get_block_with_coordinates':
+general.c:14:16: error: subscripted value is neither array nor pointer nor vector
+  return ((layer[blockY] & 1<<(8+blockX))>>(8+blockX));
+                ^
+general.c:13:10: warning: variable 'blockY' set but not used [-Wunused-but-set-variable]
+  alt_u16 blockY = positionY / 60;
+          ^
+general.c:15:1: warning: control reaches end of non-void function [-Wreturn-type]
+ }
+ ^
+make: *** [obj/default/general.o] Error 1
+18:55:12 **** Incremental Build of configuration Nios II for project pacman_soft_1_bsp ****
+make all 
+[BSP build complete]
+18:55:34 **** Incremental Build of configuration Nios II for project pacman_soft_1 ****
+make all 
+Info: Building ../pacman_soft_1_bsp/
+C:/intelFPGA/18.0/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../pacman_soft_1_bsp/
+[BSP build complete]
+Info: Compiling general.c to obj/default/general.o
+nios2-elf-gcc -xc -MP -MMD -c -I../pacman_soft_1_bsp//HAL/inc -I../pacman_soft_1_bsp/ -I../pacman_soft_1_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mno-hw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/general.o general.c
+general.c:11:8: error: conflicting types for 'get_block_with_coordinates'
+ alt_u8 get_block_with_coordinates(alt_u32 positionX, alt_u32 positionY, alt_u32 layer[]){
+        ^
+In file included from general.c:8:0:
+general.h:53:8: note: previous declaration of 'get_block_with_coordinates' was here
+ alt_u8 get_block_with_coordinates(alt_u32 positionX, alt_u32 positionY, alt_u32 layer);
+        ^
+make: *** [obj/default/general.o] Error 1
+18:55:35 **** Incremental Build of configuration Nios II for project pacman_soft_1_bsp ****
+make all 
+[BSP build complete]
+18:55:47 **** Incremental Build of configuration Nios II for project pacman_soft_1 ****
+make all 
+Info: Building ../pacman_soft_1_bsp/
+C:/intelFPGA/18.0/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../pacman_soft_1_bsp/
+[BSP build complete]
+Info: Compiling background.c to obj/default/background.o
+nios2-elf-gcc -xc -MP -MMD -c -I../pacman_soft_1_bsp//HAL/inc -I../pacman_soft_1_bsp/ -I../pacman_soft_1_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mno-hw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/background.o background.c
+In file included from background.c:9:0:
+background.h:21:16: warning: 'foodLayer' defined but not used [-Wunused-variable]
+ static alt_u32 foodLayer[15] = {
+                ^
+background.h:39:16: warning: 'background' defined but not used [-Wunused-variable]
+ static alt_u32 background[15] = {
+                ^
+Info: Compiling general.c to obj/default/general.o
+nios2-elf-gcc -xc -MP -MMD -c -I../pacman_soft_1_bsp//HAL/inc -I../pacman_soft_1_bsp/ -I../pacman_soft_1_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mno-hw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/general.o general.c
 Info: Compiling main.c to obj/default/main.o
 nios2-elf-gcc -xc -MP -MMD -c -I../pacman_soft_1_bsp//HAL/inc -I../pacman_soft_1_bsp/ -I../pacman_soft_1_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mno-hw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/main.o main.c
-In file included from main.c:2:0:
-refresh_position.h:67:13: warning: 'update_direction' declared 'static' but never defined [-Wunused-function]
- static void update_direction(void* context);
-             ^
+Info: Compiling refresh_position.c to obj/default/refresh_position.o
+nios2-elf-gcc -xc -MP -MMD -c -I../pacman_soft_1_bsp//HAL/inc -I../pacman_soft_1_bsp/ -I../pacman_soft_1_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mno-hw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/refresh_position.o refresh_position.c
+refresh_position.c: In function 'compute_collision':
+refresh_position.c:42:5: error: too few arguments to function 'get_block_with_coordinates'
+    (get_block_with_coordinates(charPosition->positionX,   charPosition->positionY - 1)  == 0, background)
+     ^
+In file included from background.h:15:0,
+                 from refresh_position.h:15,
+                 from refresh_position.c:8:
+general.h:53:8: note: declared here
+ alt_u8 get_block_with_coordinates(alt_u32 positionX, alt_u32 positionY, alt_u32 layer[]);
+        ^
+refresh_position.c:42:93: warning: left-hand operand of comma expression has no effect [-Wunused-value]
+    (get_block_with_coordinates(charPosition->positionX,   charPosition->positionY - 1)  == 0, background)
+                                                                                             ^
+refresh_position.c:44:5: error: too few arguments to function 'get_block_with_coordinates'
+    (get_block_with_coordinates(charPosition->positionX + 59,  charPosition->positionY - 1)  == 0, background)
+     ^
+In file included from background.h:15:0,
+                 from refresh_position.h:15,
+                 from refresh_position.c:8:
+general.h:53:8: note: declared here
+ alt_u8 get_block_with_coordinates(alt_u32 positionX, alt_u32 positionY, alt_u32 layer[]);
+        ^
+refresh_position.c:44:97: warning: left-hand operand of comma expression has no effect [-Wunused-value]
+    (get_block_with_coordinates(charPosition->positionX + 59,  charPosition->positionY - 1)  == 0, background)
+                                                                                                 ^
+refresh_position.c:50:5: error: too few arguments to function 'get_block_with_coordinates'
+    (get_block_with_coordinates(charPosition->positionX + 60,  charPosition->positionY)   == 0, background)
+     ^
+In file included from background.h:15:0,
+                 from refresh_position.h:15,
+                 from refresh_position.c:8:
+general.h:53:8: note: declared here
+ alt_u8 get_block_with_coordinates(alt_u32 positionX, alt_u32 positionY, alt_u32 layer[]);
+        ^
+refresh_position.c:50:94: warning: left-hand operand of comma expression has no effect [-Wunused-value]
+    (get_block_with_coordinates(charPosition->positionX + 60,  charPosition->positionY)   == 0, background)
+                                                                                              ^
+refresh_position.c:52:5: error: too few arguments to function 'get_block_with_coordinates'
+    (get_block_with_coordinates(charPosition->positionX + 60,  charPosition->positionY + 59)  == 0, background)
+     ^
+In file included from background.h:15:0,
+                 from refresh_position.h:15,
+                 from refresh_position.c:8:
+general.h:53:8: note: declared here
+ alt_u8 get_block_with_coordinates(alt_u32 positionX, alt_u32 positionY, alt_u32 layer[]);
+        ^
+refresh_position.c:52:98: warning: left-hand operand of comma expression has no effect [-Wunused-value]
+    (get_block_with_coordinates(charPosition->positionX + 60,  charPosition->positionY + 59)  == 0, background)
+                                                                                                  ^
+refresh_position.c:58:5: error: too few arguments to function 'get_block_with_coordinates'
+    (get_block_with_coordinates(charPosition->positionX,   charPosition->positionY + 60)  == 0, background)
+     ^
+In file included from background.h:15:0,
+                 from refresh_position.h:15,
+                 from refresh_position.c:8:
+general.h:53:8: note: declared here
+ alt_u8 get_block_with_coordinates(alt_u32 positionX, alt_u32 positionY, alt_u32 layer[]);
+        ^
+refresh_position.c:58:94: warning: left-hand operand of comma expression has no effect [-Wunused-value]
+    (get_block_with_coordinates(charPosition->positionX,   charPosition->positionY + 60)  == 0, background)
+                                                                                              ^
+refresh_position.c:60:5: error: too few arguments to function 'get_block_with_coordinates'
+    (get_block_with_coordinates(charPosition->positionX + 59,  charPosition->positionY + 60)  == 0, background)
+     ^
+In file included from background.h:15:0,
+                 from refresh_position.h:15,
+                 from refresh_position.c:8:
+general.h:53:8: note: declared here
+ alt_u8 get_block_with_coordinates(alt_u32 positionX, alt_u32 positionY, alt_u32 layer[]);
+        ^
+refresh_position.c:60:98: warning: left-hand operand of comma expression has no effect [-Wunused-value]
+    (get_block_with_coordinates(charPosition->positionX + 59,  charPosition->positionY + 60)  == 0, background)
+                                                                                                  ^
+refresh_position.c:66:5: error: too few arguments to function 'get_block_with_coordinates'
+    (get_block_with_coordinates(charPosition->positionX - 1,  charPosition->positionY)   == 0, background)
+     ^
+In file included from background.h:15:0,
+                 from refresh_position.h:15,
+                 from refresh_position.c:8:
+general.h:53:8: note: declared here
+ alt_u8 get_block_with_coordinates(alt_u32 positionX, alt_u32 positionY, alt_u32 layer[]);
+        ^
+refresh_position.c:66:93: warning: left-hand operand of comma expression has no effect [-Wunused-value]
+    (get_block_with_coordinates(charPosition->positionX - 1,  charPosition->positionY)   == 0, background)
+                                                                                             ^
+refresh_position.c:68:5: error: too few arguments to function 'get_block_with_coordinates'
+    (get_block_with_coordinates(charPosition->positionX - 1,  charPosition->positionY + 59)  == 0, background)
+     ^
+In file included from background.h:15:0,
+                 from refresh_position.h:15,
+                 from refresh_position.c:8:
+general.h:53:8: note: declared here
+ alt_u8 get_block_with_coordinates(alt_u32 positionX, alt_u32 positionY, alt_u32 layer[]);
+        ^
+refresh_position.c:68:97: warning: left-hand operand of comma expression has no effect [-Wunused-value]
+    (get_block_with_coordinates(charPosition->positionX - 1,  charPosition->positionY + 59)  == 0, background)
+                                                                                                 ^
+refresh_position.c: In function 'refresh_position':
+refresh_position.c:82:6: warning: unused variable 'randomOrientation' [-Wunused-variable]
+  int randomOrientation = rand() % 5;
+      ^
+In file included from refresh_position.h:15:0,
+                 from refresh_position.c:8:
+refresh_position.c: At top level:
+background.h:21:16: warning: 'foodLayer' defined but not used [-Wunused-variable]
+ static alt_u32 foodLayer[15] = {
+                ^
+make: *** [obj/default/refresh_position.o] Error 1
+18:55:48 **** Incremental Build of configuration Nios II for project pacman_soft_1_bsp ****
+make all 
+[BSP build complete]
+18:57:28 **** Incremental Build of configuration Nios II for project pacman_soft_1 ****
+make all 
+Info: Building ../pacman_soft_1_bsp/
+C:/intelFPGA/18.0/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../pacman_soft_1_bsp/
+[BSP build complete]
+Info: Compiling refresh_position.c to obj/default/refresh_position.o
+nios2-elf-gcc -xc -MP -MMD -c -I../pacman_soft_1_bsp//HAL/inc -I../pacman_soft_1_bsp/ -I../pacman_soft_1_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mno-hw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/refresh_position.o refresh_position.c
+refresh_position.c: In function 'refresh_position':
+refresh_position.c:82:6: warning: unused variable 'randomOrientation' [-Wunused-variable]
+  int randomOrientation = rand() % 5;
+      ^
+In file included from refresh_position.h:15:0,
+                 from refresh_position.c:8:
+refresh_position.c: At top level:
+background.h:21:16: warning: 'foodLayer' defined but not used [-Wunused-variable]
+ static alt_u32 foodLayer[15] = {
+                ^
 Info: Linking pacman_soft_1.elf
-nios2-elf-g++  -T'../pacman_soft_1_bsp//linker.x' -msys-crt0='../pacman_soft_1_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../pacman_soft_1_bsp/   -Wl,-Map=pacman_soft_1.map   -O0 -g -Wall   -mno-hw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o pacman_soft_1.elf obj/default/background.o obj/default/main.o obj/default/refresh_position.o -lm -msys-lib=m
-nios2-elf-insert pacman_soft_1.elf --thread_model hal --cpu_name nios2_qsys --qsys true --simulation_enabled false --id 0 --sidp 0x101120 --timestamp 1542898398 --stderr_dev jtag_uart --stdin_dev jtag_uart --stdout_dev jtag_uart --sopc_system_name HDMI_QSYS --quartus_project_dir "D:/TL_MOREIRA_BERGES/TL_PACMAN" --jdi D:/TL_MOREIRA_BERGES/TL_PACMAN/software/pacman_soft_1_bsp/../../C5G_HDMI_VPG.jdi --sopcinfo D:/TL_MOREIRA_BERGES/TL_PACMAN/software/pacman_soft_1_bsp/../../HDMI_QSYS.sopcinfo
+nios2-elf-g++  -T'../pacman_soft_1_bsp//linker.x' -msys-crt0='../pacman_soft_1_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../pacman_soft_1_bsp/   -Wl,-Map=pacman_soft_1.map   -O0 -g -Wall   -mno-hw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o pacman_soft_1.elf obj/default/background.o obj/default/general.o obj/default/main.o obj/default/refresh_position.o -lm -msys-lib=m
+nios2-elf-insert pacman_soft_1.elf --thread_model hal --cpu_name nios2_qsys --qsys true --simulation_enabled false --id 0 --sidp 0x101100 --timestamp 1542906047 --stderr_dev jtag_uart --stdin_dev jtag_uart --stdout_dev jtag_uart --sopc_system_name HDMI_QSYS --quartus_project_dir "D:/TL_MOREIRA_BERGES/TL_PACMAN" --jdi D:/TL_MOREIRA_BERGES/TL_PACMAN/software/pacman_soft_1_bsp/../../C5G_HDMI_VPG.jdi --sopcinfo D:/TL_MOREIRA_BERGES/TL_PACMAN/software/pacman_soft_1_bsp/../../HDMI_QSYS.sopcinfo
 Info: (pacman_soft_1.elf) 74 KBytes program size (code + initialized data).
 Info:                     221 KBytes free for stack + heap.
 Info: Creating pacman_soft_1.objdump
 nios2-elf-objdump --disassemble --syms --all-header --source pacman_soft_1.elf >pacman_soft_1.objdump
 [pacman_soft_1 build complete]
-16:09:34 **** Incremental Build of configuration Nios II for project pacman_soft_1 ****
+18:57:30 **** Incremental Build of configuration Nios II for project pacman_soft_1_bsp ****
+make all 
+[BSP build complete]
+18:57:37 **** Incremental Build of configuration Nios II for project pacman_soft_1 ****
 make all 
 Info: Building ../pacman_soft_1_bsp/
 C:/intelFPGA/18.0/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../pacman_soft_1_bsp/
 [BSP build complete]
-Info: Compiling main.c to obj/default/main.o
-nios2-elf-gcc -xc -MP -MMD -c -I../pacman_soft_1_bsp//HAL/inc -I../pacman_soft_1_bsp/ -I../pacman_soft_1_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mno-hw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/main.o main.c
-In file included from main.c:2:0:
-refresh_position.h:67:13: warning: 'update_direction' declared 'static' but never defined [-Wunused-function]
- static void update_direction(void* context);
-             ^
+[pacman_soft_1 build complete]
+18:58:46 **** Incremental Build of configuration Nios II for project pacman_soft_1 ****
+make all 
+Info: Building ../pacman_soft_1_bsp/
+C:/intelFPGA/18.0/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../pacman_soft_1_bsp/
+[BSP build complete]
+Info: Compiling background.c to obj/default/background.o
+nios2-elf-gcc -xc -MP -MMD -c -I../pacman_soft_1_bsp//HAL/inc -I../pacman_soft_1_bsp/ -I../pacman_soft_1_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mno-hw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/background.o background.c
+background.c: In function 'refresh_food_layer':
+background.c:33:10: warning: unused variable 'blockX' [-Wunused-variable]
+  alt_u16 blockX = charPosition->positionX / 60;
+          ^
+In file included from background.c:9:0:
+background.c: At top level:
+background.h:21:16: warning: 'foodLayer' defined but not used [-Wunused-variable]
+ static alt_u32 foodLayer[15] = {
+                ^
+background.h:39:16: warning: 'background' defined but not used [-Wunused-variable]
+ static alt_u32 background[15] = {
+                ^
 Info: Linking pacman_soft_1.elf
-nios2-elf-g++  -T'../pacman_soft_1_bsp//linker.x' -msys-crt0='../pacman_soft_1_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../pacman_soft_1_bsp/   -Wl,-Map=pacman_soft_1.map   -O0 -g -Wall   -mno-hw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o pacman_soft_1.elf obj/default/background.o obj/default/main.o obj/default/refresh_position.o -lm -msys-lib=m
-nios2-elf-insert pacman_soft_1.elf --thread_model hal --cpu_name nios2_qsys --qsys true --simulation_enabled false --id 0 --sidp 0x101120 --timestamp 1542898398 --stderr_dev jtag_uart --stdin_dev jtag_uart --stdout_dev jtag_uart --sopc_system_name HDMI_QSYS --quartus_project_dir "D:/TL_MOREIRA_BERGES/TL_PACMAN" --jdi D:/TL_MOREIRA_BERGES/TL_PACMAN/software/pacman_soft_1_bsp/../../C5G_HDMI_VPG.jdi --sopcinfo D:/TL_MOREIRA_BERGES/TL_PACMAN/software/pacman_soft_1_bsp/../../HDMI_QSYS.sopcinfo
-Info: (pacman_soft_1.elf) 73 KBytes program size (code + initialized data).
+nios2-elf-g++  -T'../pacman_soft_1_bsp//linker.x' -msys-crt0='../pacman_soft_1_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../pacman_soft_1_bsp/   -Wl,-Map=pacman_soft_1.map   -O0 -g -Wall   -mno-hw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o pacman_soft_1.elf obj/default/background.o obj/default/general.o obj/default/main.o obj/default/refresh_position.o -lm -msys-lib=m
+nios2-elf-insert pacman_soft_1.elf --thread_model hal --cpu_name nios2_qsys --qsys true --simulation_enabled false --id 0 --sidp 0x101100 --timestamp 1542906047 --stderr_dev jtag_uart --stdin_dev jtag_uart --stdout_dev jtag_uart --sopc_system_name HDMI_QSYS --quartus_project_dir "D:/TL_MOREIRA_BERGES/TL_PACMAN" --jdi D:/TL_MOREIRA_BERGES/TL_PACMAN/software/pacman_soft_1_bsp/../../C5G_HDMI_VPG.jdi --sopcinfo D:/TL_MOREIRA_BERGES/TL_PACMAN/software/pacman_soft_1_bsp/../../HDMI_QSYS.sopcinfo
+Info: (pacman_soft_1.elf) 74 KBytes program size (code + initialized data).
 Info:                     221 KBytes free for stack + heap.
 Info: Creating pacman_soft_1.objdump
 nios2-elf-objdump --disassemble --syms --all-header --source pacman_soft_1.elf >pacman_soft_1.objdump
 [pacman_soft_1 build complete]
-16:09:36 **** Incremental Build of configuration Nios II for project pacman_soft_1_bsp ****
+18:58:48 **** Incremental Build of configuration Nios II for project pacman_soft_1_bsp ****
 make all 
 [BSP build complete]
-16:09:38 **** Incremental Build of configuration Nios II for project pacman_soft_1 ****
+18:58:51 **** Incremental Build of configuration Nios II for project pacman_soft_1 ****
 make all 
 Info: Building ../pacman_soft_1_bsp/
 C:/intelFPGA/18.0/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../pacman_soft_1_bsp/
 [BSP build complete]
 [pacman_soft_1 build complete]
-16:14:03 **** Incremental Build of configuration Nios II for project pacman_soft_1 ****
+18:59:53 **** Incremental Build of configuration Nios II for project pacman_soft_1 ****
 make all 
 Info: Building ../pacman_soft_1_bsp/
 C:/intelFPGA/18.0/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../pacman_soft_1_bsp/
 [BSP build complete]
+Info: Compiling background.c to obj/default/background.o
+nios2-elf-gcc -xc -MP -MMD -c -I../pacman_soft_1_bsp//HAL/inc -I../pacman_soft_1_bsp/ -I../pacman_soft_1_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mno-hw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/background.o background.c
+In file included from background.c:9:0:
+background.h:21:16: warning: 'foodLayer' defined but not used [-Wunused-variable]
+ static alt_u32 foodLayer[15] = {
+                ^
+background.h:39:16: warning: 'background' defined but not used [-Wunused-variable]
+ static alt_u32 background[15] = {
+                ^
 Info: Compiling main.c to obj/default/main.o
 nios2-elf-gcc -xc -MP -MMD -c -I../pacman_soft_1_bsp//HAL/inc -I../pacman_soft_1_bsp/ -I../pacman_soft_1_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mno-hw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/main.o main.c
-In file included from main.c:2:0:
-refresh_position.h:67:13: warning: 'update_direction' declared 'static' but never defined [-Wunused-function]
- static void update_direction(void* context);
-             ^
 Info: Linking pacman_soft_1.elf
-nios2-elf-g++  -T'../pacman_soft_1_bsp//linker.x' -msys-crt0='../pacman_soft_1_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../pacman_soft_1_bsp/   -Wl,-Map=pacman_soft_1.map   -O0 -g -Wall   -mno-hw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o pacman_soft_1.elf obj/default/background.o obj/default/main.o obj/default/refresh_position.o -lm -msys-lib=m
-nios2-elf-insert pacman_soft_1.elf --thread_model hal --cpu_name nios2_qsys --qsys true --simulation_enabled false --id 0 --sidp 0x101120 --timestamp 1542898398 --stderr_dev jtag_uart --stdin_dev jtag_uart --stdout_dev jtag_uart --sopc_system_name HDMI_QSYS --quartus_project_dir "D:/TL_MOREIRA_BERGES/TL_PACMAN" --jdi D:/TL_MOREIRA_BERGES/TL_PACMAN/software/pacman_soft_1_bsp/../../C5G_HDMI_VPG.jdi --sopcinfo D:/TL_MOREIRA_BERGES/TL_PACMAN/software/pacman_soft_1_bsp/../../HDMI_QSYS.sopcinfo
-Info: (pacman_soft_1.elf) 73 KBytes program size (code + initialized data).
+nios2-elf-g++  -T'../pacman_soft_1_bsp//linker.x' -msys-crt0='../pacman_soft_1_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../pacman_soft_1_bsp/   -Wl,-Map=pacman_soft_1.map   -O0 -g -Wall   -mno-hw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o pacman_soft_1.elf obj/default/background.o obj/default/general.o obj/default/main.o obj/default/refresh_position.o -lm -msys-lib=m
+nios2-elf-insert pacman_soft_1.elf --thread_model hal --cpu_name nios2_qsys --qsys true --simulation_enabled false --id 0 --sidp 0x101100 --timestamp 1542906047 --stderr_dev jtag_uart --stdin_dev jtag_uart --stdout_dev jtag_uart --sopc_system_name HDMI_QSYS --quartus_project_dir "D:/TL_MOREIRA_BERGES/TL_PACMAN" --jdi D:/TL_MOREIRA_BERGES/TL_PACMAN/software/pacman_soft_1_bsp/../../C5G_HDMI_VPG.jdi --sopcinfo D:/TL_MOREIRA_BERGES/TL_PACMAN/software/pacman_soft_1_bsp/../../HDMI_QSYS.sopcinfo
+Info: (pacman_soft_1.elf) 74 KBytes program size (code + initialized data).
 Info:                     221 KBytes free for stack + heap.
 Info: Creating pacman_soft_1.objdump
 nios2-elf-objdump --disassemble --syms --all-header --source pacman_soft_1.elf >pacman_soft_1.objdump
 [pacman_soft_1 build complete]
-16:14:05 **** Incremental Build of configuration Nios II for project pacman_soft_1_bsp ****
+18:59:55 **** Incremental Build of configuration Nios II for project pacman_soft_1_bsp ****
 make all 
 [BSP build complete]
-16:14:28 **** Incremental Build of configuration Nios II for project pacman_soft_1 ****
+18:59:58 **** Incremental Build of configuration Nios II for project pacman_soft_1 ****
 make all 
 Info: Building ../pacman_soft_1_bsp/
 C:/intelFPGA/18.0/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../pacman_soft_1_bsp/
 [BSP build complete]
 [pacman_soft_1 build complete]
-16:26:31 **** Incremental Build of configuration Nios II for project pacman_soft_1 ****
+19:01:05 **** Incremental Build of configuration Nios II for project pacman_soft_1 ****
 make all 
 Info: Building ../pacman_soft_1_bsp/
 C:/intelFPGA/18.0/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../pacman_soft_1_bsp/
 [BSP build complete]
+Info: Compiling background.c to obj/default/background.o
+nios2-elf-gcc -xc -MP -MMD -c -I../pacman_soft_1_bsp//HAL/inc -I../pacman_soft_1_bsp/ -I../pacman_soft_1_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mno-hw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/background.o background.c
+In file included from background.c:9:0:
+background.h:21:16: warning: 'foodLayer' defined but not used [-Wunused-variable]
+ static alt_u32 foodLayer[15] = {
+                ^
+background.h:39:16: warning: 'background' defined but not used [-Wunused-variable]
+ static alt_u32 background[15] = {
+                ^
+Info: Linking pacman_soft_1.elf
+nios2-elf-g++  -T'../pacman_soft_1_bsp//linker.x' -msys-crt0='../pacman_soft_1_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../pacman_soft_1_bsp/   -Wl,-Map=pacman_soft_1.map   -O0 -g -Wall   -mno-hw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o pacman_soft_1.elf obj/default/background.o obj/default/general.o obj/default/main.o obj/default/refresh_position.o -lm -msys-lib=m
+nios2-elf-insert pacman_soft_1.elf --thread_model hal --cpu_name nios2_qsys --qsys true --simulation_enabled false --id 0 --sidp 0x101100 --timestamp 1542906047 --stderr_dev jtag_uart --stdin_dev jtag_uart --stdout_dev jtag_uart --sopc_system_name HDMI_QSYS --quartus_project_dir "D:/TL_MOREIRA_BERGES/TL_PACMAN" --jdi D:/TL_MOREIRA_BERGES/TL_PACMAN/software/pacman_soft_1_bsp/../../C5G_HDMI_VPG.jdi --sopcinfo D:/TL_MOREIRA_BERGES/TL_PACMAN/software/pacman_soft_1_bsp/../../HDMI_QSYS.sopcinfo
+Info: (pacman_soft_1.elf) 74 KBytes program size (code + initialized data).
+Info:                     221 KBytes free for stack + heap.
+Info: Creating pacman_soft_1.objdump
+nios2-elf-objdump --disassemble --syms --all-header --source pacman_soft_1.elf >pacman_soft_1.objdump
+[pacman_soft_1 build complete]
+19:01:07 **** Incremental Build of configuration Nios II for project pacman_soft_1_bsp ****
+make all 
+[BSP build complete]
+19:01:12 **** Incremental Build of configuration Nios II for project pacman_soft_1 ****
+make all 
+Info: Building ../pacman_soft_1_bsp/
+C:/intelFPGA/18.0/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../pacman_soft_1_bsp/
+[BSP build complete]
+[pacman_soft_1 build complete]
+19:02:28 **** Incremental Build of configuration Nios II for project pacman_soft_1 ****
+make all 
+Info: Building ../pacman_soft_1_bsp/
+C:/intelFPGA/18.0/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../pacman_soft_1_bsp/
+[BSP build complete]
+Info: Compiling background.c to obj/default/background.o
+nios2-elf-gcc -xc -MP -MMD -c -I../pacman_soft_1_bsp//HAL/inc -I../pacman_soft_1_bsp/ -I../pacman_soft_1_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mno-hw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/background.o background.c
+background.c: In function 'refresh_food_layer':
+background.c:33:33: error: expected identifier before '(' token
+  alt_u16 blockX = charPosition->(positionX + 30) / 60;
+                                 ^
+background.c:34:33: error: expected identifier before '(' token
+  alt_u16 blockY = charPosition->(positionY + 30) / 60;
+                                 ^
+In file included from background.c:9:0:
+background.c: At top level:
+background.h:21:16: warning: 'foodLayer' defined but not used [-Wunused-variable]
+ static alt_u32 foodLayer[15] = {
+                ^
+background.h:39:16: warning: 'background' defined but not used [-Wunused-variable]
+ static alt_u32 background[15] = {
+                ^
+make: *** [obj/default/background.o] Error 1
+19:02:29 **** Incremental Build of configuration Nios II for project pacman_soft_1_bsp ****
+make all 
+[BSP build complete]
+19:02:49 **** Incremental Build of configuration Nios II for project pacman_soft_1 ****
+make all 
+Info: Building ../pacman_soft_1_bsp/
+C:/intelFPGA/18.0/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../pacman_soft_1_bsp/
+[BSP build complete]
+Info: Compiling background.c to obj/default/background.o
+nios2-elf-gcc -xc -MP -MMD -c -I../pacman_soft_1_bsp//HAL/inc -I../pacman_soft_1_bsp/ -I../pacman_soft_1_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mno-hw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/background.o background.c
+In file included from background.c:9:0:
+background.h:21:16: warning: 'foodLayer' defined but not used [-Wunused-variable]
+ static alt_u32 foodLayer[15] = {
+                ^
+background.h:39:16: warning: 'background' defined but not used [-Wunused-variable]
+ static alt_u32 background[15] = {
+                ^
+Info: Linking pacman_soft_1.elf
+nios2-elf-g++  -T'../pacman_soft_1_bsp//linker.x' -msys-crt0='../pacman_soft_1_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../pacman_soft_1_bsp/   -Wl,-Map=pacman_soft_1.map   -O0 -g -Wall   -mno-hw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o pacman_soft_1.elf obj/default/background.o obj/default/general.o obj/default/main.o obj/default/refresh_position.o -lm -msys-lib=m
+nios2-elf-insert pacman_soft_1.elf --thread_model hal --cpu_name nios2_qsys --qsys true --simulation_enabled false --id 0 --sidp 0x101100 --timestamp 1542906047 --stderr_dev jtag_uart --stdin_dev jtag_uart --stdout_dev jtag_uart --sopc_system_name HDMI_QSYS --quartus_project_dir "D:/TL_MOREIRA_BERGES/TL_PACMAN" --jdi D:/TL_MOREIRA_BERGES/TL_PACMAN/software/pacman_soft_1_bsp/../../C5G_HDMI_VPG.jdi --sopcinfo D:/TL_MOREIRA_BERGES/TL_PACMAN/software/pacman_soft_1_bsp/../../HDMI_QSYS.sopcinfo
+Info: (pacman_soft_1.elf) 74 KBytes program size (code + initialized data).
+Info:                     221 KBytes free for stack + heap.
+Info: Creating pacman_soft_1.objdump
+nios2-elf-objdump --disassemble --syms --all-header --source pacman_soft_1.elf >pacman_soft_1.objdump
+[pacman_soft_1 build complete]
+19:02:50 **** Incremental Build of configuration Nios II for project pacman_soft_1_bsp ****
+make all 
+[BSP build complete]
+19:02:56 **** Incremental Build of configuration Nios II for project pacman_soft_1 ****
+make all 
+Info: Building ../pacman_soft_1_bsp/
+C:/intelFPGA/18.0/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../pacman_soft_1_bsp/
+[BSP build complete]
+[pacman_soft_1 build complete]
+19:07:50 **** Incremental Build of configuration Nios II for project pacman_soft_1 ****
+make all 
+Info: Building ../pacman_soft_1_bsp/
+C:/intelFPGA/18.0/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../pacman_soft_1_bsp/
+[BSP build complete]
+Info: Compiling background.c to obj/default/background.o
+nios2-elf-gcc -xc -MP -MMD -c -I../pacman_soft_1_bsp//HAL/inc -I../pacman_soft_1_bsp/ -I../pacman_soft_1_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mno-hw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/background.o background.c
+background.c: In function 'refresh_food_layer':
+background.c:41:3: warning: value computed is not used [-Wunused-value]
+   *score++;
+   ^
+In file included from background.c:9:0:
+background.c: At top level:
+background.h:21:16: warning: 'foodLayer' defined but not used [-Wunused-variable]
+ static alt_u32 foodLayer[15] = {
+                ^
+background.h:39:16: warning: 'background' defined but not used [-Wunused-variable]
+ static alt_u32 background[15] = {
+                ^
 Info: Compiling main.c to obj/default/main.o
 nios2-elf-gcc -xc -MP -MMD -c -I../pacman_soft_1_bsp//HAL/inc -I../pacman_soft_1_bsp/ -I../pacman_soft_1_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mno-hw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/main.o main.c
 Info: Compiling refresh_position.c to obj/default/refresh_position.o
 nios2-elf-gcc -xc -MP -MMD -c -I../pacman_soft_1_bsp//HAL/inc -I../pacman_soft_1_bsp/ -I../pacman_soft_1_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mno-hw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/refresh_position.o refresh_position.c
 refresh_position.c: In function 'refresh_position':
-refresh_position.c:95:6: warning: unused variable 'randomOrientation' [-Wunused-variable]
+refresh_position.c:82:6: warning: unused variable 'randomOrientation' [-Wunused-variable]
   int randomOrientation = rand() % 5;
       ^
+In file included from refresh_position.h:15:0,
+                 from refresh_position.c:8:
 refresh_position.c: At top level:
-refresh_position.c:142:6: error: conflicting types for 'refresh_position_keepGoing'
- void refresh_position_keepGoing(position* charPosition, alt_u16 step, alt_u8 autoMode){
-      ^
-In file included from refresh_position.c:8:0:
-refresh_position.h:64:6: note: previous declaration of 'refresh_position_keepGoing' was here
- void refresh_position_keepGoing(position* charPosition, alt_u16 step);
-      ^
-make: *** [obj/default/refresh_position.o] Error 1
-16:26:32 **** Incremental Build of configuration Nios II for project pacman_soft_1_bsp ****
+background.h:21:16: warning: 'foodLayer' defined but not used [-Wunused-variable]
+ static alt_u32 foodLayer[15] = {
+                ^
+Info: Linking pacman_soft_1.elf
+nios2-elf-g++  -T'../pacman_soft_1_bsp//linker.x' -msys-crt0='../pacman_soft_1_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../pacman_soft_1_bsp/   -Wl,-Map=pacman_soft_1.map   -O0 -g -Wall   -mno-hw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o pacman_soft_1.elf obj/default/background.o obj/default/general.o obj/default/main.o obj/default/refresh_position.o -lm -msys-lib=m
+nios2-elf-insert pacman_soft_1.elf --thread_model hal --cpu_name nios2_qsys --qsys true --simulation_enabled false --id 0 --sidp 0x101100 --timestamp 1542906047 --stderr_dev jtag_uart --stdin_dev jtag_uart --stdout_dev jtag_uart --sopc_system_name HDMI_QSYS --quartus_project_dir "D:/TL_MOREIRA_BERGES/TL_PACMAN" --jdi D:/TL_MOREIRA_BERGES/TL_PACMAN/software/pacman_soft_1_bsp/../../C5G_HDMI_VPG.jdi --sopcinfo D:/TL_MOREIRA_BERGES/TL_PACMAN/software/pacman_soft_1_bsp/../../HDMI_QSYS.sopcinfo
+Info: (pacman_soft_1.elf) 74 KBytes program size (code + initialized data).
+Info:                     221 KBytes free for stack + heap.
+Info: Creating pacman_soft_1.objdump
+nios2-elf-objdump --disassemble --syms --all-header --source pacman_soft_1.elf >pacman_soft_1.objdump
+[pacman_soft_1 build complete]
+19:07:52 **** Incremental Build of configuration Nios II for project pacman_soft_1_bsp ****
 make all 
 [BSP build complete]
-16:26:37 **** Incremental Build of configuration Nios II for project pacman_soft_1 ****
+19:08:37 **** Incremental Build of configuration Nios II for project pacman_soft_1 ****
 make all 
 Info: Building ../pacman_soft_1_bsp/
 C:/intelFPGA/18.0/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../pacman_soft_1_bsp/
 [BSP build complete]
+Info: Compiling main.c to obj/default/main.o
+nios2-elf-gcc -xc -MP -MMD -c -I../pacman_soft_1_bsp//HAL/inc -I../pacman_soft_1_bsp/ -I../pacman_soft_1_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mno-hw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/main.o main.c
+Info: Linking pacman_soft_1.elf
+nios2-elf-g++  -T'../pacman_soft_1_bsp//linker.x' -msys-crt0='../pacman_soft_1_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../pacman_soft_1_bsp/   -Wl,-Map=pacman_soft_1.map   -O0 -g -Wall   -mno-hw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o pacman_soft_1.elf obj/default/background.o obj/default/general.o obj/default/main.o obj/default/refresh_position.o -lm -msys-lib=m
+nios2-elf-insert pacman_soft_1.elf --thread_model hal --cpu_name nios2_qsys --qsys true --simulation_enabled false --id 0 --sidp 0x101100 --timestamp 1542906047 --stderr_dev jtag_uart --stdin_dev jtag_uart --stdout_dev jtag_uart --sopc_system_name HDMI_QSYS --quartus_project_dir "D:/TL_MOREIRA_BERGES/TL_PACMAN" --jdi D:/TL_MOREIRA_BERGES/TL_PACMAN/software/pacman_soft_1_bsp/../../C5G_HDMI_VPG.jdi --sopcinfo D:/TL_MOREIRA_BERGES/TL_PACMAN/software/pacman_soft_1_bsp/../../HDMI_QSYS.sopcinfo
+Info: (pacman_soft_1.elf) 74 KBytes program size (code + initialized data).
+Info:                     221 KBytes free for stack + heap.
+Info: Creating pacman_soft_1.objdump
+nios2-elf-objdump --disassemble --syms --all-header --source pacman_soft_1.elf >pacman_soft_1.objdump
+[pacman_soft_1 build complete]
+19:08:39 **** Incremental Build of configuration Nios II for project pacman_soft_1_bsp ****
+make all 
+[BSP build complete]
+19:08:41 **** Incremental Build of configuration Nios II for project pacman_soft_1 ****
+make all 
+Info: Building ../pacman_soft_1_bsp/
+C:/intelFPGA/18.0/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../pacman_soft_1_bsp/
+[BSP build complete]
+[pacman_soft_1 build complete]
+19:09:44 **** Incremental Build of configuration Nios II for project pacman_soft_1 ****
+make all 
+Info: Building ../pacman_soft_1_bsp/
+C:/intelFPGA/18.0/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../pacman_soft_1_bsp/
+[BSP build complete]
+Info: Compiling background.c to obj/default/background.o
+nios2-elf-gcc -xc -MP -MMD -c -I../pacman_soft_1_bsp//HAL/inc -I../pacman_soft_1_bsp/ -I../pacman_soft_1_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mno-hw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/background.o background.c
+In file included from background.c:9:0:
+background.h:21:16: warning: 'foodLayer' defined but not used [-Wunused-variable]
+ static alt_u32 foodLayer[15] = {
+                ^
+background.h:39:16: warning: 'background' defined but not used [-Wunused-variable]
+ static alt_u32 background[15] = {
+                ^
+Info: Compiling main.c to obj/default/main.o
+nios2-elf-gcc -xc -MP -MMD -c -I../pacman_soft_1_bsp//HAL/inc -I../pacman_soft_1_bsp/ -I../pacman_soft_1_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mno-hw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/main.o main.c
+Info: Linking pacman_soft_1.elf
+nios2-elf-g++  -T'../pacman_soft_1_bsp//linker.x' -msys-crt0='../pacman_soft_1_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../pacman_soft_1_bsp/   -Wl,-Map=pacman_soft_1.map   -O0 -g -Wall   -mno-hw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o pacman_soft_1.elf obj/default/background.o obj/default/general.o obj/default/main.o obj/default/refresh_position.o -lm -msys-lib=m
+nios2-elf-insert pacman_soft_1.elf --thread_model hal --cpu_name nios2_qsys --qsys true --simulation_enabled false --id 0 --sidp 0x101100 --timestamp 1542906047 --stderr_dev jtag_uart --stdin_dev jtag_uart --stdout_dev jtag_uart --sopc_system_name HDMI_QSYS --quartus_project_dir "D:/TL_MOREIRA_BERGES/TL_PACMAN" --jdi D:/TL_MOREIRA_BERGES/TL_PACMAN/software/pacman_soft_1_bsp/../../C5G_HDMI_VPG.jdi --sopcinfo D:/TL_MOREIRA_BERGES/TL_PACMAN/software/pacman_soft_1_bsp/../../HDMI_QSYS.sopcinfo
+Info: (pacman_soft_1.elf) 74 KBytes program size (code + initialized data).
+Info:                     221 KBytes free for stack + heap.
+Info: Creating pacman_soft_1.objdump
+nios2-elf-objdump --disassemble --syms --all-header --source pacman_soft_1.elf >pacman_soft_1.objdump
+[pacman_soft_1 build complete]
+19:09:46 **** Incremental Build of configuration Nios II for project pacman_soft_1_bsp ****
+make all 
+[BSP build complete]
+19:09:47 **** Incremental Build of configuration Nios II for project pacman_soft_1 ****
+make all 
+Info: Building ../pacman_soft_1_bsp/
+C:/intelFPGA/18.0/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../pacman_soft_1_bsp/
+[BSP build complete]
+[pacman_soft_1 build complete]
+19:11:10 **** Incremental Build of configuration Nios II for project pacman_soft_1 ****
+make all 
+Info: Building ../pacman_soft_1_bsp/
+C:/intelFPGA/18.0/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../pacman_soft_1_bsp/
+[BSP build complete]
+Info: Compiling main.c to obj/default/main.o
+nios2-elf-gcc -xc -MP -MMD -c -I../pacman_soft_1_bsp//HAL/inc -I../pacman_soft_1_bsp/ -I../pacman_soft_1_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mno-hw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/main.o main.c
+main.c: In function 'main':
+main.c:112:11: warning: format '%u' expects argument of type 'unsigned int', but argument 4 has type 'alt_u32 {aka long unsigned int}' [-Wformat=]
+    printf("directionControl : %u, orientation : %u , Score : %u\n",
+           ^
+main.c:112:11: warning: format '%u' expects argument of type 'unsigned int', but argument 4 has type 'alt_u32 {aka long unsigned int}' [-Wformat=]
+Info: Linking pacman_soft_1.elf
+nios2-elf-g++  -T'../pacman_soft_1_bsp//linker.x' -msys-crt0='../pacman_soft_1_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../pacman_soft_1_bsp/   -Wl,-Map=pacman_soft_1.map   -O0 -g -Wall   -mno-hw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o pacman_soft_1.elf obj/default/background.o obj/default/general.o obj/default/main.o obj/default/refresh_position.o -lm -msys-lib=m
+nios2-elf-insert pacman_soft_1.elf --thread_model hal --cpu_name nios2_qsys --qsys true --simulation_enabled false --id 0 --sidp 0x101100 --timestamp 1542906047 --stderr_dev jtag_uart --stdin_dev jtag_uart --stdout_dev jtag_uart --sopc_system_name HDMI_QSYS --quartus_project_dir "D:/TL_MOREIRA_BERGES/TL_PACMAN" --jdi D:/TL_MOREIRA_BERGES/TL_PACMAN/software/pacman_soft_1_bsp/../../C5G_HDMI_VPG.jdi --sopcinfo D:/TL_MOREIRA_BERGES/TL_PACMAN/software/pacman_soft_1_bsp/../../HDMI_QSYS.sopcinfo
+Info: (pacman_soft_1.elf) 74 KBytes program size (code + initialized data).
+Info:                     221 KBytes free for stack + heap.
+Info: Creating pacman_soft_1.objdump
+nios2-elf-objdump --disassemble --syms --all-header --source pacman_soft_1.elf >pacman_soft_1.objdump
+[pacman_soft_1 build complete]
+19:11:12 **** Incremental Build of configuration Nios II for project pacman_soft_1_bsp ****
+make all 
+[BSP build complete]
+19:11:18 **** Incremental Build of configuration Nios II for project pacman_soft_1 ****
+make all 
+Info: Building ../pacman_soft_1_bsp/
+C:/intelFPGA/18.0/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../pacman_soft_1_bsp/
+[BSP build complete]
+[pacman_soft_1 build complete]
+19:12:17 **** Incremental Build of configuration Nios II for project pacman_soft_1 ****
+make all 
+Info: Building ../pacman_soft_1_bsp/
+C:/intelFPGA/18.0/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../pacman_soft_1_bsp/
+[BSP build complete]
+Info: Compiling main.c to obj/default/main.o
+nios2-elf-gcc -xc -MP -MMD -c -I../pacman_soft_1_bsp//HAL/inc -I../pacman_soft_1_bsp/ -I../pacman_soft_1_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mno-hw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/main.o main.c
+main.c: In function 'main':
+main.c:112:11: warning: format '%u' expects argument of type 'unsigned int', but argument 4 has type 'alt_u32 {aka long unsigned int}' [-Wformat=]
+    printf("directionControl : %u, orientation : %u , Score : %u\n",
+           ^
+main.c:112:11: warning: format '%u' expects argument of type 'unsigned int', but argument 4 has type 'alt_u32 {aka long unsigned int}' [-Wformat=]
+Info: Linking pacman_soft_1.elf
+nios2-elf-g++  -T'../pacman_soft_1_bsp//linker.x' -msys-crt0='../pacman_soft_1_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../pacman_soft_1_bsp/   -Wl,-Map=pacman_soft_1.map   -O0 -g -Wall   -mno-hw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o pacman_soft_1.elf obj/default/background.o obj/default/general.o obj/default/main.o obj/default/refresh_position.o -lm -msys-lib=m
+nios2-elf-insert pacman_soft_1.elf --thread_model hal --cpu_name nios2_qsys --qsys true --simulation_enabled false --id 0 --sidp 0x101100 --timestamp 1542906047 --stderr_dev jtag_uart --stdin_dev jtag_uart --stdout_dev jtag_uart --sopc_system_name HDMI_QSYS --quartus_project_dir "D:/TL_MOREIRA_BERGES/TL_PACMAN" --jdi D:/TL_MOREIRA_BERGES/TL_PACMAN/software/pacman_soft_1_bsp/../../C5G_HDMI_VPG.jdi --sopcinfo D:/TL_MOREIRA_BERGES/TL_PACMAN/software/pacman_soft_1_bsp/../../HDMI_QSYS.sopcinfo
+Info: (pacman_soft_1.elf) 74 KBytes program size (code + initialized data).
+Info:                     221 KBytes free for stack + heap.
+Info: Creating pacman_soft_1.objdump
+nios2-elf-objdump --disassemble --syms --all-header --source pacman_soft_1.elf >pacman_soft_1.objdump
+[pacman_soft_1 build complete]
+19:12:19 **** Incremental Build of configuration Nios II for project pacman_soft_1_bsp ****
+make all 
+[BSP build complete]
+19:12:21 **** Incremental Build of configuration Nios II for project pacman_soft_1 ****
+make all 
+Info: Building ../pacman_soft_1_bsp/
+C:/intelFPGA/18.0/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../pacman_soft_1_bsp/
+[BSP build complete]
+[pacman_soft_1 build complete]
+19:13:17 **** Incremental Build of configuration Nios II for project pacman_soft_1 ****
+make all 
+Info: Building ../pacman_soft_1_bsp/
+C:/intelFPGA/18.0/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../pacman_soft_1_bsp/
+[BSP build complete]
+Info: Compiling background.c to obj/default/background.o
+nios2-elf-gcc -xc -MP -MMD -c -I../pacman_soft_1_bsp//HAL/inc -I../pacman_soft_1_bsp/ -I../pacman_soft_1_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mno-hw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/background.o background.c
+In file included from background.c:9:0:
+background.h:21:16: warning: 'foodLayer' defined but not used [-Wunused-variable]
+ static alt_u32 foodLayer[15] = {
+                ^
+background.h:39:16: warning: 'background' defined but not used [-Wunused-variable]
+ static alt_u32 background[15] = {
+                ^
+Info: Linking pacman_soft_1.elf
+nios2-elf-g++  -T'../pacman_soft_1_bsp//linker.x' -msys-crt0='../pacman_soft_1_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../pacman_soft_1_bsp/   -Wl,-Map=pacman_soft_1.map   -O0 -g -Wall   -mno-hw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o pacman_soft_1.elf obj/default/background.o obj/default/general.o obj/default/main.o obj/default/refresh_position.o -lm -msys-lib=m
+nios2-elf-insert pacman_soft_1.elf --thread_model hal --cpu_name nios2_qsys --qsys true --simulation_enabled false --id 0 --sidp 0x101100 --timestamp 1542906047 --stderr_dev jtag_uart --stdin_dev jtag_uart --stdout_dev jtag_uart --sopc_system_name HDMI_QSYS --quartus_project_dir "D:/TL_MOREIRA_BERGES/TL_PACMAN" --jdi D:/TL_MOREIRA_BERGES/TL_PACMAN/software/pacman_soft_1_bsp/../../C5G_HDMI_VPG.jdi --sopcinfo D:/TL_MOREIRA_BERGES/TL_PACMAN/software/pacman_soft_1_bsp/../../HDMI_QSYS.sopcinfo
+Info: (pacman_soft_1.elf) 74 KBytes program size (code + initialized data).
+Info:                     220 KBytes free for stack + heap.
+Info: Creating pacman_soft_1.objdump
+nios2-elf-objdump --disassemble --syms --all-header --source pacman_soft_1.elf >pacman_soft_1.objdump
+[pacman_soft_1 build complete]
+19:13:19 **** Incremental Build of configuration Nios II for project pacman_soft_1_bsp ****
+make all 
+[BSP build complete]
+19:13:20 **** Incremental Build of configuration Nios II for project pacman_soft_1 ****
+make all 
+Info: Building ../pacman_soft_1_bsp/
+C:/intelFPGA/18.0/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../pacman_soft_1_bsp/
+[BSP build complete]
+[pacman_soft_1 build complete]
+19:15:22 **** Incremental Build of configuration Nios II for project pacman_soft_1 ****
+make all 
+Info: Building ../pacman_soft_1_bsp/
+C:/intelFPGA/18.0/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../pacman_soft_1_bsp/
+[BSP build complete]
+Info: Compiling background.c to obj/default/background.o
+nios2-elf-gcc -xc -MP -MMD -c -I../pacman_soft_1_bsp//HAL/inc -I../pacman_soft_1_bsp/ -I../pacman_soft_1_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mno-hw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/background.o background.c
+In file included from background.c:9:0:
+background.h:21:16: warning: 'foodLayer' defined but not used [-Wunused-variable]
+ static alt_u32 foodLayer[15] = {
+                ^
+background.h:39:16: warning: 'background' defined but not used [-Wunused-variable]
+ static alt_u32 background[15] = {
+                ^
+Info: Linking pacman_soft_1.elf
+nios2-elf-g++  -T'../pacman_soft_1_bsp//linker.x' -msys-crt0='../pacman_soft_1_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../pacman_soft_1_bsp/   -Wl,-Map=pacman_soft_1.map   -O0 -g -Wall   -mno-hw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o pacman_soft_1.elf obj/default/background.o obj/default/general.o obj/default/main.o obj/default/refresh_position.o -lm -msys-lib=m
+nios2-elf-insert pacman_soft_1.elf --thread_model hal --cpu_name nios2_qsys --qsys true --simulation_enabled false --id 0 --sidp 0x101100 --timestamp 1542906047 --stderr_dev jtag_uart --stdin_dev jtag_uart --stdout_dev jtag_uart --sopc_system_name HDMI_QSYS --quartus_project_dir "D:/TL_MOREIRA_BERGES/TL_PACMAN" --jdi D:/TL_MOREIRA_BERGES/TL_PACMAN/software/pacman_soft_1_bsp/../../C5G_HDMI_VPG.jdi --sopcinfo D:/TL_MOREIRA_BERGES/TL_PACMAN/software/pacman_soft_1_bsp/../../HDMI_QSYS.sopcinfo
+Info: (pacman_soft_1.elf) 74 KBytes program size (code + initialized data).
+Info:                     220 KBytes free for stack + heap.
+Info: Creating pacman_soft_1.objdump
+nios2-elf-objdump --disassemble --syms --all-header --source pacman_soft_1.elf >pacman_soft_1.objdump
+[pacman_soft_1 build complete]
+19:15:24 **** Incremental Build of configuration Nios II for project pacman_soft_1_bsp ****
+make all 
+[BSP build complete]
+19:15:26 **** Incremental Build of configuration Nios II for project pacman_soft_1 ****
+make all 
+Info: Building ../pacman_soft_1_bsp/
+C:/intelFPGA/18.0/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../pacman_soft_1_bsp/
+[BSP build complete]
+[pacman_soft_1 build complete]
+19:16:01 **** Incremental Build of configuration Nios II for project pacman_soft_1 ****
+make all 
+Info: Building ../pacman_soft_1_bsp/
+C:/intelFPGA/18.0/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../pacman_soft_1_bsp/
+[BSP build complete]
+Info: Compiling main.c to obj/default/main.o
+nios2-elf-gcc -xc -MP -MMD -c -I../pacman_soft_1_bsp//HAL/inc -I../pacman_soft_1_bsp/ -I../pacman_soft_1_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mno-hw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/main.o main.c
+Info: Linking pacman_soft_1.elf
+nios2-elf-g++  -T'../pacman_soft_1_bsp//linker.x' -msys-crt0='../pacman_soft_1_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../pacman_soft_1_bsp/   -Wl,-Map=pacman_soft_1.map   -O0 -g -Wall   -mno-hw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o pacman_soft_1.elf obj/default/background.o obj/default/general.o obj/default/main.o obj/default/refresh_position.o -lm -msys-lib=m
+nios2-elf-insert pacman_soft_1.elf --thread_model hal --cpu_name nios2_qsys --qsys true --simulation_enabled false --id 0 --sidp 0x101100 --timestamp 1542906047 --stderr_dev jtag_uart --stdin_dev jtag_uart --stdout_dev jtag_uart --sopc_system_name HDMI_QSYS --quartus_project_dir "D:/TL_MOREIRA_BERGES/TL_PACMAN" --jdi D:/TL_MOREIRA_BERGES/TL_PACMAN/software/pacman_soft_1_bsp/../../C5G_HDMI_VPG.jdi --sopcinfo D:/TL_MOREIRA_BERGES/TL_PACMAN/software/pacman_soft_1_bsp/../../HDMI_QSYS.sopcinfo
+Info: (pacman_soft_1.elf) 74 KBytes program size (code + initialized data).
+Info:                     220 KBytes free for stack + heap.
+Info: Creating pacman_soft_1.objdump
+nios2-elf-objdump --disassemble --syms --all-header --source pacman_soft_1.elf >pacman_soft_1.objdump
+[pacman_soft_1 build complete]
+19:16:03 **** Incremental Build of configuration Nios II for project pacman_soft_1_bsp ****
+make all 
+[BSP build complete]
+19:16:07 **** Incremental Build of configuration Nios II for project pacman_soft_1 ****
+make all 
+Info: Building ../pacman_soft_1_bsp/
+C:/intelFPGA/18.0/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../pacman_soft_1_bsp/
+[BSP build complete]
+[pacman_soft_1 build complete]
+19:22:40 **** Incremental Build of configuration Nios II for project pacman_soft_1 ****
+make all 
+Info: Building ../pacman_soft_1_bsp/
+C:/intelFPGA/18.0/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../pacman_soft_1_bsp/
+[BSP build complete]
+Info: Compiling background.c to obj/default/background.o
+nios2-elf-gcc -xc -MP -MMD -c -I../pacman_soft_1_bsp//HAL/inc -I../pacman_soft_1_bsp/ -I../pacman_soft_1_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mno-hw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/background.o background.c
+In file included from background.c:9:0:
+background.h:21:16: warning: 'background' defined but not used [-Wunused-variable]
+ static alt_u32 background[15] = {
+                ^
+background.h:39:16: warning: 'foodLayer' defined but not used [-Wunused-variable]
+ static alt_u32 foodLayer[15] = {
+                ^
+Info: Compiling main.c to obj/default/main.o
+nios2-elf-gcc -xc -MP -MMD -c -I../pacman_soft_1_bsp//HAL/inc -I../pacman_soft_1_bsp/ -I../pacman_soft_1_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mno-hw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/main.o main.c
+main.c: In function 'main':
+main.c:62:29: warning: passing argument 2 of 'init_foodLayer' from incompatible pointer type [-Wincompatible-pointer-types]
+  init_foodLayer(background, &foodLayer, 15);
+                             ^
+In file included from main.c:1:0:
+background.h:58:6: note: expected 'alt_32 ** {aka long int **}' but argument is of type 'alt_u32 (*)[15] {aka long unsigned int (*)[15]}'
+ void init_foodLayer(alt_u32 background[15], alt_32* foodLayer[15], alt_u8 sizeY);
+      ^
 Info: Compiling refresh_position.c to obj/default/refresh_position.o
 nios2-elf-gcc -xc -MP -MMD -c -I../pacman_soft_1_bsp//HAL/inc -I../pacman_soft_1_bsp/ -I../pacman_soft_1_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mno-hw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/refresh_position.o refresh_position.c
 refresh_position.c: In function 'refresh_position':
-refresh_position.c:95:6: warning: unused variable 'randomOrientation' [-Wunused-variable]
+refresh_position.c:82:6: warning: unused variable 'randomOrientation' [-Wunused-variable]
   int randomOrientation = rand() % 5;
       ^
+In file included from refresh_position.h:15:0,
+                 from refresh_position.c:8:
 refresh_position.c: At top level:
-refresh_position.c:142:6: error: conflicting types for 'refresh_position_keepGoing'
- void refresh_position_keepGoing(position* charPosition, alt_u16 step, alt_u8 autoMode){
-      ^
-In file included from refresh_position.c:8:0:
-refresh_position.h:64:6: note: previous declaration of 'refresh_position_keepGoing' was here
- void refresh_position_keepGoing(position* charPosition, alt_u16 step);
-      ^
-make: *** [obj/default/refresh_position.o] Error 1
-16:26:54 **** Incremental Build of configuration Nios II for project pacman_soft_1 ****
+background.h:39:16: warning: 'foodLayer' defined but not used [-Wunused-variable]
+ static alt_u32 foodLayer[15] = {
+                ^
+Info: Linking pacman_soft_1.elf
+nios2-elf-g++  -T'../pacman_soft_1_bsp//linker.x' -msys-crt0='../pacman_soft_1_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../pacman_soft_1_bsp/   -Wl,-Map=pacman_soft_1.map   -O0 -g -Wall   -mno-hw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o pacman_soft_1.elf obj/default/background.o obj/default/general.o obj/default/main.o obj/default/refresh_position.o -lm -msys-lib=m
+nios2-elf-insert pacman_soft_1.elf --thread_model hal --cpu_name nios2_qsys --qsys true --simulation_enabled false --id 0 --sidp 0x101100 --timestamp 1542906047 --stderr_dev jtag_uart --stdin_dev jtag_uart --stdout_dev jtag_uart --sopc_system_name HDMI_QSYS --quartus_project_dir "D:/TL_MOREIRA_BERGES/TL_PACMAN" --jdi D:/TL_MOREIRA_BERGES/TL_PACMAN/software/pacman_soft_1_bsp/../../C5G_HDMI_VPG.jdi --sopcinfo D:/TL_MOREIRA_BERGES/TL_PACMAN/software/pacman_soft_1_bsp/../../HDMI_QSYS.sopcinfo
+Info: (pacman_soft_1.elf) 74 KBytes program size (code + initialized data).
+Info:                     220 KBytes free for stack + heap.
+Info: Creating pacman_soft_1.objdump
+nios2-elf-objdump --disassemble --syms --all-header --source pacman_soft_1.elf >pacman_soft_1.objdump
+[pacman_soft_1 build complete]
+19:22:42 **** Incremental Build of configuration Nios II for project pacman_soft_1_bsp ****
+make all 
+[BSP build complete]
+19:22:44 **** Incremental Build of configuration Nios II for project pacman_soft_1 ****
+make all 
+Info: Building ../pacman_soft_1_bsp/
+C:/intelFPGA/18.0/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../pacman_soft_1_bsp/
+[BSP build complete]
+[pacman_soft_1 build complete]
+19:23:07 **** Incremental Build of configuration Nios II for project pacman_soft_1 ****
+make all 
+Info: Building ../pacman_soft_1_bsp/
+C:/intelFPGA/18.0/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../pacman_soft_1_bsp/
+[BSP build complete]
+Info: Compiling background.c to obj/default/background.o
+nios2-elf-gcc -xc -MP -MMD -c -I../pacman_soft_1_bsp//HAL/inc -I../pacman_soft_1_bsp/ -I../pacman_soft_1_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mno-hw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/background.o background.c
+In file included from background.c:9:0:
+background.h:21:16: warning: 'background' defined but not used [-Wunused-variable]
+ static alt_u32 background[15] = {
+                ^
+Info: Compiling main.c to obj/default/main.o
+nios2-elf-gcc -xc -MP -MMD -c -I../pacman_soft_1_bsp//HAL/inc -I../pacman_soft_1_bsp/ -I../pacman_soft_1_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mno-hw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/main.o main.c
+main.c: In function 'refresh_position_interrupt_handler':
+main.c:22:39: error: 'foodLayer' undeclared (first use in this function)
+  refresh_food_layer(p_pacmanPosition, foodLayer, &score);
+                                       ^
+main.c:22:39: note: each undeclared identifier is reported only once for each function it appears in
+main.c: In function 'main':
+main.c:62:30: error: 'foodLayer' undeclared (first use in this function)
+  init_foodLayer(background, &foodLayer, 15);
+                              ^
+make: *** [obj/default/main.o] Error 1
+19:23:08 **** Incremental Build of configuration Nios II for project pacman_soft_1_bsp ****
+make all 
+[BSP build complete]
+19:23:10 **** Incremental Build of configuration Nios II for project pacman_soft_1 ****
 make all 
 Info: Building ../pacman_soft_1_bsp/
 C:/intelFPGA/18.0/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../pacman_soft_1_bsp/
 [BSP build complete]
 Info: Compiling main.c to obj/default/main.o
 nios2-elf-gcc -xc -MP -MMD -c -I../pacman_soft_1_bsp//HAL/inc -I../pacman_soft_1_bsp/ -I../pacman_soft_1_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mno-hw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/main.o main.c
+main.c: In function 'refresh_position_interrupt_handler':
+main.c:22:39: error: 'foodLayer' undeclared (first use in this function)
+  refresh_food_layer(p_pacmanPosition, foodLayer, &score);
+                                       ^
+main.c:22:39: note: each undeclared identifier is reported only once for each function it appears in
+main.c: In function 'main':
+main.c:62:30: error: 'foodLayer' undeclared (first use in this function)
+  init_foodLayer(background, &foodLayer, 15);
+                              ^
+make: *** [obj/default/main.o] Error 1
+19:23:27 **** Incremental Build of configuration Nios II for project pacman_soft_1 ****
+make all 
+Info: Building ../pacman_soft_1_bsp/
+C:/intelFPGA/18.0/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../pacman_soft_1_bsp/
+[BSP build complete]
+Info: Compiling background.c to obj/default/background.o
+nios2-elf-gcc -xc -MP -MMD -c -I../pacman_soft_1_bsp//HAL/inc -I../pacman_soft_1_bsp/ -I../pacman_soft_1_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mno-hw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/background.o background.c
+In file included from background.c:9:0:
+background.h:21:16: warning: 'background' defined but not used [-Wunused-variable]
+ static alt_u32 background[15] = {
+                ^
+background.h:39:16: warning: 'foodLayer' defined but not used [-Wunused-variable]
+ static alt_u32 foodLayer[15];
+                ^
+Info: Compiling main.c to obj/default/main.o
+nios2-elf-gcc -xc -MP -MMD -c -I../pacman_soft_1_bsp//HAL/inc -I../pacman_soft_1_bsp/ -I../pacman_soft_1_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mno-hw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/main.o main.c
+main.c: In function 'main':
+main.c:62:29: warning: passing argument 2 of 'init_foodLayer' from incompatible pointer type [-Wincompatible-pointer-types]
+  init_foodLayer(background, &foodLayer, 15);
+                             ^
+In file included from main.c:1:0:
+background.h:59:6: note: expected 'alt_32 ** {aka long int **}' but argument is of type 'alt_u32 (*)[15] {aka long unsigned int (*)[15]}'
+ void init_foodLayer(alt_u32 background[15], alt_32* foodLayer[15], alt_u8 sizeY);
+      ^
 Info: Compiling refresh_position.c to obj/default/refresh_position.o
 nios2-elf-gcc -xc -MP -MMD -c -I../pacman_soft_1_bsp//HAL/inc -I../pacman_soft_1_bsp/ -I../pacman_soft_1_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mno-hw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/refresh_position.o refresh_position.c
 refresh_position.c: In function 'refresh_position':
-refresh_position.c:105:5: error: too few arguments to function 'refresh_position_keepGoing'
-     refresh_position_keepGoing(charPosition, step);
-     ^
-In file included from refresh_position.c:8:0:
-refresh_position.h:64:6: note: declared here
- void refresh_position_keepGoing(position* charPosition, alt_u16 step, alt_u8 autoMode);
-      ^
-refresh_position.c:114:5: error: too few arguments to function 'refresh_position_keepGoing'
-     refresh_position_keepGoing(charPosition, step);
-     ^
-In file included from refresh_position.c:8:0:
-refresh_position.h:64:6: note: declared here
- void refresh_position_keepGoing(position* charPosition, alt_u16 step, alt_u8 autoMode);
-      ^
-refresh_position.c:123:5: error: too few arguments to function 'refresh_position_keepGoing'
-     refresh_position_keepGoing(charPosition, step);
-     ^
-In file included from refresh_position.c:8:0:
-refresh_position.h:64:6: note: declared here
- void refresh_position_keepGoing(position* charPosition, alt_u16 step, alt_u8 autoMode);
-      ^
-refresh_position.c:132:5: error: too few arguments to function 'refresh_position_keepGoing'
-     refresh_position_keepGoing(charPosition, step);
-     ^
-In file included from refresh_position.c:8:0:
-refresh_position.h:64:6: note: declared here
- void refresh_position_keepGoing(position* charPosition, alt_u16 step, alt_u8 autoMode);
-      ^
-refresh_position.c:136:4: error: too few arguments to function 'refresh_position_keepGoing'
-    refresh_position_keepGoing(charPosition, step);
-    ^
-In file included from refresh_position.c:8:0:
-refresh_position.h:64:6: note: declared here
- void refresh_position_keepGoing(position* charPosition, alt_u16 step, alt_u8 autoMode);
-      ^
-refresh_position.c:95:6: warning: unused variable 'randomOrientation' [-Wunused-variable]
+refresh_position.c:82:6: warning: unused variable 'randomOrientation' [-Wunused-variable]
   int randomOrientation = rand() % 5;
       ^
-make: *** [obj/default/refresh_position.o] Error 1
-16:26:55 **** Incremental Build of configuration Nios II for project pacman_soft_1_bsp ****
+In file included from refresh_position.h:15:0,
+                 from refresh_position.c:8:
+refresh_position.c: At top level:
+background.h:39:16: warning: 'foodLayer' defined but not used [-Wunused-variable]
+ static alt_u32 foodLayer[15];
+                ^
+Info: Linking pacman_soft_1.elf
+nios2-elf-g++  -T'../pacman_soft_1_bsp//linker.x' -msys-crt0='../pacman_soft_1_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../pacman_soft_1_bsp/   -Wl,-Map=pacman_soft_1.map   -O0 -g -Wall   -mno-hw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o pacman_soft_1.elf obj/default/background.o obj/default/general.o obj/default/main.o obj/default/refresh_position.o -lm -msys-lib=m
+nios2-elf-insert pacman_soft_1.elf --thread_model hal --cpu_name nios2_qsys --qsys true --simulation_enabled false --id 0 --sidp 0x101100 --timestamp 1542906047 --stderr_dev jtag_uart --stdin_dev jtag_uart --stdout_dev jtag_uart --sopc_system_name HDMI_QSYS --quartus_project_dir "D:/TL_MOREIRA_BERGES/TL_PACMAN" --jdi D:/TL_MOREIRA_BERGES/TL_PACMAN/software/pacman_soft_1_bsp/../../C5G_HDMI_VPG.jdi --sopcinfo D:/TL_MOREIRA_BERGES/TL_PACMAN/software/pacman_soft_1_bsp/../../HDMI_QSYS.sopcinfo
+Info: (pacman_soft_1.elf) 74 KBytes program size (code + initialized data).
+Info:                     221 KBytes free for stack + heap.
+Info: Creating pacman_soft_1.objdump
+nios2-elf-objdump --disassemble --syms --all-header --source pacman_soft_1.elf >pacman_soft_1.objdump
+[pacman_soft_1 build complete]
+19:23:29 **** Incremental Build of configuration Nios II for project pacman_soft_1_bsp ****
 make all 
 [BSP build complete]
-16:28:18 **** Incremental Build of configuration Nios II for project pacman_soft_1 ****
+19:23:33 **** Incremental Build of configuration Nios II for project pacman_soft_1 ****
+make all 
+Info: Building ../pacman_soft_1_bsp/
+C:/intelFPGA/18.0/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../pacman_soft_1_bsp/
+[BSP build complete]
+[pacman_soft_1 build complete]
+19:23:53 **** Incremental Build of configuration Nios II for project pacman_soft_1 ****
 make all 
 Info: Building ../pacman_soft_1_bsp/
 C:/intelFPGA/18.0/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../pacman_soft_1_bsp/
 [BSP build complete]
 Info: Compiling main.c to obj/default/main.o
 nios2-elf-gcc -xc -MP -MMD -c -I../pacman_soft_1_bsp//HAL/inc -I../pacman_soft_1_bsp/ -I../pacman_soft_1_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mno-hw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/main.o main.c
+main.c: In function 'main':
+main.c:62:29: warning: passing argument 2 of 'init_foodLayer' from incompatible pointer type [-Wincompatible-pointer-types]
+  init_foodLayer(background, &foodLayer[0], 15);
+                             ^
+In file included from main.c:1:0:
+background.h:59:6: note: expected 'alt_32 ** {aka long int **}' but argument is of type 'alt_u32 * {aka long unsigned int *}'
+ void init_foodLayer(alt_u32 background[15], alt_32* foodLayer[15], alt_u8 sizeY);
+      ^
+Info: Linking pacman_soft_1.elf
+nios2-elf-g++  -T'../pacman_soft_1_bsp//linker.x' -msys-crt0='../pacman_soft_1_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../pacman_soft_1_bsp/   -Wl,-Map=pacman_soft_1.map   -O0 -g -Wall   -mno-hw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o pacman_soft_1.elf obj/default/background.o obj/default/general.o obj/default/main.o obj/default/refresh_position.o -lm -msys-lib=m
+nios2-elf-insert pacman_soft_1.elf --thread_model hal --cpu_name nios2_qsys --qsys true --simulation_enabled false --id 0 --sidp 0x101100 --timestamp 1542906047 --stderr_dev jtag_uart --stdin_dev jtag_uart --stdout_dev jtag_uart --sopc_system_name HDMI_QSYS --quartus_project_dir "D:/TL_MOREIRA_BERGES/TL_PACMAN" --jdi D:/TL_MOREIRA_BERGES/TL_PACMAN/software/pacman_soft_1_bsp/../../C5G_HDMI_VPG.jdi --sopcinfo D:/TL_MOREIRA_BERGES/TL_PACMAN/software/pacman_soft_1_bsp/../../HDMI_QSYS.sopcinfo
+Info: (pacman_soft_1.elf) 74 KBytes program size (code + initialized data).
+Info:                     221 KBytes free for stack + heap.
+Info: Creating pacman_soft_1.objdump
+nios2-elf-objdump --disassemble --syms --all-header --source pacman_soft_1.elf >pacman_soft_1.objdump
+[pacman_soft_1 build complete]
+19:23:55 **** Incremental Build of configuration Nios II for project pacman_soft_1_bsp ****
+make all 
+[BSP build complete]
+19:24:40 **** Incremental Build of configuration Nios II for project pacman_soft_1 ****
+make all 
+Info: Building ../pacman_soft_1_bsp/
+C:/intelFPGA/18.0/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../pacman_soft_1_bsp/
+[BSP build complete]
+Info: Compiling background.c to obj/default/background.o
+nios2-elf-gcc -xc -MP -MMD -c -I../pacman_soft_1_bsp//HAL/inc -I../pacman_soft_1_bsp/ -I../pacman_soft_1_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mno-hw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/background.o background.c
+background.c:21:6: error: conflicting types for 'init_foodLayer'
+ void init_foodLayer(alt_u32 background[15], alt_32 foodLayer[15], alt_u8 sizeY)
+      ^
+In file included from background.c:9:0:
+background.h:59:6: note: previous declaration of 'init_foodLayer' was here
+ void init_foodLayer(alt_u32 background[15], alt_32* foodLayer[15], alt_u8 sizeY);
+      ^
+background.h:21:16: warning: 'background' defined but not used [-Wunused-variable]
+ static alt_u32 background[15] = {
+                ^
+background.h:39:16: warning: 'foodLayer' defined but not used [-Wunused-variable]
+ static alt_u32 foodLayer[15];
+                ^
+make: *** [obj/default/background.o] Error 1
+19:24:40 **** Incremental Build of configuration Nios II for project pacman_soft_1_bsp ****
+make all 
+[BSP build complete]
+19:24:50 **** Incremental Build of configuration Nios II for project pacman_soft_1 ****
+make all 
+Info: Building ../pacman_soft_1_bsp/
+C:/intelFPGA/18.0/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../pacman_soft_1_bsp/
+[BSP build complete]
+Info: Compiling background.c to obj/default/background.o
+nios2-elf-gcc -xc -MP -MMD -c -I../pacman_soft_1_bsp//HAL/inc -I../pacman_soft_1_bsp/ -I../pacman_soft_1_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mno-hw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/background.o background.c
+In file included from background.c:9:0:
+background.h:21:16: warning: 'background' defined but not used [-Wunused-variable]
+ static alt_u32 background[15] = {
+                ^
+background.h:39:16: warning: 'foodLayer' defined but not used [-Wunused-variable]
+ static alt_u32 foodLayer[15];
+                ^
+Info: Compiling main.c to obj/default/main.o
+nios2-elf-gcc -xc -MP -MMD -c -I../pacman_soft_1_bsp//HAL/inc -I../pacman_soft_1_bsp/ -I../pacman_soft_1_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mno-hw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/main.o main.c
+main.c: In function 'main':
+main.c:62:29: warning: pointer targets in passing argument 2 of 'init_foodLayer' differ in signedness [-Wpointer-sign]
+  init_foodLayer(background, foodLayer, 15);
+                             ^
+In file included from main.c:1:0:
+background.h:59:6: note: expected 'alt_32 * {aka long int *}' but argument is of type 'alt_u32 * {aka long unsigned int *}'
+ void init_foodLayer(alt_u32 background[15], alt_32 foodLayer[15], alt_u8 sizeY);
+      ^
 Info: Compiling refresh_position.c to obj/default/refresh_position.o
 nios2-elf-gcc -xc -MP -MMD -c -I../pacman_soft_1_bsp//HAL/inc -I../pacman_soft_1_bsp/ -I../pacman_soft_1_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mno-hw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/refresh_position.o refresh_position.c
 refresh_position.c: In function 'refresh_position':
-refresh_position.c:95:6: warning: unused variable 'randomOrientation' [-Wunused-variable]
+refresh_position.c:82:6: warning: unused variable 'randomOrientation' [-Wunused-variable]
   int randomOrientation = rand() % 5;
       ^
+In file included from refresh_position.h:15:0,
+                 from refresh_position.c:8:
+refresh_position.c: At top level:
+background.h:39:16: warning: 'foodLayer' defined but not used [-Wunused-variable]
+ static alt_u32 foodLayer[15];
+                ^
 Info: Linking pacman_soft_1.elf
-nios2-elf-g++  -T'../pacman_soft_1_bsp//linker.x' -msys-crt0='../pacman_soft_1_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../pacman_soft_1_bsp/   -Wl,-Map=pacman_soft_1.map   -O0 -g -Wall   -mno-hw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o pacman_soft_1.elf obj/default/background.o obj/default/main.o obj/default/refresh_position.o -lm -msys-lib=m
-nios2-elf-insert pacman_soft_1.elf --thread_model hal --cpu_name nios2_qsys --qsys true --simulation_enabled false --id 0 --sidp 0x101120 --timestamp 1542898398 --stderr_dev jtag_uart --stdin_dev jtag_uart --stdout_dev jtag_uart --sopc_system_name HDMI_QSYS --quartus_project_dir "D:/TL_MOREIRA_BERGES/TL_PACMAN" --jdi D:/TL_MOREIRA_BERGES/TL_PACMAN/software/pacman_soft_1_bsp/../../C5G_HDMI_VPG.jdi --sopcinfo D:/TL_MOREIRA_BERGES/TL_PACMAN/software/pacman_soft_1_bsp/../../HDMI_QSYS.sopcinfo
-Info: (pacman_soft_1.elf) 73 KBytes program size (code + initialized data).
+nios2-elf-g++  -T'../pacman_soft_1_bsp//linker.x' -msys-crt0='../pacman_soft_1_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../pacman_soft_1_bsp/   -Wl,-Map=pacman_soft_1.map   -O0 -g -Wall   -mno-hw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o pacman_soft_1.elf obj/default/background.o obj/default/general.o obj/default/main.o obj/default/refresh_position.o -lm -msys-lib=m
+nios2-elf-insert pacman_soft_1.elf --thread_model hal --cpu_name nios2_qsys --qsys true --simulation_enabled false --id 0 --sidp 0x101100 --timestamp 1542906047 --stderr_dev jtag_uart --stdin_dev jtag_uart --stdout_dev jtag_uart --sopc_system_name HDMI_QSYS --quartus_project_dir "D:/TL_MOREIRA_BERGES/TL_PACMAN" --jdi D:/TL_MOREIRA_BERGES/TL_PACMAN/software/pacman_soft_1_bsp/../../C5G_HDMI_VPG.jdi --sopcinfo D:/TL_MOREIRA_BERGES/TL_PACMAN/software/pacman_soft_1_bsp/../../HDMI_QSYS.sopcinfo
+Info: (pacman_soft_1.elf) 74 KBytes program size (code + initialized data).
 Info:                     221 KBytes free for stack + heap.
 Info: Creating pacman_soft_1.objdump
 nios2-elf-objdump --disassemble --syms --all-header --source pacman_soft_1.elf >pacman_soft_1.objdump
 [pacman_soft_1 build complete]
-16:28:20 **** Incremental Build of configuration Nios II for project pacman_soft_1_bsp ****
+19:24:53 **** Incremental Build of configuration Nios II for project pacman_soft_1_bsp ****
 make all 
 [BSP build complete]
-16:28:42 **** Incremental Build of configuration Nios II for project pacman_soft_1 ****
-make all 
-Info: Building ../pacman_soft_1_bsp/
-C:/intelFPGA/18.0/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../pacman_soft_1_bsp/
-[BSP build complete]
-[pacman_soft_1 build complete]
-16:44:28 **** Incremental Build of configuration Nios II for project pacman_soft_1 ****
+19:25:05 **** Incremental Build of configuration Nios II for project pacman_soft_1 ****
 make all 
 Info: Building ../pacman_soft_1_bsp/
 C:/intelFPGA/18.0/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../pacman_soft_1_bsp/
 [BSP build complete]
 [pacman_soft_1 build complete]
-16:45:30 **** Incremental Build of configuration Nios II for project pacman_soft_1 ****
+19:25:39 **** Incremental Build of configuration Nios II for project pacman_soft_1 ****
 make all 
 Info: Building ../pacman_soft_1_bsp/
 C:/intelFPGA/18.0/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../pacman_soft_1_bsp/
 [BSP build complete]
-Info: Compiling main.c to obj/default/main.o
-nios2-elf-gcc -xc -MP -MMD -c -I../pacman_soft_1_bsp//HAL/inc -I../pacman_soft_1_bsp/ -I../pacman_soft_1_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mno-hw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/main.o main.c
+Info: Compiling background.c to obj/default/background.o
+nios2-elf-gcc -xc -MP -MMD -c -I../pacman_soft_1_bsp//HAL/inc -I../pacman_soft_1_bsp/ -I../pacman_soft_1_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mno-hw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/background.o background.c
+In file included from background.c:9:0:
+background.h:21:16: warning: 'background' defined but not used [-Wunused-variable]
+ static alt_u32 background[15] = {
+                ^
+background.h:39:16: warning: 'foodLayer' defined but not used [-Wunused-variable]
+ static alt_u32 foodLayer[15];
+                ^
 Info: Linking pacman_soft_1.elf
-nios2-elf-g++  -T'../pacman_soft_1_bsp//linker.x' -msys-crt0='../pacman_soft_1_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../pacman_soft_1_bsp/   -Wl,-Map=pacman_soft_1.map   -O0 -g -Wall   -mno-hw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o pacman_soft_1.elf obj/default/background.o obj/default/main.o obj/default/refresh_position.o -lm -msys-lib=m
-nios2-elf-insert pacman_soft_1.elf --thread_model hal --cpu_name nios2_qsys --qsys true --simulation_enabled false --id 0 --sidp 0x101120 --timestamp 1542898398 --stderr_dev jtag_uart --stdin_dev jtag_uart --stdout_dev jtag_uart --sopc_system_name HDMI_QSYS --quartus_project_dir "D:/TL_MOREIRA_BERGES/TL_PACMAN" --jdi D:/TL_MOREIRA_BERGES/TL_PACMAN/software/pacman_soft_1_bsp/../../C5G_HDMI_VPG.jdi --sopcinfo D:/TL_MOREIRA_BERGES/TL_PACMAN/software/pacman_soft_1_bsp/../../HDMI_QSYS.sopcinfo
-Info: (pacman_soft_1.elf) 73 KBytes program size (code + initialized data).
+nios2-elf-g++  -T'../pacman_soft_1_bsp//linker.x' -msys-crt0='../pacman_soft_1_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../pacman_soft_1_bsp/   -Wl,-Map=pacman_soft_1.map   -O0 -g -Wall   -mno-hw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o pacman_soft_1.elf obj/default/background.o obj/default/general.o obj/default/main.o obj/default/refresh_position.o -lm -msys-lib=m
+nios2-elf-insert pacman_soft_1.elf --thread_model hal --cpu_name nios2_qsys --qsys true --simulation_enabled false --id 0 --sidp 0x101100 --timestamp 1542906047 --stderr_dev jtag_uart --stdin_dev jtag_uart --stdout_dev jtag_uart --sopc_system_name HDMI_QSYS --quartus_project_dir "D:/TL_MOREIRA_BERGES/TL_PACMAN" --jdi D:/TL_MOREIRA_BERGES/TL_PACMAN/software/pacman_soft_1_bsp/../../C5G_HDMI_VPG.jdi --sopcinfo D:/TL_MOREIRA_BERGES/TL_PACMAN/software/pacman_soft_1_bsp/../../HDMI_QSYS.sopcinfo
+Info: (pacman_soft_1.elf) 74 KBytes program size (code + initialized data).
 Info:                     221 KBytes free for stack + heap.
 Info: Creating pacman_soft_1.objdump
 nios2-elf-objdump --disassemble --syms --all-header --source pacman_soft_1.elf >pacman_soft_1.objdump
 [pacman_soft_1 build complete]
-16:45:32 **** Incremental Build of configuration Nios II for project pacman_soft_1_bsp ****
+19:25:41 **** Incremental Build of configuration Nios II for project pacman_soft_1_bsp ****
 make all 
 [BSP build complete]
-16:46:11 **** Incremental Build of configuration Nios II for project pacman_soft_1 ****
-make all 
-Info: Building ../pacman_soft_1_bsp/
-C:/intelFPGA/18.0/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../pacman_soft_1_bsp/
-[BSP build complete]
-Info: Compiling main.c to obj/default/main.o
-nios2-elf-gcc -xc -MP -MMD -c -I../pacman_soft_1_bsp//HAL/inc -I../pacman_soft_1_bsp/ -I../pacman_soft_1_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mno-hw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/main.o main.c
-Info: Linking pacman_soft_1.elf
-nios2-elf-g++  -T'../pacman_soft_1_bsp//linker.x' -msys-crt0='../pacman_soft_1_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../pacman_soft_1_bsp/   -Wl,-Map=pacman_soft_1.map   -O0 -g -Wall   -mno-hw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o pacman_soft_1.elf obj/default/background.o obj/default/main.o obj/default/refresh_position.o -lm -msys-lib=m
-nios2-elf-insert pacman_soft_1.elf --thread_model hal --cpu_name nios2_qsys --qsys true --simulation_enabled false --id 0 --sidp 0x101120 --timestamp 1542898398 --stderr_dev jtag_uart --stdin_dev jtag_uart --stdout_dev jtag_uart --sopc_system_name HDMI_QSYS --quartus_project_dir "D:/TL_MOREIRA_BERGES/TL_PACMAN" --jdi D:/TL_MOREIRA_BERGES/TL_PACMAN/software/pacman_soft_1_bsp/../../C5G_HDMI_VPG.jdi --sopcinfo D:/TL_MOREIRA_BERGES/TL_PACMAN/software/pacman_soft_1_bsp/../../HDMI_QSYS.sopcinfo
-Info: (pacman_soft_1.elf) 73 KBytes program size (code + initialized data).
-Info:                     221 KBytes free for stack + heap.
-Info: Creating pacman_soft_1.objdump
-nios2-elf-objdump --disassemble --syms --all-header --source pacman_soft_1.elf >pacman_soft_1.objdump
-[pacman_soft_1 build complete]
-16:46:12 **** Incremental Build of configuration Nios II for project pacman_soft_1_bsp ****
-make all 
-[BSP build complete]
-16:46:17 **** Incremental Build of configuration Nios II for project pacman_soft_1 ****
-make all 
-Info: Building ../pacman_soft_1_bsp/
-C:/intelFPGA/18.0/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../pacman_soft_1_bsp/
-[BSP build complete]
-[pacman_soft_1 build complete]
-16:46:17 **** Incremental Build of configuration Nios II for project pacman_soft_1_bsp ****
-make all 
-[BSP build complete]
-16:46:19 **** Incremental Build of configuration Nios II for project pacman_soft_1 ****
-make all 
-Info: Building ../pacman_soft_1_bsp/
-C:/intelFPGA/18.0/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../pacman_soft_1_bsp/
-[BSP build complete]
-Info: Compiling main.c to obj/default/main.o
-nios2-elf-gcc -xc -MP -MMD -c -I../pacman_soft_1_bsp//HAL/inc -I../pacman_soft_1_bsp/ -I../pacman_soft_1_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mno-hw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/main.o main.c
-Info: Linking pacman_soft_1.elf
-nios2-elf-g++  -T'../pacman_soft_1_bsp//linker.x' -msys-crt0='../pacman_soft_1_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../pacman_soft_1_bsp/   -Wl,-Map=pacman_soft_1.map   -O0 -g -Wall   -mno-hw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o pacman_soft_1.elf obj/default/background.o obj/default/main.o obj/default/refresh_position.o -lm -msys-lib=m
-nios2-elf-insert pacman_soft_1.elf --thread_model hal --cpu_name nios2_qsys --qsys true --simulation_enabled false --id 0 --sidp 0x101120 --timestamp 1542898398 --stderr_dev jtag_uart --stdin_dev jtag_uart --stdout_dev jtag_uart --sopc_system_name HDMI_QSYS --quartus_project_dir "D:/TL_MOREIRA_BERGES/TL_PACMAN" --jdi D:/TL_MOREIRA_BERGES/TL_PACMAN/software/pacman_soft_1_bsp/../../C5G_HDMI_VPG.jdi --sopcinfo D:/TL_MOREIRA_BERGES/TL_PACMAN/software/pacman_soft_1_bsp/../../HDMI_QSYS.sopcinfo
-Info: (pacman_soft_1.elf) 73 KBytes program size (code + initialized data).
-Info:                     221 KBytes free for stack + heap.
-Info: Creating pacman_soft_1.objdump
-nios2-elf-objdump --disassemble --syms --all-header --source pacman_soft_1.elf >pacman_soft_1.objdump
-[pacman_soft_1 build complete]
-16:46:21 **** Incremental Build of configuration Nios II for project pacman_soft_1_bsp ****
-make all 
-[BSP build complete]
-16:46:22 **** Incremental Build of configuration Nios II for project pacman_soft_1 ****
-make all 
-Info: Building ../pacman_soft_1_bsp/
-C:/intelFPGA/18.0/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../pacman_soft_1_bsp/
-[BSP build complete]
-[pacman_soft_1 build complete]
-16:47:33 **** Incremental Build of configuration Nios II for project pacman_soft_1 ****
-make all 
-Info: Building ../pacman_soft_1_bsp/
-C:/intelFPGA/18.0/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../pacman_soft_1_bsp/
-[BSP build complete]
-Info: Compiling main.c to obj/default/main.o
-nios2-elf-gcc -xc -MP -MMD -c -I../pacman_soft_1_bsp//HAL/inc -I../pacman_soft_1_bsp/ -I../pacman_soft_1_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mno-hw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/main.o main.c
-Info: Linking pacman_soft_1.elf
-nios2-elf-g++  -T'../pacman_soft_1_bsp//linker.x' -msys-crt0='../pacman_soft_1_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../pacman_soft_1_bsp/   -Wl,-Map=pacman_soft_1.map   -O0 -g -Wall   -mno-hw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o pacman_soft_1.elf obj/default/background.o obj/default/main.o obj/default/refresh_position.o -lm -msys-lib=m
-nios2-elf-insert pacman_soft_1.elf --thread_model hal --cpu_name nios2_qsys --qsys true --simulation_enabled false --id 0 --sidp 0x101120 --timestamp 1542898398 --stderr_dev jtag_uart --stdin_dev jtag_uart --stdout_dev jtag_uart --sopc_system_name HDMI_QSYS --quartus_project_dir "D:/TL_MOREIRA_BERGES/TL_PACMAN" --jdi D:/TL_MOREIRA_BERGES/TL_PACMAN/software/pacman_soft_1_bsp/../../C5G_HDMI_VPG.jdi --sopcinfo D:/TL_MOREIRA_BERGES/TL_PACMAN/software/pacman_soft_1_bsp/../../HDMI_QSYS.sopcinfo
-Info: (pacman_soft_1.elf) 73 KBytes program size (code + initialized data).
-Info:                     221 KBytes free for stack + heap.
-Info: Creating pacman_soft_1.objdump
-nios2-elf-objdump --disassemble --syms --all-header --source pacman_soft_1.elf >pacman_soft_1.objdump
-[pacman_soft_1 build complete]
-16:47:35 **** Incremental Build of configuration Nios II for project pacman_soft_1_bsp ****
-make all 
-[BSP build complete]
-16:47:37 **** Incremental Build of configuration Nios II for project pacman_soft_1 ****
-make all 
-Info: Building ../pacman_soft_1_bsp/
-C:/intelFPGA/18.0/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../pacman_soft_1_bsp/
-[BSP build complete]
-[pacman_soft_1 build complete]
-16:49:08 **** Incremental Build of configuration Nios II for project pacman_soft_1 ****
-make all 
-Info: Building ../pacman_soft_1_bsp/
-C:/intelFPGA/18.0/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../pacman_soft_1_bsp/
-[BSP build complete]
-Info: Compiling main.c to obj/default/main.o
-nios2-elf-gcc -xc -MP -MMD -c -I../pacman_soft_1_bsp//HAL/inc -I../pacman_soft_1_bsp/ -I../pacman_soft_1_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mno-hw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/main.o main.c
-Info: Linking pacman_soft_1.elf
-nios2-elf-g++  -T'../pacman_soft_1_bsp//linker.x' -msys-crt0='../pacman_soft_1_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../pacman_soft_1_bsp/   -Wl,-Map=pacman_soft_1.map   -O0 -g -Wall   -mno-hw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o pacman_soft_1.elf obj/default/background.o obj/default/main.o obj/default/refresh_position.o -lm -msys-lib=m
-nios2-elf-insert pacman_soft_1.elf --thread_model hal --cpu_name nios2_qsys --qsys true --simulation_enabled false --id 0 --sidp 0x101120 --timestamp 1542898398 --stderr_dev jtag_uart --stdin_dev jtag_uart --stdout_dev jtag_uart --sopc_system_name HDMI_QSYS --quartus_project_dir "D:/TL_MOREIRA_BERGES/TL_PACMAN" --jdi D:/TL_MOREIRA_BERGES/TL_PACMAN/software/pacman_soft_1_bsp/../../C5G_HDMI_VPG.jdi --sopcinfo D:/TL_MOREIRA_BERGES/TL_PACMAN/software/pacman_soft_1_bsp/../../HDMI_QSYS.sopcinfo
-Info: (pacman_soft_1.elf) 73 KBytes program size (code + initialized data).
-Info:                     221 KBytes free for stack + heap.
-Info: Creating pacman_soft_1.objdump
-nios2-elf-objdump --disassemble --syms --all-header --source pacman_soft_1.elf >pacman_soft_1.objdump
-[pacman_soft_1 build complete]
-16:49:10 **** Incremental Build of configuration Nios II for project pacman_soft_1_bsp ****
-make all 
-[BSP build complete]
-16:49:33 **** Incremental Build of configuration Nios II for project pacman_soft_1 ****
-make all 
-Info: Building ../pacman_soft_1_bsp/
-C:/intelFPGA/18.0/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../pacman_soft_1_bsp/
-[BSP build complete]
-[pacman_soft_1 build complete]
-16:50:59 **** Incremental Build of configuration Nios II for project pacman_soft_1 ****
-make all 
-Info: Building ../pacman_soft_1_bsp/
-C:/intelFPGA/18.0/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../pacman_soft_1_bsp/
-[BSP build complete]
-Info: Compiling main.c to obj/default/main.o
-nios2-elf-gcc -xc -MP -MMD -c -I../pacman_soft_1_bsp//HAL/inc -I../pacman_soft_1_bsp/ -I../pacman_soft_1_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mno-hw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/main.o main.c
-Info: Linking pacman_soft_1.elf
-nios2-elf-g++  -T'../pacman_soft_1_bsp//linker.x' -msys-crt0='../pacman_soft_1_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../pacman_soft_1_bsp/   -Wl,-Map=pacman_soft_1.map   -O0 -g -Wall   -mno-hw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o pacman_soft_1.elf obj/default/background.o obj/default/main.o obj/default/refresh_position.o -lm -msys-lib=m
-nios2-elf-insert pacman_soft_1.elf --thread_model hal --cpu_name nios2_qsys --qsys true --simulation_enabled false --id 0 --sidp 0x101120 --timestamp 1542898398 --stderr_dev jtag_uart --stdin_dev jtag_uart --stdout_dev jtag_uart --sopc_system_name HDMI_QSYS --quartus_project_dir "D:/TL_MOREIRA_BERGES/TL_PACMAN" --jdi D:/TL_MOREIRA_BERGES/TL_PACMAN/software/pacman_soft_1_bsp/../../C5G_HDMI_VPG.jdi --sopcinfo D:/TL_MOREIRA_BERGES/TL_PACMAN/software/pacman_soft_1_bsp/../../HDMI_QSYS.sopcinfo
-Info: (pacman_soft_1.elf) 73 KBytes program size (code + initialized data).
-Info:                     221 KBytes free for stack + heap.
-Info: Creating pacman_soft_1.objdump
-nios2-elf-objdump --disassemble --syms --all-header --source pacman_soft_1.elf >pacman_soft_1.objdump
-[pacman_soft_1 build complete]
-16:51:01 **** Incremental Build of configuration Nios II for project pacman_soft_1_bsp ****
-make all 
-[BSP build complete]
-16:51:04 **** Incremental Build of configuration Nios II for project pacman_soft_1 ****
+19:25:43 **** Incremental Build of configuration Nios II for project pacman_soft_1 ****
 make all 
 Info: Building ../pacman_soft_1_bsp/
 C:/intelFPGA/18.0/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../pacman_soft_1_bsp/

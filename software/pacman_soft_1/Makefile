@@ -145,6 +145,7 @@ ELF := pacman_soft_1.elf
 C_SRCS += main.c
 C_SRCS += background.c
 C_SRCS += refresh_position.c
+C_SRCS += general.c
 CXX_SRCS :=
 ASM_SRCS :=
 

@@ -13,7 +13,9 @@ module HDMI_QSYS (
 	refresh_image_export,
 	reset_reset_n,
 	right_button_export,
-	up_button_export);	
+	up_button_export,
+	food_layer_data_export,
+	food_layer_wr_export);	
 
 	output	[31:0]	background_data_export;
 	output	[4:0]	background_wr_export;
@@ -29,4 +31,6 @@ module HDMI_QSYS (
 	input		reset_reset_n;
 	input		right_button_export;
 	input		up_button_export;
+	output	[31:0]	food_layer_data_export;
+	output	[4:0]	food_layer_wr_export;
 endmodule

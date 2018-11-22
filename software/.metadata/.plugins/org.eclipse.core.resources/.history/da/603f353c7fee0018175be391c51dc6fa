@@ -1,0 +1,14 @@
+/*
+ * general.h
+ *
+ *  Created on: 22 nov. 2018
+ *      Author: moreira_ben
+ */
+
+#ifndef GENERAL_H_
+#define GENERAL_H_
+
+
+alt_u8 get_block_with_coordinates(alt_u32 positionX, alt_u32 positionY, alt_u32 layer);
+
+#endif /* GENERAL_H_ */

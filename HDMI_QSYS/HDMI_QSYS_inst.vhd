@@ -13,7 +13,9 @@
 			refresh_image_export                     : in    std_logic                     := 'X'; -- export
 			reset_reset_n                            : in    std_logic                     := 'X'; -- reset_n
 			right_button_export                      : in    std_logic                     := 'X'; -- export
-			up_button_export                         : in    std_logic                     := 'X'  -- export
+			up_button_export                         : in    std_logic                     := 'X'; -- export
+			food_layer_data_export                   : out   std_logic_vector(31 downto 0);        -- export
+			food_layer_wr_export                     : out   std_logic_vector(4 downto 0)          -- export
 		);
 	end component HDMI_QSYS;
 
@@ -32,6 +34,8 @@
 			refresh_image_export                     => CONNECTED_TO_refresh_image_export,                     --                     refresh_image.export
 			reset_reset_n                            => CONNECTED_TO_reset_reset_n,                            --                             reset.reset_n
 			right_button_export                      => CONNECTED_TO_right_button_export,                      --                      right_button.export
-			up_button_export                         => CONNECTED_TO_up_button_export                          --                         up_button.export
+			up_button_export                         => CONNECTED_TO_up_button_export,                         --                         up_button.export
+			food_layer_data_export                   => CONNECTED_TO_food_layer_data_export,                   --                   food_layer_data.export
+			food_layer_wr_export                     => CONNECTED_TO_food_layer_wr_export                      --                     food_layer_wr.export
 		);
 

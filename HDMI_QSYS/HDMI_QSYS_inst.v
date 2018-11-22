@@ -12,6 +12,8 @@
 		.refresh_image_export                     (<connected-to-refresh_image_export>),                     //                     refresh_image.export
 		.reset_reset_n                            (<connected-to-reset_reset_n>),                            //                             reset.reset_n
 		.right_button_export                      (<connected-to-right_button_export>),                      //                      right_button.export
-		.up_button_export                         (<connected-to-up_button_export>)                          //                         up_button.export
+		.up_button_export                         (<connected-to-up_button_export>),                         //                         up_button.export
+		.food_layer_data_export                   (<connected-to-food_layer_data_export>),                   //                   food_layer_data.export
+		.food_layer_wr_export                     (<connected-to-food_layer_wr_export>)                      //                     food_layer_wr.export
 	);
 

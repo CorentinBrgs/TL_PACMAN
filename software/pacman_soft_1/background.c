@@ -17,3 +17,40 @@ void set_background_in_memory(alt_u32 background[15])
 		IOWR_8DIRECT(BACKGROUND_WR_BASE, 0, 0b00000 + i);
 	}
 }
+
+void init_foodLayer(alt_u32 background[15], alt_32 foodLayer[15], alt_u8 sizeY)
+{
+	for(int i=0; i<sizeY; i++){
+		foodLayer[i] = 1-background[i];
+	}
+}
+
+
+void set_foodLayer_in_memory(alt_u32 foodLayer[15])
+{
+	for(int i=0; i<16; i++){
+		IOWR_32DIRECT(FOOD_LAYER_DATA_BASE, 0, foodLayer[i]);
+		IOWR_8DIRECT(FOOD_LAYER_WR_BASE, 0, 0b00000 + i);
+		IOWR_8DIRECT(FOOD_LAYER_WR_BASE, 0, 0b10000 + i);
+		IOWR_8DIRECT(FOOD_LAYER_WR_BASE, 0, 0b00000 + i);
+	}
+}
+
+void refresh_food_layer(position* charPosition, alt_u32 foodLayer[15], alt_u16* score)
+{
+	alt_u32 middlePosX = (charPosition->positionX + 30);
+	alt_u32 middlePosY = (charPosition->positionY + 30);
+
+
+	alt_u16 blockX = middlePosX / 60;
+	alt_u16 blockY = middlePosY / 60;
+	if (get_block_with_coordinates(middlePosX, middlePosY, foodLayer) == 1){
+		foodLayer[blockY] &= (~(1<<(8+blockX)));
+		IOWR_32DIRECT(FOOD_LAYER_DATA_BASE, 0, foodLayer[blockY]);
+		IOWR_8DIRECT(FOOD_LAYER_WR_BASE, 0, 0b00000 + blockY);
+		IOWR_8DIRECT(FOOD_LAYER_WR_BASE, 0, 0b10000 + blockY);
+		IOWR_8DIRECT(FOOD_LAYER_WR_BASE, 0, 0b00000 + blockY);
+		printf("foo");
+		*score = *score+1;
+	}
+}

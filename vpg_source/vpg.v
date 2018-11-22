@@ -49,7 +49,10 @@ module vpg(
 	vpg_b,
 	background_data,
 	background_wraddress,
-	background_wren
+	background_wren,
+	food_layer_data,
+	food_layer_wraddress,
+	food_layer_wren
 );
 
 
@@ -63,6 +66,9 @@ input	[31:0]	position_data;
 input   [31:0]  background_data;
 input   [3:0]   background_wraddress;
 input           background_wren;
+input   [31:0]  food_layer_data;
+input   [3:0]   food_layer_wraddress;
+input           food_layer_wren;
 
 output			vpg_pclk;
 output			vpg_de;
@@ -150,7 +156,10 @@ vga_generator u_vga_generator (
   .nios_clk(clk_50),
   .background_data(background_data),
   .background_wraddress(background_wraddress),
-  .background_wren(background_wren)
+  .background_wren(background_wren),
+  .food_layer_data(food_layer_data),
+  .food_layer_wraddress(food_layer_wraddress),
+  .food_layer_wren(food_layer_wren)
 );
 
 
