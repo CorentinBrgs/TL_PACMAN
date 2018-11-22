@@ -50,7 +50,7 @@ END character_generator;
 ARCHITECTURE bdf_type OF character_generator IS 
 	
 	SIGNAL s_rdaddress_char 	: STD_LOGIC_VECTOR (9 DOWNTO 0) 	:= (OTHERS => '0');
-	SIGNAL s_memory_out_char 	: STD_LOGIC_VECTOR (0 DOWNTO 0) 	:= (OTHERS => '0');
+	SIGNAL s_memory_out_char 	: STD_LOGIC_VECTOR (3 DOWNTO 0) 	:= (OTHERS => '0');
 	SIGNAL s_position_x			: STD_LOGIC_VECTOR (11 DOWNTO 0) 	:= (OTHERS => '0');
 	SIGNAL s_position_y			: STD_LOGIC_VECTOR (11 DOWNTO 0) 	:= (OTHERS => '0');
 	SIGNAL s_orientation		: STD_LOGIC_VECTOR (1 DOWNTO 0) 	:= (OTHERS => '0');
@@ -61,8 +61,15 @@ ARCHITECTURE bdf_type OF character_generator IS
 	SIGNAL s_wrclock_char		: STD_LOGIC := '0';
 	SIGNAL s_wren_char			: STD_LOGIC := '0';
 
+	SIGNAL s_state_counter		: INTEGER := 0;
+	SIGNAL s_frame_counter		: INTEGER := 0;
+
 	--Components
 	COMPONENT character_memory
+		GENERIC
+		(
+			file_name : STRING
+		);
 		PORT
 		(
 			data		: IN STD_LOGIC_VECTOR (0 DOWNTO 0);
@@ -132,7 +139,10 @@ ARCHITECTURE bdf_type OF character_generator IS
 	END;
 
 BEGIN 
-	character_memory_inst : character_memory 
+	pacman_memory_1 : character_memory 
+		GENERIC MAP(
+			file_name => "pacman_1.mif"
+		)
 		PORT MAP (
 			data	 	=> s_data_char,
 			rdaddress	=> s_rdaddress_char,
@@ -140,10 +150,49 @@ BEGIN
 			wraddress	=> s_wraddress_char,
 			wrclock		=> s_wrclock_char,
 			wren		=> s_wren_char,
-			q	 		=> s_memory_out_char
+			q(0) 		=> s_memory_out_char(0)
+		);
+	pacman_memory_2 : character_memory 
+		GENERIC MAP(
+			file_name => "pacman_2.mif"
+		)
+		PORT MAP (
+			data	 	=> s_data_char,
+			rdaddress	=> s_rdaddress_char,
+			rdclock	 	=> clk,
+			wraddress	=> s_wraddress_char,
+			wrclock		=> s_wrclock_char,
+			wren		=> s_wren_char,
+			q(0) 		=> s_memory_out_char(1)
+		);
+	pacman_memory_3 : character_memory 
+		GENERIC MAP(
+			file_name => "pacman_3.mif"
+		)
+		PORT MAP (
+			data	 	=> s_data_char,
+			rdaddress	=> s_rdaddress_char,
+			rdclock	 	=> clk,
+			wraddress	=> s_wraddress_char,
+			wrclock		=> s_wrclock_char,
+			wren		=> s_wren_char,
+			q(0) 		=> s_memory_out_char(2)
+		);
+	pacman_memory_4 : character_memory 
+		GENERIC MAP(
+			file_name => "pacman_4.mif"
+		)
+		PORT MAP (
+			data	 	=> s_data_char,
+			rdaddress	=> s_rdaddress_char,
+			rdclock	 	=> clk,
+			wraddress	=> s_wraddress_char,
+			wrclock		=> s_wrclock_char,
+			wren		=> s_wren_char,
+			q(0) 		=> s_memory_out_char(3)
 		);
 
-	position_data_decoder_inst : position_data_decoder
+	pacman_data_decoder : position_data_decoder
 		GENERIC MAP 
 		(
 			char_id_param 	=> "000"	
@@ -164,7 +213,24 @@ BEGIN
 --	PROCESSES
 ------------------------------------------------------------------------
 	
-	PROCESS(clk)
+	COUNTER : PROCESS(refresh_image)
+		VARIABLE state_duration : INTEGER := 2;
+	BEGIN
+		IF (refresh_image'EVENT AND refresh_image='1') THEN
+			IF(s_frame_counter < state_duration) THEN
+				s_frame_counter <= s_frame_counter + 1;
+			ELSE 
+				s_frame_counter <= 0;
+				IF(s_state_counter < 3) THEN
+					s_state_counter <= s_state_counter + 1;
+				ELSE
+					s_state_counter <= 0;
+				END IF;
+			END IF;
+		END IF;
+	END PROCESS;
+
+	DISPLAY : PROCESS(clk)
 		VARIABLE read_address : INTEGER RANGE 0 TO 575 := 0;
 		VARIABLE i_row_x : INTEGER RANGE 0 TO 1339 := 0;
 		VARIABLE i_line_y : INTEGER RANGE 0 TO 899 := 0;
@@ -199,7 +265,7 @@ BEGIN
 				WHEN 2 => --state 2 : normal procedure
 					IF(display_character) THEN
 						s_rdaddress_char <= compute_char_address(row_x, line_y, s_position_x, s_position_y, s_orientation);
-						IF(s_memory_out_char = "1") THEN
+						IF(s_memory_out_char(s_state_counter) = '1') THEN
 							vga_r <= (OTHERS => '1');
 							vga_g <= (OTHERS => '1');
 							vga_b <= (OTHERS => '0');
@@ -209,7 +275,7 @@ BEGIN
 							vga_b <= (OTHERS => '0');
 						END IF;
 					ELSE 
-						IF(s_memory_out_char = "1") THEN
+						IF(s_memory_out_char(s_state_counter) = '1') THEN
 							vga_r <= (OTHERS => '1');
 							vga_g <= (OTHERS => '1');
 							vga_b <= (OTHERS => '0');
@@ -221,7 +287,7 @@ BEGIN
 						state <= 3;
 					END IF;
 				WHEN OTHERS => --state 3 : finish display
-					IF (s_memory_out_char = "1") THEN
+					IF (s_memory_out_char(s_state_counter) = '1') THEN
 						vga_r <= (OTHERS => '1');
 						vga_g <= (OTHERS => '1');
 						vga_b <= (OTHERS => '0');

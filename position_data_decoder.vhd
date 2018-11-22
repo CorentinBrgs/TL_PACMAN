@@ -55,39 +55,12 @@ BEGIN
 	BEGIN
 		IF(clk'EVENT AND clk = '1') THEN
 			char_id := input_vector(31 DOWNTO 29);
-			--IF (char_id = char_id_param) THEN
-			position_x 	<= input_vector(28 DOWNTO 17);
-			position_y 	<= input_vector(16 DOWNTO 5);
-			state 		<= input_vector(4 DOWNTO 2);
-			orientation <= input_vector(1 DOWNTO 0);
-			--END IF;
+			IF (char_id = char_id_param) THEN
+				position_x 	<= input_vector(28 DOWNTO 17);
+				position_y 	<= input_vector(16 DOWNTO 5);
+				state 		<= input_vector(4 DOWNTO 2);
+				orientation <= input_vector(1 DOWNTO 0);
+			END IF;
 		END IF;
-		--to be deleted with NIOS software 
-		--position_x <= "000000111100";
-		--position_y <= "000011110000";
 	END PROCESS;
-
-	--PROCESS(refresh_image)
-	--	VARIABLE counter : INTEGER RANGE 0 TO 61 := 0;
-	--BEGIN
-	--	IF(refresh_image'EVENT AND refresh_image = '1') THEN
-	--		IF (counter > 60) THEN 
-	--			CASE s_orientation IS 
-	--				WHEN "00" =>
-	--					s_orientation <= "01";
-	--				WHEN "01" =>
-	--					s_orientation <= "10";
-	--				WHEN "10" =>
-	--					s_orientation <= "11";
-	--				WHEN "11" =>
-	--					s_orientation <= "00";
-	--			END CASE;
-	--			counter := 0;
-	--		ELSE 
-	--			counter := counter +1;
-	--		END IF;
-	--	END IF;
-	--	orientation <= s_orientation;
-	--END PROCESS;
-
 END arch0;

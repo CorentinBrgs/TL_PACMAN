@@ -60,7 +60,7 @@ int main()
 	while(1)
 	{
 		whileCounter++;
-		if (whileCounter > 30000){
+		if (whileCounter > 300000){
 			printf("N : %u, S : %u, E : %u, W : %u, DControl : %u\n",
 				pacmanPosition.collision.north,
 				pacmanPosition.collision.south,

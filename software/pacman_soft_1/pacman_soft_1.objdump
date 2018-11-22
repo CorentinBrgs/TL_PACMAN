@@ -1236,7 +1236,7 @@ int main()
    804f4:	e0bff617 	ldw	r2,-40(fp)
    804f8:	109d4c50 	cmplti	r2,r2,30001
    804fc:	103ffa1e 	bne	r2,zero,804e8 <__alt_data_end+0xfffb49f8>
-			printf("N : %u, E : %u, S : %u, W : %u, DControl : %u\n",
+			printf("N : %u, S : %u, E : %u, W : %u, DControl : %u\n",
 				pacmanPosition.collision.north,
    80500:	e0bffd03 	ldbu	r2,-12(fp)
 	long whileCounter = 0;
@@ -1244,7 +1244,7 @@ int main()
 	{
 		whileCounter++;
 		if (whileCounter > 30000){
-			printf("N : %u, E : %u, S : %u, W : %u, DControl : %u\n",
+			printf("N : %u, S : %u, E : %u, W : %u, DControl : %u\n",
    80504:	11003fcc 	andi	r4,r2,255
 				pacmanPosition.collision.north,
 				pacmanPosition.collision.south,
@@ -1254,7 +1254,7 @@ int main()
 	{
 		whileCounter++;
 		if (whileCounter > 30000){
-			printf("N : %u, E : %u, S : %u, W : %u, DControl : %u\n",
+			printf("N : %u, S : %u, E : %u, W : %u, DControl : %u\n",
    8050c:	11403fcc 	andi	r5,r2,255
 				pacmanPosition.collision.north,
 				pacmanPosition.collision.south,
@@ -1265,7 +1265,7 @@ int main()
 	{
 		whileCounter++;
 		if (whileCounter > 30000){
-			printf("N : %u, E : %u, S : %u, W : %u, DControl : %u\n",
+			printf("N : %u, S : %u, E : %u, W : %u, DControl : %u\n",
    80514:	11803fcc 	andi	r6,r2,255
 				pacmanPosition.collision.north,
 				pacmanPosition.collision.south,
@@ -1277,7 +1277,7 @@ int main()
 	{
 		whileCounter++;
 		if (whileCounter > 30000){
-			printf("N : %u, E : %u, S : %u, W : %u, DControl : %u\n",
+			printf("N : %u, S : %u, E : %u, W : %u, DControl : %u\n",
    8051c:	10803fcc 	andi	r2,r2,255
 				pacmanPosition.collision.north,
 				pacmanPosition.collision.south,
@@ -1290,7 +1290,7 @@ int main()
 	{
 		whileCounter++;
 		if (whileCounter > 30000){
-			printf("N : %u, E : %u, S : %u, W : %u, DControl : %u\n",
+			printf("N : %u, S : %u, E : %u, W : %u, DControl : %u\n",
    80524:	d8c00115 	stw	r3,4(sp)
    80528:	d8800015 	stw	r2,0(sp)
    8052c:	300f883a 	mov	r7,r6
@@ -1328,7 +1328,7 @@ int main()
    80588:	003fd706 	br	804e8 <__alt_data_end+0xfffb49f8>
 
 0008058c <compute_byte_packet>:
-#include "refresh_position.h"
+#define MOVEMENT_STEP 5
 
 void compute_byte_packet(position* charPosition)
 //computes the binary data sent to the logic given the other arguments (position, orientation,...)
@@ -1760,8 +1760,8 @@ void refresh_position(position* charPosition)
 	compute_collision(charPosition);
    80994:	e13fff17 	ldw	r4,-4(fp)
    80998:	00806e40 	call	806e4 <compute_collision>
-	alt_u16 step = 60;
-   8099c:	00800f04 	movi	r2,60
+	alt_u16 step = MOVEMENT_STEP;
+   8099c:	00800144 	movi	r2,5
    809a0:	e0bffd0d 	sth	r2,-12(fp)
 	
 	srand((unsigned int)time(NULL) + charPosition->positionX);

@@ -40,6 +40,10 @@ LIBRARY altera_mf;
 USE altera_mf.altera_mf_components.all;
 
 ENTITY character_memory IS
+	GENERIC
+	(
+		file_name : STRING := "pacman_4.mif"
+	);
 	PORT
 	(
 		data		: IN STD_LOGIC_VECTOR (0 DOWNTO 0);
@@ -67,7 +71,7 @@ BEGIN
 		clock_enable_input_a => "BYPASS",
 		clock_enable_input_b => "BYPASS",
 		clock_enable_output_b => "BYPASS",
-    	init_file => "pacman_4.mif",
+    	init_file => file_name,
 		intended_device_family => "Cyclone V",
 		lpm_type => "altsyncram",
 		numwords_a => 576,
