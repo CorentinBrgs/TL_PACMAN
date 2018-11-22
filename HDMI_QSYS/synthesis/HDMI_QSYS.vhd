@@ -11,13 +11,17 @@ entity HDMI_QSYS is
 		background_data_export                   : out   std_logic_vector(31 downto 0);        --                   background_data.export
 		background_wr_export                     : out   std_logic_vector(4 downto 0);         --                     background_wr.export
 		clk_clk                                  : in    std_logic                     := '0'; --                               clk.clk
+		down_button_export                       : in    std_logic                     := '0'; --                       down_button.export
 		hdmi_tx_int_n_external_connection_export : in    std_logic                     := '0'; -- hdmi_tx_int_n_external_connection.export
 		i2c_scl_external_connection_export       : out   std_logic;                            --       i2c_scl_external_connection.export
 		i2c_sda_external_connection_export       : inout std_logic                     := '0'; --       i2c_sda_external_connection.export
 		led_external_connection_export           : out   std_logic_vector(7 downto 0);         --           led_external_connection.export
+		left_button_export                       : in    std_logic                     := '0'; --                       left_button.export
 		position_table_export                    : out   std_logic_vector(31 downto 0);        --                    position_table.export
 		refresh_image_export                     : in    std_logic                     := '0'; --                     refresh_image.export
-		reset_reset_n                            : in    std_logic                     := '0'  --                             reset.reset_n
+		reset_reset_n                            : in    std_logic                     := '0'; --                             reset.reset_n
+		right_button_export                      : in    std_logic                     := '0'; --                      right_button.export
+		up_button_export                         : in    std_logic                     := '0'  --                         up_button.export
 	);
 end entity HDMI_QSYS;
 
@@ -47,6 +51,20 @@ architecture rtl of HDMI_QSYS is
 			out_port   : out std_logic_vector(4 downto 0)                      -- export
 		);
 	end component HDMI_QSYS_background_wr;
+
+	component HDMI_QSYS_down_button is
+		port (
+			clk        : in  std_logic                     := 'X';             -- clk
+			reset_n    : in  std_logic                     := 'X';             -- reset_n
+			address    : in  std_logic_vector(1 downto 0)  := (others => 'X'); -- address
+			write_n    : in  std_logic                     := 'X';             -- write_n
+			writedata  : in  std_logic_vector(31 downto 0) := (others => 'X'); -- writedata
+			chipselect : in  std_logic                     := 'X';             -- chipselect
+			readdata   : out std_logic_vector(31 downto 0);                    -- readdata
+			in_port    : in  std_logic                     := 'X';             -- export
+			irq        : out std_logic                                         -- irq
+		);
+	end component HDMI_QSYS_down_button;
 
 	component HDMI_QSYS_hdmi_tx_int_n is
 		port (
@@ -240,6 +258,11 @@ architecture rtl of HDMI_QSYS is
 			background_wr_s1_readdata                    : in  std_logic_vector(31 downto 0) := (others => 'X'); -- readdata
 			background_wr_s1_writedata                   : out std_logic_vector(31 downto 0);                    -- writedata
 			background_wr_s1_chipselect                  : out std_logic;                                        -- chipselect
+			down_button_s1_address                       : out std_logic_vector(1 downto 0);                     -- address
+			down_button_s1_write                         : out std_logic;                                        -- write
+			down_button_s1_readdata                      : in  std_logic_vector(31 downto 0) := (others => 'X'); -- readdata
+			down_button_s1_writedata                     : out std_logic_vector(31 downto 0);                    -- writedata
+			down_button_s1_chipselect                    : out std_logic;                                        -- chipselect
 			hdmi_tx_int_n_s1_address                     : out std_logic_vector(1 downto 0);                     -- address
 			hdmi_tx_int_n_s1_write                       : out std_logic;                                        -- write
 			hdmi_tx_int_n_s1_readdata                    : in  std_logic_vector(31 downto 0) := (others => 'X'); -- readdata
@@ -267,6 +290,11 @@ architecture rtl of HDMI_QSYS is
 			led_s1_readdata                              : in  std_logic_vector(31 downto 0) := (others => 'X'); -- readdata
 			led_s1_writedata                             : out std_logic_vector(31 downto 0);                    -- writedata
 			led_s1_chipselect                            : out std_logic;                                        -- chipselect
+			left_button_s1_address                       : out std_logic_vector(1 downto 0);                     -- address
+			left_button_s1_write                         : out std_logic;                                        -- write
+			left_button_s1_readdata                      : in  std_logic_vector(31 downto 0) := (others => 'X'); -- readdata
+			left_button_s1_writedata                     : out std_logic_vector(31 downto 0);                    -- writedata
+			left_button_s1_chipselect                    : out std_logic;                                        -- chipselect
 			nios2_qsys_debug_mem_slave_address           : out std_logic_vector(8 downto 0);                     -- address
 			nios2_qsys_debug_mem_slave_write             : out std_logic;                                        -- write
 			nios2_qsys_debug_mem_slave_read              : out std_logic;                                        -- read
@@ -292,13 +320,23 @@ architecture rtl of HDMI_QSYS is
 			refresh_s1_readdata                          : in  std_logic_vector(31 downto 0) := (others => 'X'); -- readdata
 			refresh_s1_writedata                         : out std_logic_vector(31 downto 0);                    -- writedata
 			refresh_s1_chipselect                        : out std_logic;                                        -- chipselect
+			right_button_s1_address                      : out std_logic_vector(1 downto 0);                     -- address
+			right_button_s1_write                        : out std_logic;                                        -- write
+			right_button_s1_readdata                     : in  std_logic_vector(31 downto 0) := (others => 'X'); -- readdata
+			right_button_s1_writedata                    : out std_logic_vector(31 downto 0);                    -- writedata
+			right_button_s1_chipselect                   : out std_logic;                                        -- chipselect
 			sysid_qsys_control_slave_address             : out std_logic_vector(0 downto 0);                     -- address
 			sysid_qsys_control_slave_readdata            : in  std_logic_vector(31 downto 0) := (others => 'X'); -- readdata
 			timer_s1_address                             : out std_logic_vector(2 downto 0);                     -- address
 			timer_s1_write                               : out std_logic;                                        -- write
 			timer_s1_readdata                            : in  std_logic_vector(15 downto 0) := (others => 'X'); -- readdata
 			timer_s1_writedata                           : out std_logic_vector(15 downto 0);                    -- writedata
-			timer_s1_chipselect                          : out std_logic                                         -- chipselect
+			timer_s1_chipselect                          : out std_logic;                                        -- chipselect
+			up_button_s1_address                         : out std_logic_vector(1 downto 0);                     -- address
+			up_button_s1_write                           : out std_logic;                                        -- write
+			up_button_s1_readdata                        : in  std_logic_vector(31 downto 0) := (others => 'X'); -- readdata
+			up_button_s1_writedata                       : out std_logic_vector(31 downto 0);                    -- writedata
+			up_button_s1_chipselect                      : out std_logic                                         -- chipselect
 		);
 	end component HDMI_QSYS_mm_interconnect_0;
 
@@ -310,6 +348,10 @@ architecture rtl of HDMI_QSYS is
 			receiver1_irq : in  std_logic                     := 'X'; -- irq
 			receiver2_irq : in  std_logic                     := 'X'; -- irq
 			receiver3_irq : in  std_logic                     := 'X'; -- irq
+			receiver4_irq : in  std_logic                     := 'X'; -- irq
+			receiver5_irq : in  std_logic                     := 'X'; -- irq
+			receiver6_irq : in  std_logic                     := 'X'; -- irq
+			receiver7_irq : in  std_logic                     := 'X'; -- irq
 			sender_irq    : out std_logic_vector(31 downto 0)         -- irq
 		);
 	end component HDMI_QSYS_irq_mapper;
@@ -460,7 +502,7 @@ architecture rtl of HDMI_QSYS is
 		);
 	end component hdmi_qsys_rst_controller_001;
 
-	signal pll_sys_outclk0_clk                                           : std_logic;                     -- pll_sys:outclk_0 -> [hdmi_tx_int_n:clk, i2c_scl:clk, i2c_sda:clk, irq_mapper:clk, irq_synchronizer:sender_clk, jtag_uart:clk, led:clk, mm_interconnect_0:pll_sys_outclk0_clk, nios2_qsys:clk, onchip_memory2:clk, rst_controller_001:clk, sysid_qsys:clock, timer:clk]
+	signal pll_sys_outclk0_clk                                           : std_logic;                     -- pll_sys:outclk_0 -> [hdmi_tx_int_n:clk, i2c_scl:clk, i2c_sda:clk, irq_mapper:clk, irq_synchronizer:sender_clk, irq_synchronizer_001:sender_clk, irq_synchronizer_002:sender_clk, irq_synchronizer_003:sender_clk, irq_synchronizer_004:sender_clk, jtag_uart:clk, led:clk, mm_interconnect_0:pll_sys_outclk0_clk, nios2_qsys:clk, onchip_memory2:clk, rst_controller_001:clk, sysid_qsys:clock, timer:clk]
 	signal nios2_qsys_data_master_readdata                               : std_logic_vector(31 downto 0); -- mm_interconnect_0:nios2_qsys_data_master_readdata -> nios2_qsys:d_readdata
 	signal nios2_qsys_data_master_waitrequest                            : std_logic;                     -- mm_interconnect_0:nios2_qsys_data_master_waitrequest -> nios2_qsys:d_waitrequest
 	signal nios2_qsys_data_master_debugaccess                            : std_logic;                     -- nios2_qsys:debug_mem_slave_debugaccess_to_roms -> mm_interconnect_0:nios2_qsys_data_master_debugaccess
@@ -544,14 +586,42 @@ architecture rtl of HDMI_QSYS is
 	signal mm_interconnect_0_background_wr_s1_address                    : std_logic_vector(1 downto 0);  -- mm_interconnect_0:background_wr_s1_address -> background_wr:address
 	signal mm_interconnect_0_background_wr_s1_write                      : std_logic;                     -- mm_interconnect_0:background_wr_s1_write -> mm_interconnect_0_background_wr_s1_write:in
 	signal mm_interconnect_0_background_wr_s1_writedata                  : std_logic_vector(31 downto 0); -- mm_interconnect_0:background_wr_s1_writedata -> background_wr:writedata
+	signal mm_interconnect_0_left_button_s1_chipselect                   : std_logic;                     -- mm_interconnect_0:left_button_s1_chipselect -> left_button:chipselect
+	signal mm_interconnect_0_left_button_s1_readdata                     : std_logic_vector(31 downto 0); -- left_button:readdata -> mm_interconnect_0:left_button_s1_readdata
+	signal mm_interconnect_0_left_button_s1_address                      : std_logic_vector(1 downto 0);  -- mm_interconnect_0:left_button_s1_address -> left_button:address
+	signal mm_interconnect_0_left_button_s1_write                        : std_logic;                     -- mm_interconnect_0:left_button_s1_write -> mm_interconnect_0_left_button_s1_write:in
+	signal mm_interconnect_0_left_button_s1_writedata                    : std_logic_vector(31 downto 0); -- mm_interconnect_0:left_button_s1_writedata -> left_button:writedata
+	signal mm_interconnect_0_up_button_s1_chipselect                     : std_logic;                     -- mm_interconnect_0:up_button_s1_chipselect -> up_button:chipselect
+	signal mm_interconnect_0_up_button_s1_readdata                       : std_logic_vector(31 downto 0); -- up_button:readdata -> mm_interconnect_0:up_button_s1_readdata
+	signal mm_interconnect_0_up_button_s1_address                        : std_logic_vector(1 downto 0);  -- mm_interconnect_0:up_button_s1_address -> up_button:address
+	signal mm_interconnect_0_up_button_s1_write                          : std_logic;                     -- mm_interconnect_0:up_button_s1_write -> mm_interconnect_0_up_button_s1_write:in
+	signal mm_interconnect_0_up_button_s1_writedata                      : std_logic_vector(31 downto 0); -- mm_interconnect_0:up_button_s1_writedata -> up_button:writedata
+	signal mm_interconnect_0_down_button_s1_chipselect                   : std_logic;                     -- mm_interconnect_0:down_button_s1_chipselect -> down_button:chipselect
+	signal mm_interconnect_0_down_button_s1_readdata                     : std_logic_vector(31 downto 0); -- down_button:readdata -> mm_interconnect_0:down_button_s1_readdata
+	signal mm_interconnect_0_down_button_s1_address                      : std_logic_vector(1 downto 0);  -- mm_interconnect_0:down_button_s1_address -> down_button:address
+	signal mm_interconnect_0_down_button_s1_write                        : std_logic;                     -- mm_interconnect_0:down_button_s1_write -> mm_interconnect_0_down_button_s1_write:in
+	signal mm_interconnect_0_down_button_s1_writedata                    : std_logic_vector(31 downto 0); -- mm_interconnect_0:down_button_s1_writedata -> down_button:writedata
+	signal mm_interconnect_0_right_button_s1_chipselect                  : std_logic;                     -- mm_interconnect_0:right_button_s1_chipselect -> right_button:chipselect
+	signal mm_interconnect_0_right_button_s1_readdata                    : std_logic_vector(31 downto 0); -- right_button:readdata -> mm_interconnect_0:right_button_s1_readdata
+	signal mm_interconnect_0_right_button_s1_address                     : std_logic_vector(1 downto 0);  -- mm_interconnect_0:right_button_s1_address -> right_button:address
+	signal mm_interconnect_0_right_button_s1_write                       : std_logic;                     -- mm_interconnect_0:right_button_s1_write -> mm_interconnect_0_right_button_s1_write:in
+	signal mm_interconnect_0_right_button_s1_writedata                   : std_logic_vector(31 downto 0); -- mm_interconnect_0:right_button_s1_writedata -> right_button:writedata
 	signal irq_mapper_receiver0_irq                                      : std_logic;                     -- timer:irq -> irq_mapper:receiver0_irq
 	signal irq_mapper_receiver1_irq                                      : std_logic;                     -- jtag_uart:av_irq -> irq_mapper:receiver1_irq
 	signal irq_mapper_receiver2_irq                                      : std_logic;                     -- hdmi_tx_int_n:irq -> irq_mapper:receiver2_irq
 	signal nios2_qsys_irq_irq                                            : std_logic_vector(31 downto 0); -- irq_mapper:sender_irq -> nios2_qsys:irq
 	signal irq_mapper_receiver3_irq                                      : std_logic;                     -- irq_synchronizer:sender_irq -> irq_mapper:receiver3_irq
 	signal irq_synchronizer_receiver_irq                                 : std_logic_vector(0 downto 0);  -- refresh:irq -> irq_synchronizer:receiver_irq
-	signal rst_controller_reset_out_reset                                : std_logic;                     -- rst_controller:reset_out -> [irq_synchronizer:receiver_reset, mm_interconnect_0:position_reset_reset_bridge_in_reset_reset, rst_controller_reset_out_reset:in]
-	signal rst_controller_001_reset_out_reset                            : std_logic;                     -- rst_controller_001:reset_out -> [irq_mapper:reset, irq_synchronizer:sender_reset, mm_interconnect_0:nios2_qsys_reset_reset_bridge_in_reset_reset, onchip_memory2:reset, rst_controller_001_reset_out_reset:in, rst_translator:in_reset]
+	signal irq_mapper_receiver4_irq                                      : std_logic;                     -- irq_synchronizer_001:sender_irq -> irq_mapper:receiver4_irq
+	signal irq_synchronizer_001_receiver_irq                             : std_logic_vector(0 downto 0);  -- left_button:irq -> irq_synchronizer_001:receiver_irq
+	signal irq_mapper_receiver5_irq                                      : std_logic;                     -- irq_synchronizer_002:sender_irq -> irq_mapper:receiver5_irq
+	signal irq_synchronizer_002_receiver_irq                             : std_logic_vector(0 downto 0);  -- up_button:irq -> irq_synchronizer_002:receiver_irq
+	signal irq_mapper_receiver6_irq                                      : std_logic;                     -- irq_synchronizer_003:sender_irq -> irq_mapper:receiver6_irq
+	signal irq_synchronizer_003_receiver_irq                             : std_logic_vector(0 downto 0);  -- down_button:irq -> irq_synchronizer_003:receiver_irq
+	signal irq_mapper_receiver7_irq                                      : std_logic;                     -- irq_synchronizer_004:sender_irq -> irq_mapper:receiver7_irq
+	signal irq_synchronizer_004_receiver_irq                             : std_logic_vector(0 downto 0);  -- right_button:irq -> irq_synchronizer_004:receiver_irq
+	signal rst_controller_reset_out_reset                                : std_logic;                     -- rst_controller:reset_out -> [irq_synchronizer:receiver_reset, irq_synchronizer_001:receiver_reset, irq_synchronizer_002:receiver_reset, irq_synchronizer_003:receiver_reset, irq_synchronizer_004:receiver_reset, mm_interconnect_0:position_reset_reset_bridge_in_reset_reset, rst_controller_reset_out_reset:in]
+	signal rst_controller_001_reset_out_reset                            : std_logic;                     -- rst_controller_001:reset_out -> [irq_mapper:reset, irq_synchronizer:sender_reset, irq_synchronizer_001:sender_reset, irq_synchronizer_002:sender_reset, irq_synchronizer_003:sender_reset, irq_synchronizer_004:sender_reset, mm_interconnect_0:nios2_qsys_reset_reset_bridge_in_reset_reset, onchip_memory2:reset, rst_controller_001_reset_out_reset:in, rst_translator:in_reset]
 	signal rst_controller_001_reset_out_reset_req                        : std_logic;                     -- rst_controller_001:reset_req -> [nios2_qsys:reset_req, onchip_memory2:reset_req, rst_translator:reset_req_in]
 	signal reset_reset_n_ports_inv                                       : std_logic;                     -- reset_reset_n:inv -> [pll_sys:rst, rst_controller:reset_in0, rst_controller_001:reset_in0]
 	signal mm_interconnect_0_jtag_uart_avalon_jtag_slave_read_ports_inv  : std_logic;                     -- mm_interconnect_0_jtag_uart_avalon_jtag_slave_read:inv -> jtag_uart:av_read_n
@@ -565,7 +635,11 @@ architecture rtl of HDMI_QSYS is
 	signal mm_interconnect_0_refresh_s1_write_ports_inv                  : std_logic;                     -- mm_interconnect_0_refresh_s1_write:inv -> refresh:write_n
 	signal mm_interconnect_0_background_data_s1_write_ports_inv          : std_logic;                     -- mm_interconnect_0_background_data_s1_write:inv -> background_data:write_n
 	signal mm_interconnect_0_background_wr_s1_write_ports_inv            : std_logic;                     -- mm_interconnect_0_background_wr_s1_write:inv -> background_wr:write_n
-	signal rst_controller_reset_out_reset_ports_inv                      : std_logic;                     -- rst_controller_reset_out_reset:inv -> [background_data:reset_n, background_wr:reset_n, position:reset_n, refresh:reset_n]
+	signal mm_interconnect_0_left_button_s1_write_ports_inv              : std_logic;                     -- mm_interconnect_0_left_button_s1_write:inv -> left_button:write_n
+	signal mm_interconnect_0_up_button_s1_write_ports_inv                : std_logic;                     -- mm_interconnect_0_up_button_s1_write:inv -> up_button:write_n
+	signal mm_interconnect_0_down_button_s1_write_ports_inv              : std_logic;                     -- mm_interconnect_0_down_button_s1_write:inv -> down_button:write_n
+	signal mm_interconnect_0_right_button_s1_write_ports_inv             : std_logic;                     -- mm_interconnect_0_right_button_s1_write:inv -> right_button:write_n
+	signal rst_controller_reset_out_reset_ports_inv                      : std_logic;                     -- rst_controller_reset_out_reset:inv -> [background_data:reset_n, background_wr:reset_n, down_button:reset_n, left_button:reset_n, position:reset_n, refresh:reset_n, right_button:reset_n, up_button:reset_n]
 	signal rst_controller_001_reset_out_reset_ports_inv                  : std_logic;                     -- rst_controller_001_reset_out_reset:inv -> [hdmi_tx_int_n:reset_n, i2c_scl:reset_n, i2c_sda:reset_n, jtag_uart:rst_n, led:reset_n, nios2_qsys:reset_n, sysid_qsys:reset_n, timer:reset_n]
 
 begin
@@ -592,6 +666,19 @@ begin
 			chipselect => mm_interconnect_0_background_wr_s1_chipselect,      --                    .chipselect
 			readdata   => mm_interconnect_0_background_wr_s1_readdata,        --                    .readdata
 			out_port   => background_wr_export                                -- external_connection.export
+		);
+
+	down_button : component HDMI_QSYS_down_button
+		port map (
+			clk        => clk_clk,                                          --                 clk.clk
+			reset_n    => rst_controller_reset_out_reset_ports_inv,         --               reset.reset_n
+			address    => mm_interconnect_0_down_button_s1_address,         --                  s1.address
+			write_n    => mm_interconnect_0_down_button_s1_write_ports_inv, --                    .write_n
+			writedata  => mm_interconnect_0_down_button_s1_writedata,       --                    .writedata
+			chipselect => mm_interconnect_0_down_button_s1_chipselect,      --                    .chipselect
+			readdata   => mm_interconnect_0_down_button_s1_readdata,        --                    .readdata
+			in_port    => down_button_export,                               -- external_connection.export
+			irq        => irq_synchronizer_003_receiver_irq(0)              --                 irq.irq
 		);
 
 	hdmi_tx_int_n : component HDMI_QSYS_hdmi_tx_int_n
@@ -655,6 +742,19 @@ begin
 			chipselect => mm_interconnect_0_led_s1_chipselect,          --                    .chipselect
 			readdata   => mm_interconnect_0_led_s1_readdata,            --                    .readdata
 			out_port   => led_external_connection_export                -- external_connection.export
+		);
+
+	left_button : component HDMI_QSYS_down_button
+		port map (
+			clk        => clk_clk,                                          --                 clk.clk
+			reset_n    => rst_controller_reset_out_reset_ports_inv,         --               reset.reset_n
+			address    => mm_interconnect_0_left_button_s1_address,         --                  s1.address
+			write_n    => mm_interconnect_0_left_button_s1_write_ports_inv, --                    .write_n
+			writedata  => mm_interconnect_0_left_button_s1_writedata,       --                    .writedata
+			chipselect => mm_interconnect_0_left_button_s1_chipselect,      --                    .chipselect
+			readdata   => mm_interconnect_0_left_button_s1_readdata,        --                    .readdata
+			in_port    => left_button_export,                               -- external_connection.export
+			irq        => irq_synchronizer_001_receiver_irq(0)              --                 irq.irq
 		);
 
 	nios2_qsys : component HDMI_QSYS_nios2_qsys
@@ -737,6 +837,19 @@ begin
 			irq        => irq_synchronizer_receiver_irq(0)              --                 irq.irq
 		);
 
+	right_button : component HDMI_QSYS_down_button
+		port map (
+			clk        => clk_clk,                                           --                 clk.clk
+			reset_n    => rst_controller_reset_out_reset_ports_inv,          --               reset.reset_n
+			address    => mm_interconnect_0_right_button_s1_address,         --                  s1.address
+			write_n    => mm_interconnect_0_right_button_s1_write_ports_inv, --                    .write_n
+			writedata  => mm_interconnect_0_right_button_s1_writedata,       --                    .writedata
+			chipselect => mm_interconnect_0_right_button_s1_chipselect,      --                    .chipselect
+			readdata   => mm_interconnect_0_right_button_s1_readdata,        --                    .readdata
+			in_port    => right_button_export,                               -- external_connection.export
+			irq        => irq_synchronizer_004_receiver_irq(0)               --                 irq.irq
+		);
+
 	sysid_qsys : component HDMI_QSYS_sysid_qsys
 		port map (
 			clock    => pll_sys_outclk0_clk,                                   --           clk.clk
@@ -755,6 +868,19 @@ begin
 			chipselect => mm_interconnect_0_timer_s1_chipselect,        --      .chipselect
 			write_n    => mm_interconnect_0_timer_s1_write_ports_inv,   --      .write_n
 			irq        => irq_mapper_receiver0_irq                      --   irq.irq
+		);
+
+	up_button : component HDMI_QSYS_down_button
+		port map (
+			clk        => clk_clk,                                        --                 clk.clk
+			reset_n    => rst_controller_reset_out_reset_ports_inv,       --               reset.reset_n
+			address    => mm_interconnect_0_up_button_s1_address,         --                  s1.address
+			write_n    => mm_interconnect_0_up_button_s1_write_ports_inv, --                    .write_n
+			writedata  => mm_interconnect_0_up_button_s1_writedata,       --                    .writedata
+			chipselect => mm_interconnect_0_up_button_s1_chipselect,      --                    .chipselect
+			readdata   => mm_interconnect_0_up_button_s1_readdata,        --                    .readdata
+			in_port    => up_button_export,                               -- external_connection.export
+			irq        => irq_synchronizer_002_receiver_irq(0)            --                 irq.irq
 		);
 
 	mm_interconnect_0 : component HDMI_QSYS_mm_interconnect_0
@@ -787,6 +913,11 @@ begin
 			background_wr_s1_readdata                    => mm_interconnect_0_background_wr_s1_readdata,               --                                       .readdata
 			background_wr_s1_writedata                   => mm_interconnect_0_background_wr_s1_writedata,              --                                       .writedata
 			background_wr_s1_chipselect                  => mm_interconnect_0_background_wr_s1_chipselect,             --                                       .chipselect
+			down_button_s1_address                       => mm_interconnect_0_down_button_s1_address,                  --                         down_button_s1.address
+			down_button_s1_write                         => mm_interconnect_0_down_button_s1_write,                    --                                       .write
+			down_button_s1_readdata                      => mm_interconnect_0_down_button_s1_readdata,                 --                                       .readdata
+			down_button_s1_writedata                     => mm_interconnect_0_down_button_s1_writedata,                --                                       .writedata
+			down_button_s1_chipselect                    => mm_interconnect_0_down_button_s1_chipselect,               --                                       .chipselect
 			hdmi_tx_int_n_s1_address                     => mm_interconnect_0_hdmi_tx_int_n_s1_address,                --                       hdmi_tx_int_n_s1.address
 			hdmi_tx_int_n_s1_write                       => mm_interconnect_0_hdmi_tx_int_n_s1_write,                  --                                       .write
 			hdmi_tx_int_n_s1_readdata                    => mm_interconnect_0_hdmi_tx_int_n_s1_readdata,               --                                       .readdata
@@ -814,6 +945,11 @@ begin
 			led_s1_readdata                              => mm_interconnect_0_led_s1_readdata,                         --                                       .readdata
 			led_s1_writedata                             => mm_interconnect_0_led_s1_writedata,                        --                                       .writedata
 			led_s1_chipselect                            => mm_interconnect_0_led_s1_chipselect,                       --                                       .chipselect
+			left_button_s1_address                       => mm_interconnect_0_left_button_s1_address,                  --                         left_button_s1.address
+			left_button_s1_write                         => mm_interconnect_0_left_button_s1_write,                    --                                       .write
+			left_button_s1_readdata                      => mm_interconnect_0_left_button_s1_readdata,                 --                                       .readdata
+			left_button_s1_writedata                     => mm_interconnect_0_left_button_s1_writedata,                --                                       .writedata
+			left_button_s1_chipselect                    => mm_interconnect_0_left_button_s1_chipselect,               --                                       .chipselect
 			nios2_qsys_debug_mem_slave_address           => mm_interconnect_0_nios2_qsys_debug_mem_slave_address,      --             nios2_qsys_debug_mem_slave.address
 			nios2_qsys_debug_mem_slave_write             => mm_interconnect_0_nios2_qsys_debug_mem_slave_write,        --                                       .write
 			nios2_qsys_debug_mem_slave_read              => mm_interconnect_0_nios2_qsys_debug_mem_slave_read,         --                                       .read
@@ -839,13 +975,23 @@ begin
 			refresh_s1_readdata                          => mm_interconnect_0_refresh_s1_readdata,                     --                                       .readdata
 			refresh_s1_writedata                         => mm_interconnect_0_refresh_s1_writedata,                    --                                       .writedata
 			refresh_s1_chipselect                        => mm_interconnect_0_refresh_s1_chipselect,                   --                                       .chipselect
+			right_button_s1_address                      => mm_interconnect_0_right_button_s1_address,                 --                        right_button_s1.address
+			right_button_s1_write                        => mm_interconnect_0_right_button_s1_write,                   --                                       .write
+			right_button_s1_readdata                     => mm_interconnect_0_right_button_s1_readdata,                --                                       .readdata
+			right_button_s1_writedata                    => mm_interconnect_0_right_button_s1_writedata,               --                                       .writedata
+			right_button_s1_chipselect                   => mm_interconnect_0_right_button_s1_chipselect,              --                                       .chipselect
 			sysid_qsys_control_slave_address             => mm_interconnect_0_sysid_qsys_control_slave_address,        --               sysid_qsys_control_slave.address
 			sysid_qsys_control_slave_readdata            => mm_interconnect_0_sysid_qsys_control_slave_readdata,       --                                       .readdata
 			timer_s1_address                             => mm_interconnect_0_timer_s1_address,                        --                               timer_s1.address
 			timer_s1_write                               => mm_interconnect_0_timer_s1_write,                          --                                       .write
 			timer_s1_readdata                            => mm_interconnect_0_timer_s1_readdata,                       --                                       .readdata
 			timer_s1_writedata                           => mm_interconnect_0_timer_s1_writedata,                      --                                       .writedata
-			timer_s1_chipselect                          => mm_interconnect_0_timer_s1_chipselect                      --                                       .chipselect
+			timer_s1_chipselect                          => mm_interconnect_0_timer_s1_chipselect,                     --                                       .chipselect
+			up_button_s1_address                         => mm_interconnect_0_up_button_s1_address,                    --                           up_button_s1.address
+			up_button_s1_write                           => mm_interconnect_0_up_button_s1_write,                      --                                       .write
+			up_button_s1_readdata                        => mm_interconnect_0_up_button_s1_readdata,                   --                                       .readdata
+			up_button_s1_writedata                       => mm_interconnect_0_up_button_s1_writedata,                  --                                       .writedata
+			up_button_s1_chipselect                      => mm_interconnect_0_up_button_s1_chipselect                  --                                       .chipselect
 		);
 
 	irq_mapper : component HDMI_QSYS_irq_mapper
@@ -856,6 +1002,10 @@ begin
 			receiver1_irq => irq_mapper_receiver1_irq,           -- receiver1.irq
 			receiver2_irq => irq_mapper_receiver2_irq,           -- receiver2.irq
 			receiver3_irq => irq_mapper_receiver3_irq,           -- receiver3.irq
+			receiver4_irq => irq_mapper_receiver4_irq,           -- receiver4.irq
+			receiver5_irq => irq_mapper_receiver5_irq,           -- receiver5.irq
+			receiver6_irq => irq_mapper_receiver6_irq,           -- receiver6.irq
+			receiver7_irq => irq_mapper_receiver7_irq,           -- receiver7.irq
 			sender_irq    => nios2_qsys_irq_irq                  --    sender.irq
 		);
 
@@ -870,6 +1020,58 @@ begin
 			sender_reset   => rst_controller_001_reset_out_reset, --   sender_clk_reset.reset
 			receiver_irq   => irq_synchronizer_receiver_irq,      --           receiver.irq
 			sender_irq(0)  => irq_mapper_receiver3_irq            --             sender.irq
+		);
+
+	irq_synchronizer_001 : component altera_irq_clock_crosser
+		generic map (
+			IRQ_WIDTH => 1
+		)
+		port map (
+			receiver_clk   => clk_clk,                            --       receiver_clk.clk
+			sender_clk     => pll_sys_outclk0_clk,                --         sender_clk.clk
+			receiver_reset => rst_controller_reset_out_reset,     -- receiver_clk_reset.reset
+			sender_reset   => rst_controller_001_reset_out_reset, --   sender_clk_reset.reset
+			receiver_irq   => irq_synchronizer_001_receiver_irq,  --           receiver.irq
+			sender_irq(0)  => irq_mapper_receiver4_irq            --             sender.irq
+		);
+
+	irq_synchronizer_002 : component altera_irq_clock_crosser
+		generic map (
+			IRQ_WIDTH => 1
+		)
+		port map (
+			receiver_clk   => clk_clk,                            --       receiver_clk.clk
+			sender_clk     => pll_sys_outclk0_clk,                --         sender_clk.clk
+			receiver_reset => rst_controller_reset_out_reset,     -- receiver_clk_reset.reset
+			sender_reset   => rst_controller_001_reset_out_reset, --   sender_clk_reset.reset
+			receiver_irq   => irq_synchronizer_002_receiver_irq,  --           receiver.irq
+			sender_irq(0)  => irq_mapper_receiver5_irq            --             sender.irq
+		);
+
+	irq_synchronizer_003 : component altera_irq_clock_crosser
+		generic map (
+			IRQ_WIDTH => 1
+		)
+		port map (
+			receiver_clk   => clk_clk,                            --       receiver_clk.clk
+			sender_clk     => pll_sys_outclk0_clk,                --         sender_clk.clk
+			receiver_reset => rst_controller_reset_out_reset,     -- receiver_clk_reset.reset
+			sender_reset   => rst_controller_001_reset_out_reset, --   sender_clk_reset.reset
+			receiver_irq   => irq_synchronizer_003_receiver_irq,  --           receiver.irq
+			sender_irq(0)  => irq_mapper_receiver6_irq            --             sender.irq
+		);
+
+	irq_synchronizer_004 : component altera_irq_clock_crosser
+		generic map (
+			IRQ_WIDTH => 1
+		)
+		port map (
+			receiver_clk   => clk_clk,                            --       receiver_clk.clk
+			sender_clk     => pll_sys_outclk0_clk,                --         sender_clk.clk
+			receiver_reset => rst_controller_reset_out_reset,     -- receiver_clk_reset.reset
+			sender_reset   => rst_controller_001_reset_out_reset, --   sender_clk_reset.reset
+			receiver_irq   => irq_synchronizer_004_receiver_irq,  --           receiver.irq
+			sender_irq(0)  => irq_mapper_receiver7_irq            --             sender.irq
 		);
 
 	rst_controller : component hdmi_qsys_rst_controller
@@ -1025,6 +1227,14 @@ begin
 	mm_interconnect_0_background_data_s1_write_ports_inv <= not mm_interconnect_0_background_data_s1_write;
 
 	mm_interconnect_0_background_wr_s1_write_ports_inv <= not mm_interconnect_0_background_wr_s1_write;
+
+	mm_interconnect_0_left_button_s1_write_ports_inv <= not mm_interconnect_0_left_button_s1_write;
+
+	mm_interconnect_0_up_button_s1_write_ports_inv <= not mm_interconnect_0_up_button_s1_write;
+
+	mm_interconnect_0_down_button_s1_write_ports_inv <= not mm_interconnect_0_down_button_s1_write;
+
+	mm_interconnect_0_right_button_s1_write_ports_inv <= not mm_interconnect_0_right_button_s1_write;
 
 	rst_controller_reset_out_reset_ports_inv <= not rst_controller_reset_out_reset;
 

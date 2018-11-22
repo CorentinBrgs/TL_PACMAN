@@ -2,8 +2,8 @@
 <sch:Settings xmlns:sch="http://www.altera.com/embeddedsw/bsp/schema">
         <BspType>hal</BspType>
         <BspVersion>default</BspVersion>
-        <BspGeneratedTimeStamp>21 nov. 2018 13:50:23</BspGeneratedTimeStamp>
-        <BspGeneratedUnixTimeStamp>1542804623701</BspGeneratedUnixTimeStamp>
+        <BspGeneratedTimeStamp>22 nov. 2018 16:02:04</BspGeneratedTimeStamp>
+        <BspGeneratedUnixTimeStamp>1542898924082</BspGeneratedUnixTimeStamp>
         <BspGeneratedLocation>D:\TL_MOREIRA_BERGES\TL_PACMAN\software\pacman_soft_1_bsp</BspGeneratedLocation>
         <BspSettingsFile>settings.bsp</BspSettingsFile>
         <SopcDesignFile>..\..\HDMI_QSYS.sopcinfo</SopcDesignFile>
@@ -911,62 +911,86 @@
                 <attributes>timer</attributes>
         </MemoryMap>
         <MemoryMap>
-                <slaveDescriptor>background_wr</slaveDescriptor>
-                <addressRange>0x00101020 - 0x0010102F</addressRange>
-                <addressSpan>16</addressSpan>
-                <attributes/>
-        </MemoryMap>
-        <MemoryMap>
-                <slaveDescriptor>background_data</slaveDescriptor>
-                <addressRange>0x00101030 - 0x0010103F</addressRange>
-                <addressSpan>16</addressSpan>
-                <attributes/>
-        </MemoryMap>
-        <MemoryMap>
-                <slaveDescriptor>refresh</slaveDescriptor>
-                <addressRange>0x00101040 - 0x0010104F</addressRange>
-                <addressSpan>16</addressSpan>
-                <attributes/>
-        </MemoryMap>
-        <MemoryMap>
-                <slaveDescriptor>position</slaveDescriptor>
-                <addressRange>0x00101050 - 0x0010105F</addressRange>
-                <addressSpan>16</addressSpan>
-                <attributes/>
-        </MemoryMap>
-        <MemoryMap>
-                <slaveDescriptor>hdmi_tx_int_n</slaveDescriptor>
+                <slaveDescriptor>right_button</slaveDescriptor>
                 <addressRange>0x00101060 - 0x0010106F</addressRange>
                 <addressSpan>16</addressSpan>
                 <attributes/>
         </MemoryMap>
         <MemoryMap>
-                <slaveDescriptor>led</slaveDescriptor>
+                <slaveDescriptor>down_button</slaveDescriptor>
                 <addressRange>0x00101070 - 0x0010107F</addressRange>
                 <addressSpan>16</addressSpan>
                 <attributes/>
         </MemoryMap>
         <MemoryMap>
-                <slaveDescriptor>i2c_scl</slaveDescriptor>
+                <slaveDescriptor>up_button</slaveDescriptor>
                 <addressRange>0x00101080 - 0x0010108F</addressRange>
                 <addressSpan>16</addressSpan>
                 <attributes/>
         </MemoryMap>
         <MemoryMap>
-                <slaveDescriptor>i2c_sda</slaveDescriptor>
+                <slaveDescriptor>left_button</slaveDescriptor>
                 <addressRange>0x00101090 - 0x0010109F</addressRange>
                 <addressSpan>16</addressSpan>
                 <attributes/>
         </MemoryMap>
         <MemoryMap>
+                <slaveDescriptor>background_wr</slaveDescriptor>
+                <addressRange>0x001010A0 - 0x001010AF</addressRange>
+                <addressSpan>16</addressSpan>
+                <attributes/>
+        </MemoryMap>
+        <MemoryMap>
+                <slaveDescriptor>background_data</slaveDescriptor>
+                <addressRange>0x001010B0 - 0x001010BF</addressRange>
+                <addressSpan>16</addressSpan>
+                <attributes/>
+        </MemoryMap>
+        <MemoryMap>
+                <slaveDescriptor>refresh</slaveDescriptor>
+                <addressRange>0x001010C0 - 0x001010CF</addressRange>
+                <addressSpan>16</addressSpan>
+                <attributes/>
+        </MemoryMap>
+        <MemoryMap>
+                <slaveDescriptor>position</slaveDescriptor>
+                <addressRange>0x001010D0 - 0x001010DF</addressRange>
+                <addressSpan>16</addressSpan>
+                <attributes/>
+        </MemoryMap>
+        <MemoryMap>
+                <slaveDescriptor>hdmi_tx_int_n</slaveDescriptor>
+                <addressRange>0x001010E0 - 0x001010EF</addressRange>
+                <addressSpan>16</addressSpan>
+                <attributes/>
+        </MemoryMap>
+        <MemoryMap>
+                <slaveDescriptor>led</slaveDescriptor>
+                <addressRange>0x001010F0 - 0x001010FF</addressRange>
+                <addressSpan>16</addressSpan>
+                <attributes/>
+        </MemoryMap>
+        <MemoryMap>
+                <slaveDescriptor>i2c_scl</slaveDescriptor>
+                <addressRange>0x00101100 - 0x0010110F</addressRange>
+                <addressSpan>16</addressSpan>
+                <attributes/>
+        </MemoryMap>
+        <MemoryMap>
+                <slaveDescriptor>i2c_sda</slaveDescriptor>
+                <addressRange>0x00101110 - 0x0010111F</addressRange>
+                <addressSpan>16</addressSpan>
+                <attributes/>
+        </MemoryMap>
+        <MemoryMap>
                 <slaveDescriptor>sysid_qsys</slaveDescriptor>
-                <addressRange>0x001010A0 - 0x001010A7</addressRange>
+                <addressRange>0x00101120 - 0x00101127</addressRange>
                 <addressSpan>8</addressSpan>
                 <attributes/>
         </MemoryMap>
         <MemoryMap>
                 <slaveDescriptor>jtag_uart</slaveDescriptor>
-                <addressRange>0x001010A8 - 0x001010AF</addressRange>
+                <addressRange>0x00101128 - 0x0010112F</addressRange>
                 <addressSpan>8</addressSpan>
                 <attributes>printable</attributes>
         </MemoryMap>

@@ -82,7 +82,7 @@ alt_u8 get_block_with_coordinates(alt_u32 positionX, alt_u32 positionY){
 	return ((background[blockY] & 1<<(8+blockX))>>(8+blockX));
 }
 
-void refresh_position(position* charPosition)
+void refresh_position(position* charPosition, alt_u8 autoMode)
 /*this function computes the new position of the pacman given :
  * - the orientation
  * - the collisions around the character
@@ -102,7 +102,7 @@ void refresh_position(position* charPosition)
 				charPosition->positionY = charPosition->positionY - step;
 				charPosition->directionControl = NONE;
 			} else {
-				refresh_position_keepGoing(charPosition, step);
+				refresh_position_keepGoing(charPosition, step, autoMode);
 			}
 		break;
 		case RIGHT:
@@ -111,7 +111,7 @@ void refresh_position(position* charPosition)
 				charPosition->positionX = charPosition->positionX + step;
 				charPosition->directionControl = NONE;
 			} else {
-				refresh_position_keepGoing(charPosition, step);
+				refresh_position_keepGoing(charPosition, step, autoMode);
 			}
 		break;
 		case DOWN:
@@ -120,7 +120,7 @@ void refresh_position(position* charPosition)
 				charPosition->positionY = charPosition->positionY + step;
 				charPosition->directionControl = NONE;
 			} else {
-				refresh_position_keepGoing(charPosition, step);
+				refresh_position_keepGoing(charPosition, step, autoMode);
 			}
 		break;
 		case LEFT:
@@ -129,44 +129,44 @@ void refresh_position(position* charPosition)
 				charPosition->positionX = charPosition->positionX - step;
 				charPosition->directionControl = NONE;
 			} else {
-				refresh_position_keepGoing(charPosition, step);
+				refresh_position_keepGoing(charPosition, step, autoMode);
 			}
 		break;
 		default :
-			refresh_position_keepGoing(charPosition, step);
+			refresh_position_keepGoing(charPosition, step, autoMode);
 		break;
 	}
 	compute_byte_packet(charPosition);
 }
 
-void refresh_position_keepGoing(position* charPosition, alt_u16 step){
+void refresh_position_keepGoing(position* charPosition, alt_u16 step, alt_u8 autoMode){
 	switch(charPosition->orientation)
 	{
 		case NORTH :
 			if (charPosition->collision.north == 0){
 				charPosition->positionY = charPosition->positionY - step;	
-			} else {
+			} else if (autoMode == 1) {
 				randomDirection(charPosition, step);
 			} 
 		break;
 		case EAST :
 			if (charPosition->collision.east == 0){
 				charPosition->positionX = charPosition->positionX + step;
-			} else {
+			} else if (autoMode == 1) {
 				randomDirection(charPosition, step);
 			} 
 		break;
 		case SOUTH :
 			if (charPosition->collision.south == 0){
 				charPosition->positionY = charPosition->positionY + step;
-			} else {
+			} else if (autoMode == 1) {
 				randomDirection(charPosition, step);
 			} 
 		break;
 		case WEST :
 			if (charPosition->collision.west == 0){
 				charPosition->positionX = charPosition->positionX - step;
-			} else {
+			} else if (autoMode == 1) {
 				randomDirection(charPosition, step);
 			} 
 		break;
@@ -193,15 +193,6 @@ void randomDirection(position* charPosition, alt_u16 step){
 	}
 }
 
-static void update_direction(void* context)
-/* interrupt handler : this function is called each time a button is pushed (60Hz)
- * it updates the directionControl of the charPosition given in the context
-*/
-{
-	position* p_pacmanPosition = (position*) context;
-	p_pacmanPosition->directionControl = (rand() % 4) + 1;
-	//IOWR(BUTTON_BASE,3,0xf);
-}
 
 
 

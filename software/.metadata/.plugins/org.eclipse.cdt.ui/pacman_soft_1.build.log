@@ -1,9 +1,9 @@
-14:48:27 **** Incremental Build of configuration Nios II for project pacman_soft_1 ****
+16:51:04 **** Incremental Build of configuration Nios II for project pacman_soft_1 ****
 make all 
 Info: Building ../pacman_soft_1_bsp/
 C:/intelFPGA/18.0/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../pacman_soft_1_bsp/
 [BSP build complete]
 [pacman_soft_1 build complete]
 
-14:48:28 Build Finished (took 841ms)
+16:51:05 Build Finished (took 750ms)
 

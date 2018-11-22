@@ -207,7 +207,7 @@ wire        position_memory_updated;
 //system clock
 sys_pll u_sys_pll (
 	.refclk(CLOCK_50_B7A),
-	.rst(!KEY[2]),
+	.rst(!SW[1]),
 	.outclk_0(pll_1200k), // 1200K
 	.locked(reset_n) );
 
@@ -216,7 +216,7 @@ vpg_mode u_vpg_mode (
 	.reset_n(reset_n),
 	.clk(pll_1200k),
 	.clk_en(en_150),
-	.mode_button(KEY[1]),
+	.mode_button(SW[0]),
 	.vpg_mode_change(vpg_mode_change),
 	.vpg_mode(vpg_mode) );
 
@@ -283,6 +283,10 @@ end
         .position_table_export(position_table_data),
         .refresh_image_export(refresh_image),
         .background_data_export(background_data),
+        .left_button_export(KEY[3]),
+        .up_button_export(KEY[2]),
+        .down_button_export(KEY[1]),
+        .right_button_export(KEY[0]),
 		.background_wr_export(background_wr)
     );
 

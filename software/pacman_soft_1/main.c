@@ -5,15 +5,11 @@
 
 
 #include "io.h"
-#include "system.h"
+#include <system.h>
 #include "alt_types.h"
 #include "sys\alt_irq.h"
 #include "priv\alt_legacy_irq.h"
 
-
-alt_u32 counter = 0;
-alt_8	counter_dir = -1;
-alt_u32 temp_counter = 0;
 
 static void refresh_position_interrupt_handler(void* context)
 /* interrupt handler : this function is called each time a new frame is build (60Hz)
@@ -21,18 +17,41 @@ static void refresh_position_interrupt_handler(void* context)
 */
 {
 	position* p_pacmanPosition = (position*) context;
-	refresh_position(p_pacmanPosition);
+	refresh_position(p_pacmanPosition, 0);
 	IOWR_32DIRECT(POSITION_BASE, 0, p_pacmanPosition->bytePacket);
-	if(counter > 600){
-		counter_dir = -1;
-		p_pacmanPosition->orientation = NORTH;
-	}
-	if(counter < 60){
-		counter_dir = 1;
-		p_pacmanPosition->orientation = SOUTH;
-	}
-	counter = counter + (1<<0)*counter_dir;
 	IOWR(REFRESH_BASE,3,0xf);
+}
+
+static void left_button_interrupt_handler(void* context)
+/* interrupt handler : this function is called each time the left button direction is pressed */
+{
+	position* p_pacmanPosition = (position*) context;
+	p_pacmanPosition->directionControl = LEFT;
+	IOWR(LEFT_BUTTON_BASE,3,0xf);
+}
+
+static void up_button_interrupt_handler(void* context)
+/* interrupt handler : this function is called each time the up button direction is pressed */
+{
+	position* p_pacmanPosition = (position*) context;
+	p_pacmanPosition->directionControl = DOWN;
+	IOWR(UP_BUTTON_BASE,3,0xf);
+}
+
+static void down_button_interrupt_handler(void* context)
+/* interrupt handler : this function is called each time the down button direction is pressed */
+{
+	position* p_pacmanPosition = (position*) context;
+	p_pacmanPosition->directionControl = UP;
+	IOWR(DOWN_BUTTON_BASE,3,0xf);
+}
+
+static void right_button_interrupt_handler(void* context)
+/* interrupt handler : this function is called each time the right button direction is pressed */
+{
+	position* p_pacmanPosition = (position*) context;
+	p_pacmanPosition->directionControl = RIGHT;
+	IOWR(RIGHT_BUTTON_BASE,3,0xf);
 }
 
 int main()
@@ -44,15 +63,41 @@ int main()
 	compute_collision(&pacmanPosition);
 
 	printf("Hello from Nios II!\n");
-	printf("get_blocks : %u\n",
-		get_block_with_coordinates(50,50)
-	);
 
 	//IRQ initialization
 	IOWR(REFRESH_BASE,2,0xf); //enable interrupt
 	IOWR(REFRESH_BASE,3,0xf); //clear edge register
-	printf("alt_ic_irq_enabled : %lu \n", alt_ic_irq_enabled(REFRESH_IRQ_INTERRUPT_CONTROLLER_ID, REFRESH_IRQ));
 	alt_irq_register(REFRESH_IRQ,(void*)&pacmanPosition,refresh_position_interrupt_handler);
+	printf("Refresh IRQ : ");
+	printf("alt_ic_irq_enabled : %lu \n", alt_ic_irq_enabled(REFRESH_IRQ_INTERRUPT_CONTROLLER_ID, REFRESH_IRQ));
+
+	//Left button IRQ initialization
+	IOWR(LEFT_BUTTON_BASE,2,0xf); //enable interrupt
+	IOWR(LEFT_BUTTON_BASE,3,0xf); //clear edge register
+	alt_irq_register(LEFT_BUTTON_IRQ,(void*)&pacmanPosition,left_button_interrupt_handler);
+	printf("Left button IRQ : ");
+	printf("left_button_irq_enabled : %lu \n", alt_ic_irq_enabled(LEFT_BUTTON_IRQ_INTERRUPT_CONTROLLER_ID, LEFT_BUTTON_IRQ));
+
+	//Up button IRQ initialization
+	IOWR(UP_BUTTON_BASE,2,0xf); //enable interrupt
+	IOWR(UP_BUTTON_BASE,3,0xf); //clear edge register
+	alt_irq_register(UP_BUTTON_IRQ,(void*)&pacmanPosition,up_button_interrupt_handler);
+	printf("Up button IRQ : ");
+	printf("up_button_irq_enabled : %lu \n", alt_ic_irq_enabled(UP_BUTTON_IRQ_INTERRUPT_CONTROLLER_ID, UP_BUTTON_IRQ));
+
+	//Down button IRQ initialization
+	IOWR(DOWN_BUTTON_BASE,2,0xf); //enable interrupt
+	IOWR(DOWN_BUTTON_BASE,3,0xf); //clear edge register
+	alt_irq_register(DOWN_BUTTON_IRQ,(void*)&pacmanPosition,down_button_interrupt_handler);
+	printf("Down button IRQ : ");
+	printf("down_button_irq_enabled : %lu \n", alt_ic_irq_enabled(DOWN_BUTTON_IRQ_INTERRUPT_CONTROLLER_ID, DOWN_BUTTON_IRQ));
+
+	//Right button IRQ initialization
+	IOWR(RIGHT_BUTTON_BASE,2,0xf); //enable interrupt
+	IOWR(RIGHT_BUTTON_BASE,3,0xf); //clear edge register
+	alt_irq_register(RIGHT_BUTTON_IRQ,(void*)&pacmanPosition,right_button_interrupt_handler);
+	printf("Right button IRQ : ");
+	printf("right_button_irq_enabled : %lu \n", alt_ic_irq_enabled(RIGHT_BUTTON_IRQ_INTERRUPT_CONTROLLER_ID, RIGHT_BUTTON_IRQ));
 
 	printf("%lu\n", background[1]);
 
@@ -61,15 +106,11 @@ int main()
 	{
 		whileCounter++;
 		if (whileCounter > 30000){
-			printf("N : %u, S : %u, E : %u, W : %u, DControl : %u\n",
-				pacmanPosition.collision.north,
-				pacmanPosition.collision.south,
-				pacmanPosition.collision.east,
-				pacmanPosition.collision.west,
-				pacmanPosition.directionControl
+			printf("directionControl : %u, orientation : %u \n",
+					pacmanPosition.directionControl,
+					pacmanPosition.orientation
 			);
 			whileCounter = 0;
-			pacmanPosition.directionControl = ((pacmanPosition.orientation + 2*(rand()%2))%4) + 1 ;
 		}
 	}
 }

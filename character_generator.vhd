@@ -50,7 +50,7 @@ END character_generator;
 ARCHITECTURE bdf_type OF character_generator IS 
 	
 	SIGNAL s_rdaddress_char 	: STD_LOGIC_VECTOR (9 DOWNTO 0) 	:= (OTHERS => '0');
-	SIGNAL s_memory_out_char 	: STD_LOGIC_VECTOR (3 DOWNTO 0) 	:= (OTHERS => '0');
+	SIGNAL s_memory_out_char 	: STD_LOGIC_VECTOR (4 DOWNTO 0) 	:= (OTHERS => '0');
 	SIGNAL s_position_x			: STD_LOGIC_VECTOR (11 DOWNTO 0) 	:= (OTHERS => '0');
 	SIGNAL s_position_y			: STD_LOGIC_VECTOR (11 DOWNTO 0) 	:= (OTHERS => '0');
 	SIGNAL s_orientation		: STD_LOGIC_VECTOR (1 DOWNTO 0) 	:= (OTHERS => '0');
@@ -139,6 +139,19 @@ ARCHITECTURE bdf_type OF character_generator IS
 	END;
 
 BEGIN 
+	pacman_memory_0 : character_memory 
+		GENERIC MAP(
+			file_name => "pacman_0.mif"
+		)
+		PORT MAP (
+			data	 	=> s_data_char,
+			rdaddress	=> s_rdaddress_char,
+			rdclock	 	=> clk,
+			wraddress	=> s_wraddress_char,
+			wrclock		=> s_wrclock_char,
+			wren		=> s_wren_char,
+			q(0) 		=> s_memory_out_char(0)
+		);
 	pacman_memory_1 : character_memory 
 		GENERIC MAP(
 			file_name => "pacman_1.mif"
@@ -150,7 +163,7 @@ BEGIN
 			wraddress	=> s_wraddress_char,
 			wrclock		=> s_wrclock_char,
 			wren		=> s_wren_char,
-			q(0) 		=> s_memory_out_char(0)
+			q(0) 		=> s_memory_out_char(1)
 		);
 	pacman_memory_2 : character_memory 
 		GENERIC MAP(
@@ -163,7 +176,7 @@ BEGIN
 			wraddress	=> s_wraddress_char,
 			wrclock		=> s_wrclock_char,
 			wren		=> s_wren_char,
-			q(0) 		=> s_memory_out_char(1)
+			q(0) 		=> s_memory_out_char(2)
 		);
 	pacman_memory_3 : character_memory 
 		GENERIC MAP(
@@ -176,7 +189,7 @@ BEGIN
 			wraddress	=> s_wraddress_char,
 			wrclock		=> s_wrclock_char,
 			wren		=> s_wren_char,
-			q(0) 		=> s_memory_out_char(2)
+			q(0) 		=> s_memory_out_char(3)
 		);
 	pacman_memory_4 : character_memory 
 		GENERIC MAP(
@@ -189,7 +202,7 @@ BEGIN
 			wraddress	=> s_wraddress_char,
 			wrclock		=> s_wrclock_char,
 			wren		=> s_wren_char,
-			q(0) 		=> s_memory_out_char(3)
+			q(0) 		=> s_memory_out_char(4)
 		);
 
 	pacman_data_decoder : position_data_decoder
@@ -221,7 +234,7 @@ BEGIN
 				s_frame_counter <= s_frame_counter + 1;
 			ELSE 
 				s_frame_counter <= 0;
-				IF(s_state_counter < 3) THEN
+				IF(s_state_counter < 4) THEN
 					s_state_counter <= s_state_counter + 1;
 				ELSE
 					s_state_counter <= 0;
