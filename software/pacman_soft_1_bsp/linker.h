@@ -4,7 +4,7 @@
  * Machine generated for CPU 'nios2_qsys' in SOPC Builder design 'HDMI_QSYS'
  * SOPC Builder design path: ../../HDMI_QSYS.sopcinfo
  *
- * Generated: Mon Nov 19 18:33:39 CET 2018
+ * Generated: Fri Nov 23 18:38:34 CET 2018
  */
 
 /*
@@ -66,7 +66,7 @@
  */
 
 #define ONCHIP_MEMORY2_REGION_BASE 0x80020
-#define ONCHIP_MEMORY2_REGION_SPAN 309968
+#define ONCHIP_MEMORY2_REGION_SPAN 399968
 #define RESET_REGION_BASE 0x80000
 #define RESET_REGION_SPAN 32
 

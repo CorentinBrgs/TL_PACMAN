@@ -3,7 +3,7 @@
 # Machine generated for CPU 'nios2_qsys' in SOPC Builder design 'HDMI_QSYS'
 # SOPC Builder design path: ../../HDMI_QSYS.sopcinfo
 #
-# Generated: Mon Nov 19 18:33:39 CET 2018
+# Generated: Fri Nov 23 18:38:34 CET 2018
 
 # DO NOT MODIFY THIS FILE
 #
@@ -47,4 +47,4 @@
 # by allowing GDB to cache memory contents on the host.
 
 # onchip_memory2
-memory 0x80000 0xcbaf0 cache
+memory 0x80000 0xe1a80 cache

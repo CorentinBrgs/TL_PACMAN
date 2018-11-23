@@ -4,6 +4,8 @@ module HDMI_QSYS (
 	background_wr_export,
 	clk_clk,
 	down_button_export,
+	food_layer_data_export,
+	food_layer_wr_export,
 	hdmi_tx_int_n_external_connection_export,
 	i2c_scl_external_connection_export,
 	i2c_sda_external_connection_export,
@@ -13,14 +15,15 @@ module HDMI_QSYS (
 	refresh_image_export,
 	reset_reset_n,
 	right_button_export,
-	up_button_export,
-	food_layer_data_export,
-	food_layer_wr_export);	
+	segments_display_export,
+	up_button_export);	
 
 	output	[31:0]	background_data_export;
 	output	[4:0]	background_wr_export;
 	input		clk_clk;
 	input		down_button_export;
+	output	[31:0]	food_layer_data_export;
+	output	[4:0]	food_layer_wr_export;
 	input		hdmi_tx_int_n_external_connection_export;
 	output		i2c_scl_external_connection_export;
 	inout		i2c_sda_external_connection_export;
@@ -30,7 +33,6 @@ module HDMI_QSYS (
 	input		refresh_image_export;
 	input		reset_reset_n;
 	input		right_button_export;
+	output	[20:0]	segments_display_export;
 	input		up_button_export;
-	output	[31:0]	food_layer_data_export;
-	output	[4:0]	food_layer_wr_export;
 endmodule

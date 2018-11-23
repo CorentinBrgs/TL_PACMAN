@@ -26,6 +26,7 @@ module C5G_HDMI_VPG(
 	//////////// SEG7 //////////
 	HEX0,
 	HEX1,
+	HEX2,
 
 	//////////// HDMI-TX //////////
 	HDMI_TX_CLK,
@@ -114,6 +115,7 @@ input 		     [9:0]		SW;
 //////////// SEG7 //////////
 output		     [6:0]		HEX0;
 output		     [6:0]		HEX1;
+output           [6:0]		HEX2;
 
 //////////// HDMI-TX //////////
 output		          		HDMI_TX_CLK;
@@ -205,6 +207,8 @@ wire [1:0] 	paral_wraddress_pos;
 wire 		paral_wren_pos;
 wire        position_memory_updated;
 
+wire [20:0] segments_display;
+
 //=======================================================
 //  Sub-module
 //=======================================================
@@ -254,6 +258,11 @@ assign HDMI_TX_DE  = vpg_de;
 assign HDMI_TX_HS  = vpg_hs;
 assign HDMI_TX_VS  = vpg_vs;
 
+assign HEX2[6:0] = segments_display[20:14];
+assign HEX1[6:0] = segments_display[13:7];
+assign HEX0[6:0] = segments_display[6:0];
+
+
 //=======================================================
 //  Structural coding
 //=======================================================
@@ -290,13 +299,14 @@ end
         .position_table_export(position_table_data),
         .refresh_image_export(refresh_image),
         .background_data_export(background_data),
-		.background_wr_export(background_wr),
-		.food_layer_data_export(food_layer_data),
-		.food_layer_wr_export(food_layer_wr),		
+		  .background_wr_export(background_wr),
+		  .food_layer_data_export(food_layer_data),
+		  .food_layer_wr_export(food_layer_wr),		
         .left_button_export(KEY[3]),
         .up_button_export(KEY[2]),
         .down_button_export(KEY[1]),
-        .right_button_export(KEY[0])
+        .right_button_export(KEY[0]),
+		  .segments_display_export(segments_display)
     );
 
 

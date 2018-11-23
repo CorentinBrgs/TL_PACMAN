@@ -146,6 +146,7 @@ C_SRCS += main.c
 C_SRCS += background.c
 C_SRCS += refresh_position.c
 C_SRCS += general.c
+C_SRCS += segments_display.c
 CXX_SRCS :=
 ASM_SRCS :=
 

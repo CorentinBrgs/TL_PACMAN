@@ -7,7 +7,8 @@
    <irq preferredWidth="34" />
   </columns>
  </systemtable>
- <library expandedCategories="Project,Library" />
+ <library
+   expandedCategories="Project,Library/University Program,Library/Memory Interfaces and Controllers/Memory Interfaces with UniPHY,Library/University Program/Memory,Library,Library/Memory Interfaces and Controllers" />
  <window width="1680" height="1010" x="0" y="0" />
  <generation synthesis="VHDL" />
 </preferences>
