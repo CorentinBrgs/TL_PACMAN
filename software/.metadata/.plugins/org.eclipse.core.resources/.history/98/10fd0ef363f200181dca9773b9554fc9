@@ -1,0 +1,25 @@
+/*
+ * game_manager.c
+ *
+ *  Created on: 27 nov. 2018
+ *      Author: moreira_ben
+ */
+
+#include "game_manager.h"
+
+void init_game(
+	position* charPosition,
+	position ghostPosition[5],
+	alt_u8 charId,
+	alt_u32 positionX,
+	alt_u32 positionY,
+	orientation orientation,
+	alt_u32 charBackground[15],
+	alt_32 ghostBackground[15],
+		){
+
+
+	
+	void init_position(position* charPosition, alt_u8 charId, alt_u32 positionX, alt_u32 positionY, alt_u8 state, orientation orientation, alt_u32 background[15]);
+
+}

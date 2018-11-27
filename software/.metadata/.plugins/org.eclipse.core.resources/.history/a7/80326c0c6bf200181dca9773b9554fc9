@@ -1,0 +1,30 @@
+/*
+ * game_manager.h
+ *
+ *  Created on: 27 nov. 2018
+ *      Author: moreira_ben
+ */
+
+#ifndef GAME_MANAGER_H_
+#define GAME_MANAGER_H_
+
+#include "background.h"
+#include "refresh_position.h"
+#include "segments_display.h"
+
+#include <stdio.h>
+
+void init_game(
+	position* charPosition,
+	position ghostPosition[2],
+	alt_u32 positionX,
+	alt_u32 positionY,
+	orientation orientation,
+	alt_u32 charBackground[15],
+	alt_u32 ghostBackground[15],
+	alt_u32 foodLayer[15]
+	);
+
+
+
+#endif /* GAME_MANAGER_H_ */

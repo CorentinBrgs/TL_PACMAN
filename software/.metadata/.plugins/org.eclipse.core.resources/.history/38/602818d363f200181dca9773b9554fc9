@@ -1,0 +1,12 @@
+/*
+ * game_manager.c
+ *
+ *  Created on: 27 nov. 2018
+ *      Author: moreira_ben
+ */
+
+#include "game_manager.h"
+
+void init_game(){
+	
+}

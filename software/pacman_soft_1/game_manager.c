@@ -7,15 +7,26 @@
 
 #include "game_manager.h"
 
-void init_game(alt_u8 ghostNb)
+void init_game(
+	position* charPosition,
+	position ghostPosition[2],
+	alt_u32 positionX,
+	alt_u32 positionY,
+	orientation orientation,
+	alt_u32 charBackground[15],
+	alt_u32 ghostBackground[15],
+	alt_u32 foodLayer[15],
+	alt_u16 *score
+	)
 {
-	set_background_in_memory(background);
-	init_foodLayer(background, foodLayer, 15);
-	set_foodLayer_in_memory(foodLayer);
+	*score = 0;
 
-	position pacmanPosition;
-	//position ghostPosition[5];
-	init_position(&pacmanPosition, 0, 60, 60, ACTIVE, SOUTH);
-	//init_position(ghostPosition[5], ghostNb, 7*60, 12*60, ACTIVE, NORTH);
-	compute_collision(&pacmanPosition);
+	init_position(charPosition, 0, positionX, positionY, ACTIVE, orientation, charBackground);
+	init_position(&(ghostPosition[0]), 0, 60, 60, ACTIVE, NORTH, ghostBackground);
+	init_position(&(ghostPosition[1]), 0, 60, 60, ACTIVE, SOUTH, ghostBackground);
+
+	set_background_in_memory(ghostBackground);
+	init_foodLayer(charBackground, foodLayer, 15);
+	set_foodLayer_in_memory(foodLayer);
+	compute_collision(charPosition);
 }

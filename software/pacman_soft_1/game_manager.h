@@ -12,6 +12,18 @@
 #include "refresh_position.h"
 #include "segments_display.h"
 
+#include <stdio.h>
 
-void init_game(alt_u8 ghostNb);
+void init_game(
+	position* charPosition,
+	position ghostPosition[2],
+	alt_u32 positionX,
+	alt_u32 positionY,
+	orientation orientation,
+	alt_u32 charBackground[15],
+	alt_u32 ghostBackground[15],
+	alt_u32 foodLayer[15],
+	alt_u16 *score
+	);
+
 #endif /* GAME_MANAGER_H_ */

@@ -18,7 +18,7 @@ void set_background_in_memory(alt_u32 background[15])
 	}
 }
 
-void init_foodLayer(alt_u32 background[15], alt_32 foodLayer[15], alt_u8 sizeY)
+void init_foodLayer(alt_u32 background[15], alt_u32 foodLayer[15], alt_u8 sizeY)
 {
 	for(int i=0; i<sizeY; i++){
 		foodLayer[i] = ~background[i];
@@ -41,9 +41,9 @@ void refresh_food_layer(position* charPosition, alt_u32 foodLayer[15], alt_u16* 
 	alt_u32 middlePosX = (charPosition->positionX + 30);
 	alt_u32 middlePosY = (charPosition->positionY + 30);
 
-
 	alt_u16 blockX = middlePosX / 60;
 	alt_u16 blockY = middlePosY / 60;
+
 	if (get_block_with_coordinates(middlePosX, middlePosY, foodLayer) == 1){
 		foodLayer[blockY] &= (~(1<<(8+blockX)));
 		IOWR_32DIRECT(FOOD_LAYER_DATA_BASE, 0, foodLayer[blockY]);

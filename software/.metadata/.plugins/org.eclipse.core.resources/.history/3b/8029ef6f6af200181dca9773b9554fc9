@@ -1,0 +1,80 @@
+/*
+ * game_manager.c
+ *
+ *  Created on: 27 nov. 2018
+ *      Author: moreira_ben
+ */
+
+#include "game_manager.h"
+
+void init_game(
+	position* charPosition,
+	position ghostPosition[2],
+	alt_u32 positionX,
+	alt_u32 positionY,
+	orientation orientation,
+	alt_u32 charBackground[15],
+	alt_u32 ghostBackground[15],
+	alt_u32 foodLayer[15]
+	)
+{
+	init_position(charPosition, 0, positionX, positionY, ACTIVE, orientation, charBackground);
+	//init_position(&(ghostPosition[0]), 0, 60, 60, ACTIVE, NORTH, ghostBackground);
+	//init_position(&(ghostPosition[1]), 0, 60, 60, ACTIVE, SOUTH, ghostBackground);
+	
+	set_background_in_memory(ghostBackground);
+	printf("1 : %lu %lu %lu %lu %lu %lu %lu %lu %lu %lu %lu %lu %lu %lu %lu \n",
+				 	foodLayer[0],
+				 	foodLayer[1],
+				 	foodLayer[2],
+				 	foodLayer[3],
+				 	foodLayer[4],
+				 	foodLayer[5],
+				 	foodLayer[6],
+				 	foodLayer[7],
+				 	foodLayer[8],
+				 	foodLayer[9],
+				 	foodLayer[10],
+				 	foodLayer[11],
+				 	foodLayer[12],
+				 	foodLayer[13],
+				 	foodLayer[14]
+				 );
+	init_foodLayer(charBackground, foodLayer, 15);
+	printf("2 : %lu %lu %lu %lu %lu %lu %lu %lu %lu %lu %lu %lu %lu %lu %lu \n",
+				 	foodLayer[0],
+				 	foodLayer[1],
+				 	foodLayer[2],
+				 	foodLayer[3],
+				 	foodLayer[4],
+				 	foodLayer[5],
+				 	foodLayer[6],
+				 	foodLayer[7],
+				 	foodLayer[8],
+				 	foodLayer[9],
+				 	foodLayer[10],
+				 	foodLayer[11],
+				 	foodLayer[12],
+				 	foodLayer[13],
+				 	foodLayer[14]
+				 );
+	set_foodLayer_in_memory(foodLayer);
+	printf("3 : %lu %lu %lu %lu %lu %lu %lu %lu %lu %lu %lu %lu %lu %lu %lu \n",
+					 	foodLayer[0],
+					 	foodLayer[1],
+					 	foodLayer[2],
+					 	foodLayer[3],
+					 	foodLayer[4],
+					 	foodLayer[5],
+					 	foodLayer[6],
+					 	foodLayer[7],
+					 	foodLayer[8],
+					 	foodLayer[9],
+					 	foodLayer[10],
+					 	foodLayer[11],
+					 	foodLayer[12],
+					 	foodLayer[13],
+					 	foodLayer[14]
+					 );
+	compute_collision(charPosition);
+}

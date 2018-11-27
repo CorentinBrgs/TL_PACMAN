@@ -60,13 +60,10 @@ static void right_button_interrupt_handler(void* context)
 
 int main()
 {
-	set_background_in_memory(background);
-	init_foodLayer(background, foodLayer, 15);
-	set_foodLayer_in_memory(foodLayer);
 
 	position pacmanPosition;
-	init_position(&pacmanPosition, 0, 60, 60, ACTIVE, SOUTH);
-	compute_collision(&pacmanPosition);
+	position ghostPosition[2];
+	init_game(&pacmanPosition, ghostPosition, 60, 60, SOUTH, charBackground, ghostBackground, foodLayer, &score);
 
 	printf("Hello from Nios II!\n");
 
@@ -105,36 +102,42 @@ int main()
 	printf("Right button IRQ : ");
 	printf("right_button_irq_enabled : %lu \n", alt_ic_irq_enabled(RIGHT_BUTTON_IRQ_INTERRUPT_CONTROLLER_ID, RIGHT_BUTTON_IRQ));
 
+
+
 	long whileCounter = 0;
 	while(1)
 	{
 		display_number(score);
 		whileCounter++;
 		if (whileCounter > 500000){
-			printf("directionControl : %u, orientation : %u , Score : %u, foodLayer is Empty : %u\n",
-				pacmanPosition.directionControl,
-				pacmanPosition.orientation,
-				score,
-				food_layer_empty(foodLayer)
-			);
+			if(food_layer_empty(foodLayer) == 1){
+				init_game(&pacmanPosition, ghostPosition, 60, 60, SOUTH, charBackground, ghostBackground, foodLayer, &score);
+			}
+
+//			printf("directionControl : %u, orientation : %u , Score : %u, foodLayer is Empty : %u\n",
+//				pacmanPosition.directionControl,
+//				pacmanPosition.orientation,
+//				score,
+//				food_layer_empty(foodLayer)
+//			);
 			
-			// printf("%lu %lu %lu %lu %lu %lu %lu %lu %lu %lu %lu %lu %lu %lu %lu \n",
-			// 	foodLayer[0],
-			// 	foodLayer[1],
-			// 	foodLayer[2],
-			// 	foodLayer[3],
-			// 	foodLayer[4],
-			// 	foodLayer[5],
-			// 	foodLayer[6],
-			// 	foodLayer[7],
-			// 	foodLayer[8],
-			// 	foodLayer[9],
-			// 	foodLayer[10],
-			// 	foodLayer[11],
-			// 	foodLayer[12],
-			// 	foodLayer[13],
-			// 	foodLayer[14]
-			// );
+//			 printf("%lu %lu %lu %lu %lu %lu %lu %lu %lu %lu %lu %lu %lu %lu %lu \n",
+//			 	foodLayer[0],
+//			 	foodLayer[1],
+//			 	foodLayer[2],
+//			 	foodLayer[3],
+//			 	foodLayer[4],
+//			 	foodLayer[5],
+//			 	foodLayer[6],
+//			 	foodLayer[7],
+//			 	foodLayer[8],
+//			 	foodLayer[9],
+//			 	foodLayer[10],
+//			 	foodLayer[11],
+//			 	foodLayer[12],
+//			 	foodLayer[13],
+//			 	foodLayer[14]
+//			 );
 			whileCounter = 0;
 		}
 	}

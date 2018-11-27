@@ -1,0 +1,56 @@
+/*
+ * general.h
+ *
+ *  Created on: 22 nov. 2018
+ *      Author: moreira_ben
+ */
+
+#ifndef GENERAL_H_
+#define GENERAL_H_
+
+#include "io.h"
+#include "system.h"
+#include "alt_types.h"
+
+typedef enum {
+	WEST,
+	NORTH,
+	EAST,
+	SOUTH
+} orientation;
+
+typedef enum {
+	INACTIVE,
+	ACTIVE
+} char_state;
+
+typedef struct {
+	alt_u8 north;
+	alt_u8 east;
+	alt_u8 south;
+	alt_u8 west;
+} collision;
+
+typedef enum {
+	NONE,
+	UP,
+	RIGHT,
+	DOWN,
+	LEFT
+} direction;
+
+typedef struct {
+	alt_u8 charId;
+	alt_u32 positionX;
+	alt_u32 positionY;
+	alt_u8 state;
+	orientation orientation;
+	alt_u32 bytePacket;
+	collision collision;
+	direction directionControl;
+	alt_u32 **p_background;
+} position;
+
+alt_u8 get_block_with_coordinates(alt_u32 positionX, alt_u32 positionY, alt_u32 layer[]);
+
+#endif /* GENERAL_H_ */
