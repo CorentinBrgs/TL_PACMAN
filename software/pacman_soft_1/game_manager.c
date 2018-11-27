@@ -8,8 +8,7 @@
 #include "game_manager.h"
 
 void init_game(
-	position* charPosition,
-	position ghostPosition[2],
+	position charPosition[4],
 	alt_u32 positionX,
 	alt_u32 positionY,
 	orientation orientation,
@@ -21,9 +20,16 @@ void init_game(
 {
 	*score = 0;
 
-	init_position(charPosition, 2, positionX, positionY, ACTIVE, orientation, charBackground);
-	init_position(&(ghostPosition[0]), 1, 60, 60, ACTIVE, NORTH, ghostBackground);
-	init_position(&(ghostPosition[1]), 2, 60, 60, ACTIVE, SOUTH, ghostBackground);
+	init_position(&(charPosition[0]), 0, positionX, positionY, ACTIVE, orientation, charBackground);
+	IOWR_32DIRECT(POSITION_BASE, 0, charPosition[0].bytePacket);
+
+	init_position(&(charPosition[1]), 1, 12*60, 6*60, ACTIVE, NORTH, ghostBackground);
+	IOWR_32DIRECT(POSITION_BASE, 0, charPosition[1].bytePacket);
+
+	init_position(&(charPosition[2]), 2, 12*60, 5*60, ACTIVE, SOUTH, ghostBackground);
+	IOWR_32DIRECT(POSITION_BASE, 0, charPosition[2].bytePacket);
+
+
 
 	set_background_in_memory(ghostBackground);
 	init_foodLayer(charBackground, foodLayer, 15);

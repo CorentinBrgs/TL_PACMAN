@@ -15,8 +15,7 @@
 #include <stdio.h>
 
 void init_game(
-	position* charPosition,
-	position ghostPosition[2],
+	position charPosition[4],
 	alt_u32 positionX,
 	alt_u32 positionY,
 	orientation orientation,
