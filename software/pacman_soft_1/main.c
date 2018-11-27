@@ -1,6 +1,7 @@
-#include "background.h"
-#include "refresh_position.h"
-#include "segments_display.h"
+// #include "background.h"
+// #include "refresh_position.h"
+// #include "segments_display.h"
+#include "game_manager.h"
 
 #include <stdio.h>
 
@@ -104,19 +105,36 @@ int main()
 	printf("Right button IRQ : ");
 	printf("right_button_irq_enabled : %lu \n", alt_ic_irq_enabled(RIGHT_BUTTON_IRQ_INTERRUPT_CONTROLLER_ID, RIGHT_BUTTON_IRQ));
 
-	printf("%lu\n", background[1]);
-
 	long whileCounter = 0;
 	while(1)
 	{
 		display_number(score);
 		whileCounter++;
 		if (whileCounter > 500000){
-			printf("directionControl : %u, orientation : %u , Score : %u\n",
-					pacmanPosition.directionControl,
-					pacmanPosition.orientation,
-					score
+			printf("directionControl : %u, orientation : %u , Score : %u, foodLayer is Empty : %u\n",
+				pacmanPosition.directionControl,
+				pacmanPosition.orientation,
+				score,
+				food_layer_empty(foodLayer)
 			);
+			
+			// printf("%lu %lu %lu %lu %lu %lu %lu %lu %lu %lu %lu %lu %lu %lu %lu \n",
+			// 	foodLayer[0],
+			// 	foodLayer[1],
+			// 	foodLayer[2],
+			// 	foodLayer[3],
+			// 	foodLayer[4],
+			// 	foodLayer[5],
+			// 	foodLayer[6],
+			// 	foodLayer[7],
+			// 	foodLayer[8],
+			// 	foodLayer[9],
+			// 	foodLayer[10],
+			// 	foodLayer[11],
+			// 	foodLayer[12],
+			// 	foodLayer[13],
+			// 	foodLayer[14]
+			// );
 			whileCounter = 0;
 		}
 	}

@@ -21,7 +21,7 @@ void set_background_in_memory(alt_u32 background[15])
 void init_foodLayer(alt_u32 background[15], alt_32 foodLayer[15], alt_u8 sizeY)
 {
 	for(int i=0; i<sizeY; i++){
-		foodLayer[i] = 1-background[i];
+		foodLayer[i] = ~background[i];
 	}
 }
 
@@ -50,7 +50,17 @@ void refresh_food_layer(position* charPosition, alt_u32 foodLayer[15], alt_u16* 
 		IOWR_8DIRECT(FOOD_LAYER_WR_BASE, 0, 0b00000 + blockY);
 		IOWR_8DIRECT(FOOD_LAYER_WR_BASE, 0, 0b10000 + blockY);
 		IOWR_8DIRECT(FOOD_LAYER_WR_BASE, 0, 0b00000 + blockY);
-		printf("foo");
 		*score = *score+1;
 	}
 }
+
+alt_u8 food_layer_empty(alt_u32 foodLayer[15]) 
+{
+	for(alt_u8 idx = 0; idx < 15; idx++){
+		if(foodLayer[idx] != 0){
+			return 0;
+		}
+	}
+	return 1;
+}
+

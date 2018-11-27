@@ -42,5 +42,6 @@ void set_background_in_memory(alt_u32 background[15]);
 void init_foodLayer(alt_u32 background[15], alt_32 foodLayer[15], alt_u8 sizeY);
 void set_foodLayer_in_memory(alt_u32 foodLayer[15]);
 void refresh_food_layer(position* charPosition, alt_u32 foodLayer[15], alt_u16* score);
+alt_u8 food_layer_empty(alt_u32 foodLayer[15]);
 
 #endif /* BACKGROUND_H_ */

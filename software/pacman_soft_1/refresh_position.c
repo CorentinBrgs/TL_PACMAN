@@ -16,7 +16,7 @@ void compute_byte_packet(position* charPosition)
 	charPosition->bytePacket = (charPosition->charId << 29) + (charPosition->positionX << 17 ) + (charPosition->positionY << 5) + (charPosition->state << 2) + (charPosition->orientation );
 }
 
-void initCollision(position* charPosition){
+void init_collision(position* charPosition){
 	charPosition->collision.north = 0;
 	charPosition->collision.east = 0;
 	charPosition->collision.south = 0;
@@ -31,8 +31,12 @@ void init_position(position* charPosition, alt_u8 charId, alt_u32 positionX, alt
 	charPosition->positionY = positionY ;
 	charPosition->state = state ;
 	charPosition->orientation = orientation ;
-	initCollision(charPosition);
+	init_collision(charPosition);
 	compute_byte_packet(charPosition);
+}
+
+void init_ghost_position(position* charPosition, alt_u8 charId, alt_u32 positionX, alt_u32 positionY, alt_u8 state, orientation orientation){
+
 }
 
 void compute_collision(position* charPosition){
