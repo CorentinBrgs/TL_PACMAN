@@ -8696,3 +8696,141 @@ Info: Building ../pacman_soft_1_bsp/
 C:/intelFPGA/18.0/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../pacman_soft_1_bsp/
 [BSP build complete]
 [pacman_soft_1 build complete]
+19:18:51 **** Incremental Build of configuration Nios II for project pacman_soft_1 ****
+make all 
+Info: Building ../pacman_soft_1_bsp/
+C:/intelFPGA/18.0/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../pacman_soft_1_bsp/
+[BSP build complete]
+[pacman_soft_1 build complete]
+19:18:53 **** Incremental Build of configuration Nios II for project pacman_soft_1_bsp ****
+make all 
+[BSP build complete]
+19:18:56 **** Incremental Build of configuration Nios II for project pacman_soft_1 ****
+make all 
+Info: Building ../pacman_soft_1_bsp/
+C:/intelFPGA/18.0/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../pacman_soft_1_bsp/
+[BSP build complete]
+[pacman_soft_1 build complete]
+19:27:49 **** Incremental Build of configuration Nios II for project pacman_soft_1 ****
+make all 
+Info: Building ../pacman_soft_1_bsp/
+C:/intelFPGA/18.0/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../pacman_soft_1_bsp/
+[BSP build complete]
+Info: Compiling refresh_position.c to obj/default/refresh_position.o
+nios2-elf-gcc -xc -MP -MMD -c -I../pacman_soft_1_bsp//HAL/inc -I../pacman_soft_1_bsp/ -I../pacman_soft_1_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mno-hw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/refresh_position.o refresh_position.c
+refresh_position.c: In function 'refresh_position':
+refresh_position.c:87:6: warning: unused variable 'randomOrientation' [-Wunused-variable]
+  int randomOrientation = rand() % 5;
+      ^
+In file included from refresh_position.h:15:0,
+                 from refresh_position.c:8:
+refresh_position.c: At top level:
+background.h:21:16: warning: 'charBackground' defined but not used [-Wunused-variable]
+ static alt_u32 charBackground[15] = {
+                ^
+background.h:39:16: warning: 'ghostBackground' defined but not used [-Wunused-variable]
+ static alt_u32 ghostBackground[15] = {
+                ^
+background.h:57:16: warning: 'foodLayer' defined but not used [-Wunused-variable]
+ static alt_u32 foodLayer[15];
+                ^
+Info: Linking pacman_soft_1.elf
+nios2-elf-g++  -T'../pacman_soft_1_bsp//linker.x' -msys-crt0='../pacman_soft_1_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../pacman_soft_1_bsp/   -Wl,-Map=pacman_soft_1.map   -O0 -g -Wall   -mno-hw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o pacman_soft_1.elf obj/default/background.o obj/default/game_manager.o obj/default/general.o obj/default/main.o obj/default/refresh_position.o obj/default/segments_display.o -lm -msys-lib=m
+nios2-elf-insert pacman_soft_1.elf --thread_model hal --cpu_name nios2_qsys --qsys true --simulation_enabled false --id 0 --sidp 0x101110 --timestamp 1542994312 --stderr_dev jtag_uart --stdin_dev jtag_uart --stdout_dev jtag_uart --sopc_system_name HDMI_QSYS --quartus_project_dir "D:/TL_MOREIRA_BERGES/TL_PACMAN" --jdi D:/TL_MOREIRA_BERGES/TL_PACMAN/software/pacman_soft_1_bsp/../../C5G_HDMI_VPG.jdi --sopcinfo D:/TL_MOREIRA_BERGES/TL_PACMAN/software/pacman_soft_1_bsp/../../HDMI_QSYS.sopcinfo
+Info: (pacman_soft_1.elf) 76 KBytes program size (code + initialized data).
+Info:                     307 KBytes free for stack + heap.
+Info: Creating pacman_soft_1.objdump
+nios2-elf-objdump --disassemble --syms --all-header --source pacman_soft_1.elf >pacman_soft_1.objdump
+[pacman_soft_1 build complete]
+19:28:10 **** Incremental Build of configuration Nios II for project pacman_soft_1 ****
+make all 
+Info: Building ../pacman_soft_1_bsp/
+C:/intelFPGA/18.0/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../pacman_soft_1_bsp/
+[BSP build complete]
+[pacman_soft_1 build complete]
+19:29:14 **** Incremental Build of configuration Nios II for project pacman_soft_1 ****
+make all 
+Info: Building ../pacman_soft_1_bsp/
+C:/intelFPGA/18.0/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../pacman_soft_1_bsp/
+[BSP build complete]
+Info: Compiling game_manager.c to obj/default/game_manager.o
+nios2-elf-gcc -xc -MP -MMD -c -I../pacman_soft_1_bsp//HAL/inc -I../pacman_soft_1_bsp/ -I../pacman_soft_1_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mno-hw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/game_manager.o game_manager.c
+In file included from game_manager.h:11:0,
+                 from game_manager.c:8:
+background.h:21:16: warning: 'charBackground' defined but not used [-Wunused-variable]
+ static alt_u32 charBackground[15] = {
+                ^
+background.h:39:16: warning: 'ghostBackground' defined but not used [-Wunused-variable]
+ static alt_u32 ghostBackground[15] = {
+                ^
+background.h:57:16: warning: 'foodLayer' defined but not used [-Wunused-variable]
+ static alt_u32 foodLayer[15];
+                ^
+In file included from game_manager.h:13:0,
+                 from game_manager.c:8:
+segments_display.h:15:15: warning: 'char_array_1' defined but not used [-Wunused-variable]
+ static alt_u8 char_array_1[] = {
+               ^
+segments_display.h:27:15: warning: 'char_array_2' defined but not used [-Wunused-variable]
+ static alt_u8 char_array_2[] = {
+               ^
+Info: Linking pacman_soft_1.elf
+nios2-elf-g++  -T'../pacman_soft_1_bsp//linker.x' -msys-crt0='../pacman_soft_1_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../pacman_soft_1_bsp/   -Wl,-Map=pacman_soft_1.map   -O0 -g -Wall   -mno-hw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o pacman_soft_1.elf obj/default/background.o obj/default/game_manager.o obj/default/general.o obj/default/main.o obj/default/refresh_position.o obj/default/segments_display.o -lm -msys-lib=m
+nios2-elf-insert pacman_soft_1.elf --thread_model hal --cpu_name nios2_qsys --qsys true --simulation_enabled false --id 0 --sidp 0x101110 --timestamp 1542994312 --stderr_dev jtag_uart --stdin_dev jtag_uart --stdout_dev jtag_uart --sopc_system_name HDMI_QSYS --quartus_project_dir "D:/TL_MOREIRA_BERGES/TL_PACMAN" --jdi D:/TL_MOREIRA_BERGES/TL_PACMAN/software/pacman_soft_1_bsp/../../C5G_HDMI_VPG.jdi --sopcinfo D:/TL_MOREIRA_BERGES/TL_PACMAN/software/pacman_soft_1_bsp/../../HDMI_QSYS.sopcinfo
+Info: (pacman_soft_1.elf) 76 KBytes program size (code + initialized data).
+Info:                     307 KBytes free for stack + heap.
+Info: Creating pacman_soft_1.objdump
+nios2-elf-objdump --disassemble --syms --all-header --source pacman_soft_1.elf >pacman_soft_1.objdump
+[pacman_soft_1 build complete]
+19:29:16 **** Incremental Build of configuration Nios II for project pacman_soft_1_bsp ****
+make all 
+[BSP build complete]
+19:29:17 **** Incremental Build of configuration Nios II for project pacman_soft_1 ****
+make all 
+Info: Building ../pacman_soft_1_bsp/
+C:/intelFPGA/18.0/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../pacman_soft_1_bsp/
+[BSP build complete]
+[pacman_soft_1 build complete]
+19:30:21 **** Incremental Build of configuration Nios II for project pacman_soft_1 ****
+make all 
+Info: Building ../pacman_soft_1_bsp/
+C:/intelFPGA/18.0/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../pacman_soft_1_bsp/
+[BSP build complete]
+Info: Compiling game_manager.c to obj/default/game_manager.o
+nios2-elf-gcc -xc -MP -MMD -c -I../pacman_soft_1_bsp//HAL/inc -I../pacman_soft_1_bsp/ -I../pacman_soft_1_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mno-hw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/game_manager.o game_manager.c
+In file included from game_manager.h:11:0,
+                 from game_manager.c:8:
+background.h:21:16: warning: 'charBackground' defined but not used [-Wunused-variable]
+ static alt_u32 charBackground[15] = {
+                ^
+background.h:39:16: warning: 'ghostBackground' defined but not used [-Wunused-variable]
+ static alt_u32 ghostBackground[15] = {
+                ^
+background.h:57:16: warning: 'foodLayer' defined but not used [-Wunused-variable]
+ static alt_u32 foodLayer[15];
+                ^
+In file included from game_manager.h:13:0,
+                 from game_manager.c:8:
+segments_display.h:15:15: warning: 'char_array_1' defined but not used [-Wunused-variable]
+ static alt_u8 char_array_1[] = {
+               ^
+segments_display.h:27:15: warning: 'char_array_2' defined but not used [-Wunused-variable]
+ static alt_u8 char_array_2[] = {
+               ^
+Info: Linking pacman_soft_1.elf
+nios2-elf-g++  -T'../pacman_soft_1_bsp//linker.x' -msys-crt0='../pacman_soft_1_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../pacman_soft_1_bsp/   -Wl,-Map=pacman_soft_1.map   -O0 -g -Wall   -mno-hw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o pacman_soft_1.elf obj/default/background.o obj/default/game_manager.o obj/default/general.o obj/default/main.o obj/default/refresh_position.o obj/default/segments_display.o -lm -msys-lib=m
+nios2-elf-insert pacman_soft_1.elf --thread_model hal --cpu_name nios2_qsys --qsys true --simulation_enabled false --id 0 --sidp 0x101110 --timestamp 1542994312 --stderr_dev jtag_uart --stdin_dev jtag_uart --stdout_dev jtag_uart --sopc_system_name HDMI_QSYS --quartus_project_dir "D:/TL_MOREIRA_BERGES/TL_PACMAN" --jdi D:/TL_MOREIRA_BERGES/TL_PACMAN/software/pacman_soft_1_bsp/../../C5G_HDMI_VPG.jdi --sopcinfo D:/TL_MOREIRA_BERGES/TL_PACMAN/software/pacman_soft_1_bsp/../../HDMI_QSYS.sopcinfo
+Info: (pacman_soft_1.elf) 76 KBytes program size (code + initialized data).
+Info:                     307 KBytes free for stack + heap.
+Info: Creating pacman_soft_1.objdump
+nios2-elf-objdump --disassemble --syms --all-header --source pacman_soft_1.elf >pacman_soft_1.objdump
+[pacman_soft_1 build complete]
+19:30:23 **** Incremental Build of configuration Nios II for project pacman_soft_1_bsp ****
+make all 
+[BSP build complete]
+19:30:34 **** Incremental Build of configuration Nios II for project pacman_soft_1 ****
+make all 
+Info: Building ../pacman_soft_1_bsp/
+C:/intelFPGA/18.0/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../pacman_soft_1_bsp/
+[BSP build complete]
+[pacman_soft_1 build complete]

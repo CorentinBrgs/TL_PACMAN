@@ -182,7 +182,7 @@ BEGIN
 	ghost_data_decoder : position_data_decoder
 		GENERIC MAP 
 		(
-			char_id_param 	=> "000"	
+			char_id_param 	=> char_id	
 		)
 		PORT MAP 
 		(
@@ -206,7 +206,7 @@ BEGIN
 		VARIABLE i_line_y : INTEGER RANGE 0 TO 899 := 0;
 		VARIABLE i_position_x : INTEGER RANGE 0 TO 1339 := 0;
 		VARIABLE i_position_y : INTEGER RANGE 0 TO 899 := 0;
-		VARIABLE i_orientation := INTEGER RANGE 0 TO 3 := 0;
+		VARIABLE i_orientation : INTEGER RANGE 0 TO 3 := 0;
 		VARIABLE display_character : BOOLEAN := FALSE;
 
 	BEGIN

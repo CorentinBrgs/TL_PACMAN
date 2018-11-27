@@ -108,6 +108,50 @@ character_generator pacman_generator(
 	.vga_g(s_vga_g_1),
 	.vga_b(s_vga_b_1)
 );
+defparam pacman_generator.char_id = 3'b000; 
+
+ghost_generator ghost_generator_1(
+	.clk(clk),
+	.row_x(pixel_x),
+	.line_y(pixel_y),
+	.position_data(position_data),
+	.enable(pre_vga_de),
+	.reset(end_image),
+	.refresh_image(new_image),
+	.vga_r(s_vga_r_4),
+	.vga_g(s_vga_g_4),
+	.vga_b(s_vga_b_4)
+);
+defparam ghost_generator_1.char_id = 3'b001; 
+
+ghost_generator ghost_generator_2(
+	.clk(clk),
+	.row_x(pixel_x),
+	.line_y(pixel_y),
+	.position_data(position_data),
+	.enable(pre_vga_de),
+	.reset(end_image),
+	.refresh_image(new_image),
+	.vga_r(s_vga_r_5),
+	.vga_g(s_vga_g_5),
+	.vga_b(s_vga_b_5)
+);
+defparam ghost_generator_2.char_id = 3'b010; 
+
+ghost_generator ghost_generator_3(
+	.clk(clk),
+	.row_x(pixel_x),
+	.line_y(pixel_y),
+	.position_data(position_data),
+	.enable(pre_vga_de),
+	.reset(end_image),
+	.refresh_image(new_image),
+	.vga_r(s_vga_r_6),
+	.vga_g(s_vga_g_6),
+	.vga_b(s_vga_b_6)
+);
+defparam ghost_generator_3.char_id = 3'b011; 
+
 
 sync_signals_buffer sync_signals_buffer_inst0(
 	.clk(clk),
@@ -176,15 +220,15 @@ reg [7:0] 	s_vga_b_2;
 reg [7:0] 	s_vga_g_3;
 reg [7:0] 	s_vga_r_3;
 reg [7:0] 	s_vga_b_3;
-reg [7:0] 	s_vga_b_4 = 0;
-reg [7:0] 	s_vga_r_4 = 0;
-reg [7:0] 	s_vga_g_4 = 0;
-reg [7:0] 	s_vga_r_5 = 0;
-reg [7:0] 	s_vga_g_5 = 0;
-reg [7:0] 	s_vga_b_5 = 0;
-reg [7:0] 	s_vga_r_6 = 0;
-reg [7:0] 	s_vga_g_6 = 0;
-reg [7:0] 	s_vga_b_6 = 0;
+reg [7:0] 	s_vga_b_4;
+reg [7:0] 	s_vga_r_4;
+reg [7:0] 	s_vga_g_4;
+reg [7:0] 	s_vga_r_5;
+reg [7:0] 	s_vga_g_5;
+reg [7:0] 	s_vga_b_5;
+reg [7:0] 	s_vga_r_6;
+reg [7:0] 	s_vga_g_6;
+reg [7:0] 	s_vga_b_6;
 
 //=======================================================
 //  Structural coding

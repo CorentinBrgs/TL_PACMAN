@@ -21,7 +21,7 @@ void init_game(
 {
 	*score = 0;
 
-	init_position(charPosition, 2, positionX, positionY, ACTIVE, orientation, charBackground);
+	init_position(charPosition, 1, positionX, positionY, ACTIVE, orientation, charBackground);
 	init_position(&(ghostPosition[0]), 1, 60, 60, ACTIVE, NORTH, ghostBackground);
 	init_position(&(ghostPosition[1]), 2, 60, 60, ACTIVE, SOUTH, ghostBackground);
 

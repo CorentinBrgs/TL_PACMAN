@@ -1381,7 +1381,7 @@ alt_u8 food_layer_empty(alt_u32 foodLayer[15])
    80650:	e0800617 	ldw	r2,24(fp)
    80654:	1000000d 	sth	zero,0(r2)
 
-	init_position(charPosition, 0, positionX, positionY, ACTIVE, orientation, charBackground);
+	init_position(charPosition, 2, positionX, positionY, ACTIVE, orientation, charBackground);
    80658:	e0800317 	ldw	r2,12(fp)
    8065c:	d8800215 	stw	r2,8(sp)
    80660:	e0800217 	ldw	r2,8(fp)
@@ -1390,10 +1390,10 @@ alt_u8 food_layer_empty(alt_u32 foodLayer[15])
    8066c:	d8800015 	stw	r2,0(sp)
    80670:	e1ffff17 	ldw	r7,-4(fp)
    80674:	e1bffe17 	ldw	r6,-8(fp)
-   80678:	000b883a 	mov	r5,zero
+   80678:	01400084 	movi	r5,2
    8067c:	e13ffc17 	ldw	r4,-16(fp)
    80680:	0080d080 	call	80d08 <init_position>
-	init_position(&(ghostPosition[0]), 0, 60, 60, ACTIVE, NORTH, ghostBackground);
+	init_position(&(ghostPosition[0]), 1, 60, 60, ACTIVE, NORTH, ghostBackground);
    80684:	e0800417 	ldw	r2,16(fp)
    80688:	d8800215 	stw	r2,8(sp)
    8068c:	00800044 	movi	r2,1
@@ -1402,10 +1402,10 @@ alt_u8 food_layer_empty(alt_u32 foodLayer[15])
    80698:	d8800015 	stw	r2,0(sp)
    8069c:	01c00f04 	movi	r7,60
    806a0:	01800f04 	movi	r6,60
-   806a4:	000b883a 	mov	r5,zero
+   806a4:	01400044 	movi	r5,1
    806a8:	e13ffd17 	ldw	r4,-12(fp)
    806ac:	0080d080 	call	80d08 <init_position>
-	init_position(&(ghostPosition[1]), 0, 60, 60, ACTIVE, SOUTH, ghostBackground);
+	init_position(&(ghostPosition[1]), 2, 60, 60, ACTIVE, SOUTH, ghostBackground);
    806b0:	e0bffd17 	ldw	r2,-12(fp)
    806b4:	10c00904 	addi	r3,r2,36
    806b8:	e0800417 	ldw	r2,16(fp)
@@ -1416,7 +1416,7 @@ alt_u8 food_layer_empty(alt_u32 foodLayer[15])
    806cc:	d8800015 	stw	r2,0(sp)
    806d0:	01c00f04 	movi	r7,60
    806d4:	01800f04 	movi	r6,60
-   806d8:	000b883a 	mov	r5,zero
+   806d8:	01400084 	movi	r5,2
    806dc:	1809883a 	mov	r4,r3
    806e0:	0080d080 	call	80d08 <init_position>
 
