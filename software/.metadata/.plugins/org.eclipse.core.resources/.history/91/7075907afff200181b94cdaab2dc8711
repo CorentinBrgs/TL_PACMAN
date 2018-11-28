@@ -37,59 +37,52 @@ static void refresh_position_interrupt_handler(void* context)
 	// 	charPosition[3].positionY
 	// );
 
-	IOWR_32DIRECT(POSITION_BASE, 0, charPosition[0].bytePacket|(0b111<<29));
+	alt_irq_disable_all();
 	IOWR_32DIRECT(POSITION_BASE, 0, charPosition[0].bytePacket);
-	IOWR_32DIRECT(POSITION_BASE, 0, charPosition[0].bytePacket|(0b111<<29));
-	IOWR_32DIRECT(POSITION_BASE, 0, charPosition[1].bytePacket|(0b111<<29));
 	IOWR_32DIRECT(POSITION_BASE, 0, charPosition[1].bytePacket);
-	IOWR_32DIRECT(POSITION_BASE, 0, charPosition[1].bytePacket|(0b111<<29));
-	IOWR_32DIRECT(POSITION_BASE, 0, charPosition[2].bytePacket|(0b111<<29));
 	IOWR_32DIRECT(POSITION_BASE, 0, charPosition[2].bytePacket);
-	IOWR_32DIRECT(POSITION_BASE, 0, charPosition[2].bytePacket|(0b111<<29));
-	IOWR_32DIRECT(POSITION_BASE, 0, charPosition[3].bytePacket|(0b111<<29));
 	IOWR_32DIRECT(POSITION_BASE, 0, charPosition[3].bytePacket);
-	IOWR_32DIRECT(POSITION_BASE, 0, charPosition[3].bytePacket|(0b111<<29));
-
+	alt_irq_enable_all();
 	IOWR(REFRESH_BASE,3,0xf);
 }
 
 static void left_button_interrupt_handler(void* context)
 /* interrupt handler : this function is called each time the left button direction is pressed */
 {
-	position* charPosition = (position*) context;
-	charPosition[0].directionControl = LEFT;
+	position* p_pacmanPosition = (position*) context;
+	p_pacmanPosition->directionControl = LEFT;
 	IOWR(LEFT_BUTTON_BASE,3,0xf);
 }
 
 static void up_button_interrupt_handler(void* context)
 /* interrupt handler : this function is called each time the up button direction is pressed */
 {
-	position* charPosition = (position*) context;
-	charPosition[0].directionControl = DOWN;
+	position* p_pacmanPosition = (position*) context;
+	p_pacmanPosition->directionControl = DOWN;
 	IOWR(UP_BUTTON_BASE,3,0xf);
 }
 
 static void down_button_interrupt_handler(void* context)
 /* interrupt handler : this function is called each time the down button direction is pressed */
 {
-	position* charPosition = (position*) context;
-	charPosition[0].directionControl = UP;
+	position* p_pacmanPosition = (position*) context;
+	p_pacmanPosition->directionControl = UP;
 	IOWR(DOWN_BUTTON_BASE,3,0xf);
 }
 
 static void right_button_interrupt_handler(void* context)
 /* interrupt handler : this function is called each time the right button direction is pressed */
 {
-	position* charPosition = (position*) context;
-	charPosition[0].directionControl = RIGHT;
+	position* p_pacmanPosition = (position*) context;
+	p_pacmanPosition->directionControl = RIGHT;
 	IOWR(RIGHT_BUTTON_BASE,3,0xf);
 }
 
 int main()
 {
 
-	position charPosition[5];
-	position (*charPosition_ptr)[5] = &charPosition; //& obligatoire
+	position charPosition[4];
+	position (*charPosition_ptr)[4] = &charPosition; //& obligatoire
 	init_game(charPosition, 60, 60, SOUTH, charBackground, ghostBackground, foodLayer, &score);
 
 	printf("Hello from Nios II!\n");

@@ -21,9 +21,9 @@ static void refresh_position_interrupt_handler(void* context)
 {
 	position* charPosition = (position*) context;
 	refresh_position(&(charPosition[0]), 0);
-	refresh_position(&(charPosition[1]), 1);
-	refresh_position(&(charPosition[2]), 1);
-	refresh_position(&(charPosition[3]), 1);
+	//refresh_position(&(charPosition[1]), 1);
+	//refresh_position(&(charPosition[2]), 1);
+	//refresh_position(&(charPosition[3]), 1);
 	refresh_food_layer(&(charPosition[0]), foodLayer, &score);
 
 	// printf("0.x = %u, 0.y = %u, 1.x = %u, 1.y = %u, 2.x = %u, 2.y = %u, 3.x = %u, 3.y = %u,\n",
@@ -37,18 +37,9 @@ static void refresh_position_interrupt_handler(void* context)
 	// 	charPosition[3].positionY
 	// );
 
-	IOWR_32DIRECT(POSITION_BASE, 0, charPosition[0].bytePacket|(0b111<<29));
+
 	IOWR_32DIRECT(POSITION_BASE, 0, charPosition[0].bytePacket);
 	IOWR_32DIRECT(POSITION_BASE, 0, charPosition[0].bytePacket|(0b111<<29));
-	IOWR_32DIRECT(POSITION_BASE, 0, charPosition[1].bytePacket|(0b111<<29));
-	IOWR_32DIRECT(POSITION_BASE, 0, charPosition[1].bytePacket);
-	IOWR_32DIRECT(POSITION_BASE, 0, charPosition[1].bytePacket|(0b111<<29));
-	IOWR_32DIRECT(POSITION_BASE, 0, charPosition[2].bytePacket|(0b111<<29));
-	IOWR_32DIRECT(POSITION_BASE, 0, charPosition[2].bytePacket);
-	IOWR_32DIRECT(POSITION_BASE, 0, charPosition[2].bytePacket|(0b111<<29));
-	IOWR_32DIRECT(POSITION_BASE, 0, charPosition[3].bytePacket|(0b111<<29));
-	IOWR_32DIRECT(POSITION_BASE, 0, charPosition[3].bytePacket);
-	IOWR_32DIRECT(POSITION_BASE, 0, charPosition[3].bytePacket|(0b111<<29));
 
 	IOWR(REFRESH_BASE,3,0xf);
 }

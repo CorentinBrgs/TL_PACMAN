@@ -1,6 +1,6 @@
-10:54:08 **** Incremental Build of configuration Nios II for project pacman_soft_1_bsp ****
+12:47:55 **** Incremental Build of configuration Nios II for project pacman_soft_1_bsp ****
 make all 
 [BSP build complete]
 
-10:54:08 Build Finished (took 754ms)
+12:47:56 Build Finished (took 593ms)
 
