@@ -25,7 +25,10 @@ LIBRARY work;
 ENTITY ghost_generator IS
 	GENERIC 
 	(
-		char_id 		: STD_LOGIC_VECTOR(2 DOWNTO 0) := "000"
+		char_id 		: STD_LOGIC_VECTOR(2 DOWNTO 0) 	:= "000";
+		color_r			: INTEGER RANGE 0 TO 255 		:= 255 ;
+		color_g			: INTEGER RANGE 0 TO 255 		:= 255 ;
+		color_b			: INTEGER RANGE 0 TO 255 		:= 255
 	);
 	PORT
 	(
@@ -209,6 +212,10 @@ BEGIN
 		VARIABLE i_orientation : INTEGER RANGE 0 TO 3 := 0;
 		VARIABLE display_character : BOOLEAN := FALSE;
 
+		VARIABLE i_color_r : STD_LOGIC_VECTOR(7 DOWNTO 0) := std_logic_vector(to_unsigned(color_r, 8));
+		VARIABLE i_color_g : STD_LOGIC_VECTOR(7 DOWNTO 0) := std_logic_vector(to_unsigned(color_g, 8));
+		VARIABLE i_color_b : STD_LOGIC_VECTOR(7 DOWNTO 0) := std_logic_vector(to_unsigned(color_b, 8));
+
 	BEGIN
 		i_row_x := to_integer(unsigned(row_x));
 		i_line_y := to_integer(unsigned(line_y));
@@ -239,9 +246,9 @@ BEGIN
 					IF(display_character) THEN
 						s_rdaddress_char <= compute_char_address(row_x, line_y, s_position_x, s_position_y);
 						IF(s_memory_out_char(i_orientation) = '1') THEN
-							vga_r <= (OTHERS => '1');
-							vga_g <= (OTHERS => '1');
-							vga_b <= (OTHERS => '0');
+							vga_r <= i_color_r;
+							vga_g <= i_color_g;
+							vga_b <= i_color_b;
 						ELSE 
 							vga_r <= (OTHERS => '0');
 							vga_g <= (OTHERS => '0');
@@ -249,9 +256,9 @@ BEGIN
 						END IF;
 					ELSE 
 						IF(s_memory_out_char(i_orientation) = '1') THEN
-							vga_r <= (OTHERS => '1');
-							vga_g <= (OTHERS => '1');
-							vga_b <= (OTHERS => '0');
+							vga_r <= i_color_r;
+							vga_g <= i_color_g;
+							vga_b <= i_color_b;
 						ELSE 
 							vga_r <= (OTHERS => '0');
 							vga_g <= (OTHERS => '0');
@@ -261,9 +268,9 @@ BEGIN
 					END IF;
 				WHEN OTHERS => --state 3 : finish display
 					IF (s_memory_out_char(i_orientation) = '1') THEN
-						vga_r <= (OTHERS => '1');
-						vga_g <= (OTHERS => '1');
-						vga_b <= (OTHERS => '0');
+						vga_r <= i_color_r;
+						vga_g <= i_color_g;
+						vga_b <= i_color_b;
 					ELSE 
 						vga_r <= (OTHERS => '0');
 						vga_g <= (OTHERS => '0');

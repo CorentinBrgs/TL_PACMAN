@@ -29,6 +29,8 @@ void init_game(
 	init_position(&(charPosition[2]), 2, 12*60, 5*60, ACTIVE, SOUTH, ghostBackground);
 	IOWR_32DIRECT(POSITION_BASE, 0, charPosition[2].bytePacket);
 
+	init_position(&(charPosition[3]), 3, 11*60, 5*60, ACTIVE, EAST, ghostBackground);
+	IOWR_32DIRECT(POSITION_BASE, 0, charPosition[3].bytePacket);
 
 
 	set_background_in_memory(ghostBackground);

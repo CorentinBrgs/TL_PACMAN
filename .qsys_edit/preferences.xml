@@ -3,12 +3,12 @@
  <debug showDebugMenu="0" />
  <systemtable filter="All Interfaces">
   <columns>
-   <connections preferredWidth="159" />
+   <connections preferredWidth="30" />
    <irq preferredWidth="34" />
   </columns>
  </systemtable>
  <library
    expandedCategories="Project,Library/University Program,Library/Memory Interfaces and Controllers/Memory Interfaces with UniPHY,Library/University Program/Memory,Library,Library/Memory Interfaces and Controllers" />
- <window width="1680" height="1010" x="0" y="0" />
+ <window width="1936" height="1096" x="-8" y="-8" />
  <generation synthesis="VHDL" />
 </preferences>

@@ -123,6 +123,10 @@ ghost_generator ghost_generator_1(
 	.vga_b(s_vga_b_4)
 );
 defparam ghost_generator_1.char_id = 3'b001; 
+defparam ghost_generator_1.color_r = 255; 
+defparam ghost_generator_1.color_g = 102; 
+defparam ghost_generator_1.color_b = 0; 
+
 
 ghost_generator ghost_generator_2(
 	.clk(clk),
@@ -137,6 +141,9 @@ ghost_generator ghost_generator_2(
 	.vga_b(s_vga_b_5)
 );
 defparam ghost_generator_2.char_id = 3'b010; 
+defparam ghost_generator_2.color_r = 0; 
+defparam ghost_generator_2.color_g = 178; 
+defparam ghost_generator_2.color_b = 0; 
 
 ghost_generator ghost_generator_3(
 	.clk(clk),
@@ -151,6 +158,9 @@ ghost_generator ghost_generator_3(
 	.vga_b(s_vga_b_6)
 );
 defparam ghost_generator_3.char_id = 3'b011; 
+defparam ghost_generator_3.color_r = 21; 
+defparam ghost_generator_3.color_g = 102; 
+defparam ghost_generator_3.color_b = 255; 
 
 
 sync_signals_buffer sync_signals_buffer_inst0(

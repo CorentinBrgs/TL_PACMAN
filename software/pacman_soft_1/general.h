@@ -40,15 +40,15 @@ typedef enum {
 } direction;
 
 typedef struct {
-	alt_u8 charId;
-	alt_u32 positionX;
-	alt_u32 positionY;
-	alt_u8 state;
-	orientation orientation;
-	alt_u32 bytePacket;
-	collision collision;
-	direction directionControl;
-	alt_u32* background;
+	alt_u8			charId;
+	alt_u32			positionX;
+	alt_u32			positionY;
+	alt_u8			state;
+	orientation		orientation;
+	alt_u32			bytePacket;
+	collision		collision;
+	direction		directionControl;
+	alt_u32*		background;
 } position;
 
 alt_u8 get_block_with_coordinates(alt_u32 positionX, alt_u32 positionY, alt_u32 layer[]);

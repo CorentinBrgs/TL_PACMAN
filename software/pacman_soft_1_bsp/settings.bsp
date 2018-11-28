@@ -2,9 +2,9 @@
 <sch:Settings xmlns:sch="http://www.altera.com/embeddedsw/bsp/schema">
         <BspType>hal</BspType>
         <BspVersion>default</BspVersion>
-        <BspGeneratedTimeStamp>23 nov. 2018 18:38:33</BspGeneratedTimeStamp>
-        <BspGeneratedUnixTimeStamp>1542994713505</BspGeneratedUnixTimeStamp>
-        <BspGeneratedLocation>D:\TL_MOREIRA_BERGES\TL_PACMAN\software\pacman_soft_1_bsp</BspGeneratedLocation>
+        <BspGeneratedTimeStamp>28 nov. 2018 09:22:52</BspGeneratedTimeStamp>
+        <BspGeneratedUnixTimeStamp>1543393372651</BspGeneratedUnixTimeStamp>
+        <BspGeneratedLocation>F:\QuartusProjects\TL_PACMAN\software\pacman_soft_1_bsp</BspGeneratedLocation>
         <BspSettingsFile>settings.bsp</BspSettingsFile>
         <SopcDesignFile>..\..\HDMI_QSYS.sopcinfo</SopcDesignFile>
         <JdiFile>default</JdiFile>
